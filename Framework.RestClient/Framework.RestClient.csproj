@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DDDAEA82-4585-456A-85BA-9D59DD6EB178}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework.Rest</RootNamespace>
+    <AssemblyName>Framework.RestClient</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AcceptMode.cs" />
+    <Compile Include="OAuth\OAuth1Token.cs" />
+    <Compile Include="RestConstants.cs" />
+    <Compile Include="FileParameter.cs" />
+    <Compile Include="FileParameterCollection.cs" />
+    <Compile Include="IRestClient.cs" />
+    <Compile Include="IRestRequest.cs" />
+    <Compile Include="MethodType.cs" />
+    <Compile Include="OAuth\Impl\InMemoryOAuthStateManager.cs" />
+    <Compile Include="OAuth\Impl\InMemoryTokenManager.cs" />
+    <Compile Include="OAuth\IOAuthStateManager.cs" />
+    <Compile Include="OAuth\ITokenManager.cs" />
+    <Compile Include="OAuth\OAuth1Client.cs" />
+    <Compile Include="OAuth\OAuth1RestRequest.cs" />
+    <Compile Include="OAuth\OAuth1TempCredential.cs" />
+    <Compile Include="OAuth\OAuth1TokenCredential.cs" />
+    <Compile Include="OAuth\OAuth2BaseResponse.cs" />
+    <Compile Include="OAuth\OAuth2Client.cs" />
+    <Compile Include="OAuth\OAuth2GrantType.cs" />
+    <Compile Include="OAuth\OAuth2ResponseType.cs" />
+    <Compile Include="OAuth\OAuth2TokenAccessType.cs" />
+    <Compile Include="OAuth\OAuth2TokenCredential.cs" />
+    <Compile Include="OAuth\OAuthExtensions.cs" />
+    <Compile Include="OAuth\OAuthState.cs" />
+    <Compile Include="ProgressChangedEventArgs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryParameter.cs" />
+    <Compile Include="QueryParameterCollection.cs" />
+    <Compile Include="QueryParameterComparer.cs" />
+    <Compile Include="RequestMode.cs" />
+    <Compile Include="ResponseMode.cs" />
+    <Compile Include="ResponseStatus.cs" />
+    <Compile Include="RestClient.Async.cs" />
+    <Compile Include="RestClient.cs" />
+    <Compile Include="RestClient.Sync.cs" />
+    <Compile Include="RestException.cs" />
+    <Compile Include="RestRequest.Async.cs" />
+    <Compile Include="RestRequest.cs" />
+    <Compile Include="RestRequest.Sync.cs" />
+    <Compile Include="RestResponse.cs" />
+    <Compile Include="RestResponse{T}.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\key.snk">
+      <Link>key.snk</Link>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Caching\Framework.Caching.csproj">
+      <Project>{130fd298-5d8e-48ae-aedb-f8bf62b78eba}</Project>
+      <Name>Framework.Caching</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Core\Framework.Core.csproj">
+      <Project>{128d8022-ce31-4316-963f-58b54bc4191c}</Project>
+      <Name>Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Ioc\Framework.Ioc.csproj">
+      <Project>{d2b3e2d2-9496-4f51-9db0-6ec0379dd3ad}</Project>
+      <Name>Framework.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Logging\Framework.Logging.csproj">
+      <Project>{1ad267ae-fb9c-4b9f-8b18-8397b558a631}</Project>
+      <Name>Framework.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Reflection\Framework.Reflection.csproj">
+      <Project>{932c61e9-b2cb-43fa-acb0-d1f6d491b3a9}</Project>
+      <Name>Framework.Reflection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Serialization\Framework.Serialization.csproj">
+      <Project>{d7b764bf-07ce-4782-aa8a-8dcbd36be9f2}</Project>
+      <Name>Framework.Serialization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(ProjectDir)\..\AssemblyInfo.Version.Targets" />
+  <Import Project="$(ProjectDir)\..\CopyBuild.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

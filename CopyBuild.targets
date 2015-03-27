@@ -1,0 +1,18 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <ItemGroup>
+        <MyDeployFiles Include="$(OutDir)\**\$(ProjectName).*"/>
+    </ItemGroup>
+
+    <Target Name="CopyFiles">
+        <Copy
+            SourceFiles="@(MyDeployFiles)"
+            DestinationFolder="$(SolutionDir)\binaries"
+            SkipUnchangedFiles="false"
+        />
+    </Target>
+    <Target Name="AfterBuild">
+        <Message Text="Copying $(ProjectName)" />
+        <CallTarget Targets="CopyFiles"/>
+    </Target>
+</Project>

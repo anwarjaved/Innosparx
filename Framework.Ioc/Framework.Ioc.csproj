@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D2B3E2D2-9496-4F51-9DB0-6EC0379DD3AD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework</RootNamespace>
+    <AssemblyName>Framework.Ioc</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activator\ActivationManager.cs" />
+    <Compile Include="Activator\ApplicationShutdownMethodAttribute.cs" />
+    <Compile Include="Activator\AssemblyComparer.cs" />
+    <Compile Include="Activator\BaseActivationMethodAttribute.cs" />
+    <Compile Include="Activator\LazyHttpModule.cs" />
+    <Compile Include="Activator\PostApplicationStartMethodAttribute.cs" />
+    <Compile Include="Activator\PreApplicationStartMethodAttribute.cs" />
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="IocConstants.cs" />
+    <Compile Include="IBootstrapTask.cs" />
+    <Compile Include="IocAssemblyExtensions.cs" />
+    <Compile Include="Ioc\ActivationException.cs" />
+    <Compile Include="Ioc\BindingDependencyBuilder.cs" />
+    <Compile Include="Ioc\BindingExtensions.cs" />
+    <Compile Include="Ioc\BindingInfo.cs" />
+    <Compile Include="Ioc\BindingInfo{T}.cs" />
+    <Compile Include="Ioc\BindingRequest.cs" />
+    <Compile Include="Ioc\BindingType.cs" />
+    <Compile Include="Ioc\Container.cs" />
+    <Compile Include="Ioc\DependencyBuilder.cs" />
+    <Compile Include="Ioc\FilterHttpModule.cs" />
+    <Compile Include="Ioc\IAssemblyBindingBuilder.cs" />
+    <Compile Include="Ioc\IBindingInfo.cs" />
+    <Compile Include="Ioc\IBindingInfo{T}.cs" />
+    <Compile Include="Ioc\IBindingInitializer.cs" />
+    <Compile Include="Ioc\IBindingMatcher.cs" />
+    <Compile Include="Ioc\IBindingRequest.cs" />
+    <Compile Include="Ioc\IBindingDependencyBuilder.cs" />
+    <Compile Include="Ioc\ILifetime.cs" />
+    <Compile Include="Ioc\InjectAttribute.cs" />
+    <Compile Include="Ioc\InjectBindAttribute.cs" />
+    <Compile Include="Ioc\ContainerAssemblyAttribute.cs" />
+    <Compile Include="Ioc\IocManagerModule.cs" />
+    <Compile Include="Ioc\LifetimeType.cs" />
+    <Compile Include="Ioc\NamedAttribute.cs" />
+    <Compile Include="Ioc\OnceRequestLifetime.cs" />
+    <Compile Include="Ioc\RequestLifetime.cs" />
+    <Compile Include="Ioc\SessionLifetime.cs" />
+    <Compile Include="Ioc\SingletonLifetime.cs" />
+    <Compile Include="Ioc\ThreadLifetime.cs" />
+    <Compile Include="Ioc\TransientLifetime.cs" />
+    <Compile Include="Ioc\ValueAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\key.snk">
+      <Link>key.snk</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Core\Framework.Core.csproj">
+      <Project>{128d8022-ce31-4316-963f-58b54bc4191c}</Project>
+      <Name>Framework.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(ProjectDir)\..\AssemblyInfo.Version.Targets" />
+  <Import Project="$(ProjectDir)\..\CopyBuild.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

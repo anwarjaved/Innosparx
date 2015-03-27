@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <MSBuildCommunityTasksPath>$(ProjectDir)\..\.build</MSBuildCommunityTasksPath>
+    </PropertyGroup>
+    <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
+    <Target Name="ConfigureVersionNumber">
+        <Time>
+            <Output TaskParameter="Year" PropertyName="Year" />
+        </Time>
+        <Version VersionFile="$(ProjectDir)\AssemblyVersion.txt" BuildType="Automatic" RevisionType="Reset" StartDate="January 1, 2008"  Major="7" Minor="0">
+            <Output TaskParameter="Major" PropertyName="Major" />
+            <Output TaskParameter="Minor" PropertyName="Minor" />
+            <Output TaskParameter="Build" PropertyName="Build" />
+            <Output TaskParameter="Revision" PropertyName="Revision" />
+        </Version>
+
+        <Message Text="Version: $(Major).$(Minor).$(Build).$(Revision)" />
+    </Target>
+
+    <!-- AssemblyInfo.cs file. -->
+    <ItemGroup>
+        <Compile Include="Properties\AssemblyInfo.Version.cs" />
+    </ItemGroup>
+
+    <!-- Creates the AssemblyInfo.cs file. -->
+    <Target Name="CreateAssemblyInfo"
+                      DependsOnTargets="ConfigureVersionNumber" >
+        <MakeDir Directories="Properties" />
+        <AssemblyInfo OutputFile="Properties\AssemblyInfo.Version.cs"
+                                        CodeLanguage="CS"
+            AssemblyVersion="$(Major).$(Minor).$(Build).$(Revision)"
+            AssemblyFileVersion="$(Major).$(Minor).$(Build).$(Revision)"
+        AssemblyInformationalVersion="$(Major).$(Minor).$(Build).$(Revision)"
+		/>
+    </Target>
+
+    <!-- Deletes the AssemblyInfo.cs file. -->
+    <Target Name="DeleteAssemblyInfo">
+        <Delete Files="Properties\AssemblyInfo.Version.cs" />
+    </Target>
+
+    <!-- Inserts AssemblyInfo.cs file generation into the build process. -->
+    <PropertyGroup>
+        <BuildDependsOn>ConfigureVersionNumber;CreateAssemblyInfo;$(BuildDependsOn)</BuildDependsOn>
+        <CleanDependsOn>DeleteAssemblyInfo;$(CleanDependsOn)</CleanDependsOn>
+    </PropertyGroup>
+</Project>

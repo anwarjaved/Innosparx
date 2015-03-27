@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{128D8022-CE31-4316-963F-58B54BC4191C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework</RootNamespace>
+    <AssemblyName>Framework.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiException.cs" />
+    <Compile Include="AssemblyExtensions.cs" />
+    <Compile Include="Benchmark.cs" />
+    <Compile Include="ClaimsExtensions.cs" />
+    <Compile Include="ClaimsPrincipalExtensions.cs" />
+    <Compile Include="Collections\HierarchyNode.cs" />
+    <Compile Include="Collections\MultiKeyDictionary.cs" />
+    <Compile Include="Collections\Multimap.cs" />
+    <Compile Include="Collections\OrderedDictionary.cs" />
+    <Compile Include="Collections\OrderedDictionaryEnumerator.cs" />
+    <Compile Include="CompareInfo.cs" />
+    <Compile Include="Drawing\ImageFormat.cs" />
+    <Compile Include="FrameworkConstants.cs" />
+    <Compile Include="Cryptography.cs" />
+    <Compile Include="DataAnnotations\CreditCardAttribute.cs" />
+    <Compile Include="DataAnnotations\DateAttribute.cs" />
+    <Compile Include="DataAnnotations\DigitsAttribute.cs" />
+    <Compile Include="DataAnnotations\EmailAttribute.cs" />
+    <Compile Include="DataAnnotations\EqualToAttribute.cs" />
+    <Compile Include="DataAnnotations\FileExtensionsAttribute.cs" />
+    <Compile Include="DataAnnotations\IntegerAttribute.cs" />
+    <Compile Include="DataAnnotations\MaxAttribute.cs" />
+    <Compile Include="DataAnnotations\MinAttribute.cs" />
+    <Compile Include="DataAnnotations\NumericAttribute.cs" />
+    <Compile Include="DataAnnotations\RequiredHttpAttribute.cs" />
+    <Compile Include="DataAnnotations\UrlAttribute.cs" />
+    <Compile Include="DataAnnotations\UrlOptions.cs" />
+    <Compile Include="DataAnnotations\YearAttribute.cs" />
+    <Compile Include="DateTimeExtentions.cs" />
+    <Compile Include="DescriptionAttribute.cs" />
+    <Compile Include="DisposableExtensions.cs" />
+    <Compile Include="DisposableObject.cs" />
+    <Compile Include="DynamicExtensions.cs" />
+    <Compile Include="Dynamic\ElasticObject.cs" />
+    <Compile Include="Dynamic\ExpandedArray.cs" />
+    <Compile Include="Dynamic\ExpandedObject.cs" />
+    <Compile Include="Dynamic\FormatType.cs" />
+    <Compile Include="Dynamic\IHierarchyWrapper.cs" />
+    <Compile Include="Dynamic\NodeType.cs" />
+    <Compile Include="Dynamic\SimpleHierarchyWrapper.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="EnumExtensions.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
+    <Compile Include="Fakes\FakeExtensions.cs" />
+    <Compile Include="Fakes\FakeHttpContext.cs" />
+    <Compile Include="Fakes\FakeHttpRequest.cs" />
+    <Compile Include="Fakes\FakeHttpResponse.cs" />
+    <Compile Include="Fakes\FakeHttpSessionState.cs" />
+    <Compile Include="Fakes\FakeIdentity.cs" />
+    <Compile Include="Fakes\FakePrincipal.cs" />
+    <Compile Include="GuidExtensions.cs" />
+    <Compile Include="HashCodeUtility.cs" />
+    <Compile Include="HashMode.cs" />
+    <Compile Include="HierarchyExtensions.cs" />
+    <Compile Include="HostingEnvironment.cs" />
+    <Compile Include="HttpContextExtensions.cs" />
+    <Compile Include="HttpHeaders.cs" />
+    <Compile Include="HttpUtility.cs" />
+    <Compile Include="ICloneable.cs" />
+    <Compile Include="IgnoreAttribute.cs" />
+    <Compile Include="IO\CsvReader.cs" />
+    <Compile Include="IO\CsvStream.cs" />
+    <Compile Include="IO\CsvWriter.cs" />
+    <Compile Include="IO\StringWriter.cs" />
+    <Compile Include="IWeakAction.cs" />
+    <Compile Include="IWeakAction.Generic.cs">
+      <DependentUpon>IWeakAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IWeakFunc.cs" />
+    <Compile Include="IWeakFunc.Generic.cs">
+      <DependentUpon>IWeakFunc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KeyedHashMode.cs" />
+    <Compile Include="LambdaEqualityComparer.cs" />
+    <Compile Include="LinqExtensions.cs" />
+    <Compile Include="MappingInfo.cs" />
+    <Compile Include="MimeMapping.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\EntityModel.cs" />
+    <Compile Include="MVVM\BindableObjectCollection.cs" />
+    <Compile Include="NumericExtensions.cs" />
+    <Compile Include="ObjectDisposingException.cs" />
+    <Compile Include="MVVM\BindableObject.cs" />
+    <Compile Include="OrderAttribute.cs" />
+    <Compile Include="PagingExtensions.cs" />
+    <Compile Include="Paging\BasePagedList.cs" />
+    <Compile Include="Paging\IPagedList.cs" />
+    <Compile Include="Paging\IPagedList{T}.cs" />
+    <Compile Include="Paging\PagedList.cs" />
+    <Compile Include="Pair.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoteDisposableObject.cs" />
+    <Compile Include="Rfc3986Parser.cs" />
+    <Compile Include="SelectorEqualityComparer.cs" />
+    <Compile Include="SkipAttribute.cs" />
+    <Compile Include="StreamExtension.cs" />
+    <Compile Include="StringExtensions.cs" />
+    <Compile Include="Threading\BackgroundProcessor.cs" />
+    <Compile Include="Threading\BackgroundWorker.cs" />
+    <Compile Include="Threading\IBackgroundProcessor.cs" />
+    <Compile Include="TimeSpanExtensions.cs" />
+    <Compile Include="TransformVisitor.cs" />
+    <Compile Include="TypeExtension.cs" />
+    <Compile Include="UrlBuilder.cs" />
+    <Compile Include="UrlPath.cs" />
+    <Compile Include="UrlStringExtensions.cs" />
+    <Compile Include="ValueTypeExtensions.cs" />
+    <Compile Include="W3CDateTime.cs" />
+    <Compile Include="WeakAction.cs" />
+    <Compile Include="WeakAction.Generic.cs">
+      <DependentUpon>WeakAction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WeakFunc.Generic.cs">
+      <DependentUpon>WeakFunc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WeakFunc.cs" />
+    <Compile Include="Web\BaseHttpFilter.cs" />
+    <Compile Include="Web\IHttpApplication.cs" />
+    <Compile Include="Web\IHttpFilter.cs" />
+    <Compile Include="Web\Impl\HttpApplicationProxy.cs" />
+    <Compile Include="Web\NullHtmlString.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\key.snk">
+      <Link>key.snk</Link>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\mimetypes.xml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(ProjectDir)\..\AssemblyInfo.Version.targets" />
+  <Import Project="$(ProjectDir)\..\CopyBuild.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

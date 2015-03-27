@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{126F79CE-9CE2-41AD-84F3-64E97D37438B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LinkedInSDK</RootNamespace>
+    <AssemblyName>LinkedInSDK</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Author.cs" />
+    <Compile Include="Authors.cs" />
+    <Compile Include="BaseRequest.cs" />
+    <Compile Include="BaseResponse.cs" />
+    <Compile Include="Company.cs" />
+    <Compile Include="LinkedInConstants.cs" />
+    <Compile Include="DateInfo.cs" />
+    <Compile Include="Education.cs" />
+    <Compile Include="Educations.cs" />
+    <Compile Include="LinkedInClient.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="Persons.cs" />
+    <Compile Include="PhoneNumber.cs" />
+    <Compile Include="PhoneNumbers.cs" />
+    <Compile Include="Position.cs" />
+    <Compile Include="Positions.cs" />
+    <Compile Include="Post.cs" />
+    <Compile Include="PostContent.cs" />
+    <Compile Include="PostResponse.cs" />
+    <Compile Include="PostVisibility.cs" />
+    <Compile Include="Profile.cs" />
+    <Compile Include="ProfileField.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Publication.cs" />
+    <Compile Include="Publications.cs" />
+    <Compile Include="Publisher.cs" />
+    <Compile Include="Publishers.cs" />
+    <Compile Include="ScopeTypes.cs" />
+    <Compile Include="Skill.cs" />
+    <Compile Include="SkillInfo.cs" />
+    <Compile Include="Skills.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Key.snk">
+      <Link>Key.snk</Link>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Configuration\Framework.Configuration.csproj">
+      <Project>{396d4d03-3e6b-4e8d-ad9d-f10f6df65fb1}</Project>
+      <Name>Framework.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Core\Framework.Core.csproj">
+      <Project>{128d8022-ce31-4316-963f-58b54bc4191c}</Project>
+      <Name>Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Ioc\Framework.Ioc.csproj">
+      <Project>{D2B3E2D2-9496-4F51-9DB0-6EC0379DD3AD}</Project>
+      <Name>Framework.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.RestClient\Framework.RestClient.csproj">
+      <Project>{dddaea82-4585-456a-85ba-9d59dd6eb178}</Project>
+      <Name>Framework.RestClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Serialization\Framework.Serialization.csproj">
+      <Project>{d7b764bf-07ce-4782-aa8a-8dcbd36be9f2}</Project>
+      <Name>Framework.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Services\Framework.Services.csproj">
+      <Project>{3781da8c-c96f-4570-99e6-4b955819a107}</Project>
+      <Name>Framework.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(ProjectDir)\..\AssemblyInfo.Version.Targets" />
+  <Import Project="$(ProjectDir)\..\CopyBuild.targets" />
+</Project>

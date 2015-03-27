@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7EED1949-9F77-4AFF-A643-E76E0ABC2DAD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GoogleSDK</RootNamespace>
+    <AssemblyName>GoogleSDK</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Analytics\ColumnHeader.cs" />
+    <Compile Include="Analytics\DimensionsType.cs" />
+    <Compile Include="Analytics\MetricesType.cs" />
+    <Compile Include="Analytics\PageTrackingResponse.cs" />
+    <Compile Include="Analytics\ProfileInfo.cs" />
+    <Compile Include="Analytics\Query.cs" />
+    <Compile Include="Analytics\BaseResponse.cs" />
+    <Compile Include="Analytics\PageTrackingResultTotal.cs" />
+    <Compile Include="Common\Geometry.cs" />
+    <Compile Include="Common\Location.cs" />
+    <Compile Include="Common\UserProfile.cs" />
+    <Compile Include="GoogleApiClient.cs" />
+    <Compile Include="GoogleConstants.cs" />
+    <Compile Include="Contacts\Contact.cs" />
+    <Compile Include="Contacts\EmailInfo.cs" />
+    <Compile Include="Analytics\GoogleAnalyticsClient.cs" />
+    <Compile Include="GoogleClient.cs" />
+    <Compile Include="Contacts\GoogleContactsClient.cs" />
+    <Compile Include="Contacts\GoogleDocument.cs" />
+    <Compile Include="Contacts\GoogleFeed.cs" />
+    <Compile Include="Maps\GoogleMapClient.cs" />
+    <Compile Include="Places\GooglePlacesClient.cs" />
+    <Compile Include="Plus\GooglePlusClient.cs" />
+    <Compile Include="Plus\People.cs" />
+    <Compile Include="Plus\PeopleFields.cs" />
+    <Compile Include="Plus\PeopleName.cs" />
+    <Compile Include="Profile\GoogleProfileClient.cs" />
+    <Compile Include="Contacts\NameInfo.cs" />
+    <Compile Include="Places\AddressComponent.cs" />
+    <Compile Include="Places\AddressDetails.cs" />
+    <Compile Include="Converters\AddressDetailsConverter.cs" />
+    <Compile Include="Places\AddressResponse.cs" />
+    <Compile Include="Places\AddressResponses.cs" />
+    <Compile Include="Places\AddressResult.cs" />
+    <Compile Include="Places\AutocompletePlaceResponse.cs" />
+    <Compile Include="Places\NearByPlaceResult.cs" />
+    <Compile Include="Places\NearByPlacesResponse.cs" />
+    <Compile Include="Places\PlacesResponse.cs" />
+    <Compile Include="Places\PlaceResult.cs" />
+    <Compile Include="Places\PlaceResultComparer.cs" />
+    <Compile Include="Places\PredictionResult.cs" />
+    <Compile Include="Places\RankByOrder.cs" />
+    <Compile Include="Places\StatusCode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Contacts\StringInfo.cs" />
+    <Compile Include="Scopes.cs" />
+    <Compile Include="UrlShortener\GoogleUrlShortnerApiClient.cs" />
+    <Compile Include="UrlShortener\GoogleUrlShortnerClient.cs" />
+    <Compile Include="UrlShortener\GoogleUrlShortnerResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Key.snk">
+      <Link>Key.snk</Link>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Configuration\Framework.Configuration.csproj">
+      <Project>{396d4d03-3e6b-4e8d-ad9d-f10f6df65fb1}</Project>
+      <Name>Framework.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Core\Framework.Core.csproj">
+      <Project>{128d8022-ce31-4316-963f-58b54bc4191c}</Project>
+      <Name>Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Ioc\Framework.Ioc.csproj">
+      <Project>{D2B3E2D2-9496-4F51-9DB0-6EC0379DD3AD}</Project>
+      <Name>Framework.Ioc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Localization\Framework.Localization.csproj">
+      <Project>{25f6e589-5ad9-4200-9ee5-bb287b6f346e}</Project>
+      <Name>Framework.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.RestClient\Framework.RestClient.csproj">
+      <Project>{dddaea82-4585-456a-85ba-9d59dd6eb178}</Project>
+      <Name>Framework.RestClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Serialization\Framework.Serialization.csproj">
+      <Project>{d7b764bf-07ce-4782-aa8a-8dcbd36be9f2}</Project>
+      <Name>Framework.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Services\Framework.Services.csproj">
+      <Project>{3781da8c-c96f-4570-99e6-4b955819a107}</Project>
+      <Name>Framework.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(ProjectDir)\..\AssemblyInfo.Version.Targets" />
+  <Import Project="$(ProjectDir)\..\CopyBuild.targets" />
+</Project>
