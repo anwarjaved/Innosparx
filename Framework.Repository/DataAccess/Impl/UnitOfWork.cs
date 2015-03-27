@@ -34,7 +34,7 @@ namespace Framework.DataAccess.Impl
     [EditorBrowsable(EditorBrowsableState.Never)]
     internal class UnitOfWork : DisposableObject, IUnitOfWork
     {
-        private IEntityContext context;
+        private readonly WeakReference<IEntityContext> weakContext;
 
         private readonly string connectionString;
 
@@ -68,6 +68,7 @@ namespace Framework.DataAccess.Impl
 
             this.connectionString = nameOrConnectionString;
             this.LoggingEnabled = logEnabled;
+            this.weakContext = new WeakReference<IEntityContext>(null);
         }
 
         private void OnObjectMaterialized(object sender, ObjectMaterializedEventArgs e)
@@ -115,24 +116,25 @@ namespace Framework.DataAccess.Impl
             [SecurityCritical]
             get
             {
-                if (this.context == null)
+                IEntityContext dbContext;
+                if (!this.weakContext.TryGetTarget(out dbContext))
                 {
                     using (var benchmark = Benchmark.Start())
                     {
-                        this.context = EntityContextFactory.CreateContext(this.connectionString);
-                        ((IObjectContextAdapter)this.context).ObjectContext.ObjectMaterialized += this.OnObjectMaterialized;
+                        dbContext = EntityContextFactory.CreateContext(this.connectionString);
+                        this.weakContext.SetTarget(dbContext);
+                        ((IObjectContextAdapter)dbContext).ObjectContext.ObjectMaterialized += this.OnObjectMaterialized;
 
                         if (LoggingEnabled)
                         {
-                            this.context.Log += s => Logger.Info(s, RepositoryConstants.RepositoryComponent);
+                            dbContext.Log += s => Logger.Info(s, RepositoryConstants.RepositoryComponent);
                             Logger.Info(Logger.Completed(benchmark.TotalTime, true, "new EntityContext('{0}')".FormatString(this.connectionString)), RepositoryConstants.RepositoryComponent);
                         }
-
                     }
 
                 }
 
-                return this.context;
+                return dbContext;
             }
         }
 
@@ -154,11 +156,13 @@ namespace Framework.DataAccess.Impl
         {
             try
             {
-                if (this.context == null)
+                IEntityContext dbContext;
+
+                if (!this.weakContext.TryGetTarget(out dbContext))
                 {
                     return -1;
                 }
-                IEnumerable<DbEntityEntry> entries = Context.ChangeTracker.Entries().ToList();
+                IEnumerable<DbEntityEntry> entries = dbContext.ChangeTracker.Entries().ToList();
                 IList<DbEntityEntry> notifyEntries = entries.Where(entry => entry.Entity is IBaseEntity).ToList();
 
                 foreach (var entry in notifyEntries)
@@ -181,7 +185,7 @@ namespace Framework.DataAccess.Impl
                     notifyEntries.Where(
                         entry => IsState(entry, EntityState.Added) && !IsState(entry, EntityState.Deleted)).ToList();
 
-                IList<DbEntityEntry> modifiedyEntries =
+                IList<DbEntityEntry> modifiedEntries =
                     notifyEntries.Where(
                         entry => IsState(entry, EntityState.Modified) && !IsState(entry, EntityState.Deleted)).ToList();
                 IList<DbEntityEntry> deletedEntries =
@@ -192,13 +196,13 @@ namespace Framework.DataAccess.Impl
                 {
                     ((IBaseEntity)entry.Entity).OnBeforeSave(this, true);
 
-                    foreach (var enitityFormatter in formatters)
+                    foreach (var entityFormatter in formatters)
                     {
-                        enitityFormatter.OnSave(entry.Entity.GetType(), (IBaseEntity)entry.Entity);
+                        entityFormatter.OnSave(entry.Entity.GetType(), (IBaseEntity)entry.Entity);
                     }
                 }
 
-                foreach (var entry in modifiedyEntries)
+                foreach (var entry in modifiedEntries)
                 {
                     ((IBaseEntity)entry.Entity).OnBeforeSave(this, false);
                     foreach (var formatter in formatters)
@@ -213,7 +217,7 @@ namespace Framework.DataAccess.Impl
 
                     if (returnValue > 0)
                     {
-                        foreach (var entry in modifiedyEntries)
+                        foreach (var entry in modifiedEntries)
                         {
                             ((IBaseEntity)entry.Entity).OnSave(this);
                         }
@@ -281,10 +285,11 @@ namespace Framework.DataAccess.Impl
 
         public void Rollback()
         {
-            if (this.context == null)
+            IEntityContext dbContext;
+
+            if (this.weakContext.TryGetTarget(out dbContext))
             {
-                this.Context.Rollback();
- 
+                dbContext.Rollback();
             }
         }
 
@@ -324,13 +329,15 @@ namespace Framework.DataAccess.Impl
         [SecuritySafeCritical]
         protected override void DisposeResources()
         {
-            if (this.context != null)
+            IEntityContext dbContext;
+
+            if (this.weakContext.TryGetTarget(out dbContext))
             {
                 this.Commit();
 
-                ((IObjectContextAdapter)this.context).ObjectContext.ObjectMaterialized -= this.OnObjectMaterialized;
-                this.context.Dispose();
-                this.context = null;
+                ((IObjectContextAdapter)dbContext).ObjectContext.ObjectMaterialized -= this.OnObjectMaterialized;
+                dbContext.Dispose();
+                this.weakContext.SetTarget(null);
             }
         }
 
@@ -365,7 +372,7 @@ namespace Framework.DataAccess.Impl
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Get a new <see cref="IUnitOfWork"/> with new connextionString.
+        ///     Get a new <see cref="IUnitOfWork"/> with new connectionString.
         /// </summary>
         ///
         /// <exception cref="ArgumentNullException">
@@ -420,38 +427,5 @@ namespace Framework.DataAccess.Impl
         {
             return (entity.State & state) == state;
         }
-
-        //private static int Retry(Func<int> func)
-        //{
-        //    int count = 3;
-        //    TimeSpan delay = TimeSpan.FromSeconds(2);
-        //    while (true)
-        //    {
-        //        try
-        //        {
-        //            return func();
-        //        }
-        //        catch (SqlException e)
-        //        {
-        //            --count;
-        //            if (count <= 0) throw;
-
-        //            if (e.Number == 1205)
-        //            {
-        //                //_log.Debug("Deadlock, retrying", e);
-        //            }
-        //            else if (e.Number == -2)
-        //            {
-        //                //_log.Debug("Timeout, retrying", e);
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-
-        //            Thread.Sleep(delay);
-        //        }
-        //    }
-        //}
     }
 }
