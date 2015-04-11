@@ -17,7 +17,7 @@
         ///-------------------------------------------------------------------------------------------------
         public PasswordInfoMapping()
         {
-            this.Property(c => c.Value).IsRequired().IsUnicode().HasMaxLength(64).HasColumnName("Password");
+            this.Property(c => c.Value).IsRequired().IsUnicode().HasMaxLength(512).HasColumnName("Password");
             this.Property(c => c.Salt).IsRequired().IsUnicode().HasMaxLength(64).HasColumnName("PasswordSalt");
         }
     }

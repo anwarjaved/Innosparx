@@ -23,21 +23,33 @@
         {
             if (account.PasswordSalt.IsEmpty())
             {
-                account.PasswordSalt = Cryptography.GenerateSalt();
+                account.PasswordSalt = Cryptography.GenerateSalt(32);
             }
 
             var saltAndPwd = String.Concat(account.Password, account.PasswordSalt);
             var bytes = Encoding.UTF8.GetBytes(saltAndPwd);
-            var sha1 = SHA1.Create();
-            var computedHash = sha1.ComputeHash(bytes);
-            return Convert.ToBase64String(computedHash);
+
+            string computedHash;
+
+            if (account.PasswordSalt.Length == 24)
+            {
+                var sha1 = SHA1.Create();
+                computedHash = Convert.ToBase64String(sha1.ComputeHash(bytes));
+            }
+            else
+            {
+                var sha1256 = SHA256.Create();
+                computedHash = Convert.ToBase64String(sha1256.ComputeHash(bytes));
+            }
+
+            return computedHash;
         }
 
 
         /// <summary>
         /// Decrypt a password
         /// </summary>
-        /// <param name="password">Encrpted password</param>
+        /// <param name="password">Encrypted password</param>
         /// <param name="passwordSalt">The password salt.</param>
         /// <returns>
         /// Decrypted password if decryption is possible; otherwise null.

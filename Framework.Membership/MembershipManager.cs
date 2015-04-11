@@ -20,7 +20,7 @@ namespace Framework.Membership
     public static class MembershipManager
     {
         private static IAccountPolicy accountPolicy;
-        private static IPasswordStrategy _passwordStrategy;
+        private static IPasswordStrategy passwordStrategy;
 
         private static readonly Regex EmailRegex = new Regex(@"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
@@ -31,14 +31,14 @@ namespace Framework.Membership
         {
             get
             {
-                if (_passwordStrategy == null)
+                if (passwordStrategy == null)
                 {
-                    _passwordStrategy = Container.Get<IPasswordStrategy>();
-                    if (_passwordStrategy == null)
+                    passwordStrategy = Container.Get<IPasswordStrategy>();
+                    if (passwordStrategy == null)
                         throw new InvalidOperationException(
                             "You need to assign a locator to the ServiceLocator property and it should be able to lookup IPasswordStrategy.");
                 }
-                return _passwordStrategy;
+                return passwordStrategy;
             }
         }
 

@@ -59,7 +59,7 @@
             return repository.Query.OrderBy(a => a.Name).ToList();
         }
 
- 
+
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
@@ -85,13 +85,13 @@
             return repository.Exists(a => a.Name.ToLower() == roleName.ToLower());
         }
 
-        private static readonly MethodInfo MemebershipRoleExistsDefinition =
- typeof(SqlMembershipProvider).GetMethod("MemebershipRoleExists", BindingFlags.Public | BindingFlags.Instance);
+        private static readonly MethodInfo MembershipRoleExistsDefinition =
+            typeof(SqlMembershipProvider).GetMethod("MembershipRoleExists", BindingFlags.Public | BindingFlags.Instance);
 
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [SecurityCritical]
-        public bool MemebershipRoleExists<T>(string roleName) where T : Role, new()
+        public bool MembershipRoleExists<T>(string roleName) where T : Role, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
@@ -110,7 +110,7 @@
                 throw new InvalidCastException("T must be type of Role");
             }
 
-            MethodInfo method = MemebershipRoleExistsDefinition.MakeGenericMethod(type);
+            MethodInfo method = MembershipRoleExistsDefinition.MakeGenericMethod(type);
 
             var instance = Expression.Parameter(typeof(SqlMembershipProvider), "instance");
             MethodCallExpression callExpression = Expression.Call(
@@ -194,8 +194,7 @@ typeof(SqlMembershipProvider).GetMethod("CreateMemebershipRole", BindingFlags.Pu
             MethodCallExpression callExpression = Expression.Call(
                 instance,
                 method,
-                new Expression[]
-                    { Expression.Constant(roleName, typeof(string)), Expression.Constant(description, typeof(string)) });
+                new Expression[] { Expression.Constant(roleName, typeof(string)), Expression.Constant(description, typeof(string)) });
 
             Func<SqlMembershipProvider, T> func = Expression.Lambda<Func<SqlMembershipProvider, T>>(callExpression, instance).Compile();
             return func(this);
@@ -296,7 +295,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
 
         }
 
-      
+
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
@@ -775,6 +774,28 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
                 IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
                 IRepository<User> repository = unitOfWork.Get<User>();
                 castUser.LastActivityDate = DateTime.UtcNow;
+                repository.Save(castUser);
+                unitOfWork.Commit();
+
+            }
+        }
+
+        [SecurityCritical]
+        public void CheckPassword(IUser user, string password)
+        {
+            User castUser = user as User;
+            if (castUser != null)
+            {
+                IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
+                IRepository<User> repository = unitOfWork.Get<User>();
+                AccountPasswordInfo accountPasswordInfo = new AccountPasswordInfo(castUser.Email, password);
+                string encryptedPassword = MembershipManager.PasswordStrategy.Encrypt(accountPasswordInfo);
+                castUser.Password = new PasswordInfo()
+                                        {
+                                            Value = encryptedPassword,
+                                            Salt = accountPasswordInfo.PasswordSalt
+                                        };
+
                 repository.Save(castUser);
                 unitOfWork.Commit();
 
@@ -1446,6 +1467,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
                     account.LastLockoutDate = null;
                     account.PasswordFailureSinceLastSuccess = 0;
                     UpdateUser(account);
+                    CheckPassword(account, password);
                     return true;
                 }
 
@@ -1567,7 +1589,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
                     UpdateUser(account);
                 }
 
-               
+
             }
             else
             {
