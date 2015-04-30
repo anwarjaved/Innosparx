@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="AcceptMode.cs" />
     <Compile Include="OAuth\OAuth1Token.cs" />
+    <Compile Include="OAuth\OAuth2Client.cs" />
     <Compile Include="RestConstants.cs" />
     <Compile Include="FileParameter.cs" />
     <Compile Include="FileParameterCollection.cs" />
@@ -63,7 +64,6 @@
     <Compile Include="OAuth\OAuth1TempCredential.cs" />
     <Compile Include="OAuth\OAuth1TokenCredential.cs" />
     <Compile Include="OAuth\OAuth2BaseResponse.cs" />
-    <Compile Include="OAuth\OAuth2Client.cs" />
     <Compile Include="OAuth\OAuth2GrantType.cs" />
     <Compile Include="OAuth\OAuth2ResponseType.cs" />
     <Compile Include="OAuth\OAuth2TokenAccessType.cs" />

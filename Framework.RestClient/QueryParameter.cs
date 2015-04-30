@@ -14,8 +14,8 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryParameter"/> class.
         /// </summary>
-        /// <param name="name">The paramter name.</param>
-        /// <param name="value">The paramter value.</param>
+        /// <param name="name">The parameter name.</param>
+        /// <param name="value">The parameter value.</param>
         /// <author>Anwar</author>
         /// <datetime>3/24/2011 11:20 PM</datetime>
         public QueryParameter(string name, string value)
@@ -32,7 +32,7 @@
         /// <summary>
         /// Gets the name.
         /// </summary>
-        /// <value>The paramter name.</value>
+        /// <value>The parameter name.</value>
         /// <author>Anwar</author>
         /// <datetime>3/24/2011 11:20 PM</datetime>
         public string Name { get; private set; }

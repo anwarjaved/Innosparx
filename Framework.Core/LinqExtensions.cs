@@ -128,9 +128,19 @@ namespace Framework
                     return SortInternal(source, sortDirection, Expression.Lambda<Func<T, Guid>>(propertyReference, parameter));
                 }
 
+                if (propertyType == typeof(Guid?))
+                {
+                    return SortInternal(source, sortDirection, Expression.Lambda<Func<T, Guid?>>(propertyReference, parameter));
+                }
+
                 if (propertyType == typeof(int))
                 {
                     return SortInternal(source, sortDirection, Expression.Lambda<Func<T, int>>(propertyReference, parameter));
+                }
+
+                if (propertyType == typeof(int?))
+                {
+                    return SortInternal(source, sortDirection, Expression.Lambda<Func<T, int?>>(propertyReference, parameter));
                 }
 
                 if (propertyType == typeof(short))
@@ -138,9 +148,19 @@ namespace Framework
                     return SortInternal(source, sortDirection, Expression.Lambda<Func<T, short>>(propertyReference, parameter));
                 }
 
+                if (propertyType == typeof(short?))
+                {
+                    return SortInternal(source, sortDirection, Expression.Lambda<Func<T, short?>>(propertyReference, parameter));
+                }
+
                 if (propertyType == typeof(byte))
                 {
                     return SortInternal(source, sortDirection, Expression.Lambda<Func<T, byte>>(propertyReference, parameter));
+                }
+
+                if (propertyType == typeof(byte?))
+                {
+                    return SortInternal(source, sortDirection, Expression.Lambda<Func<T, byte?>>(propertyReference, parameter));
                 }
 
                 if (propertyType == typeof(long))
@@ -148,9 +168,19 @@ namespace Framework
                     return SortInternal(source, sortDirection, Expression.Lambda<Func<T, long>>(propertyReference, parameter));
                 }
 
+                if (propertyType == typeof(long?))
+                {
+                    return SortInternal(source, sortDirection, Expression.Lambda<Func<T, long?>>(propertyReference, parameter));
+                }
+
                 if (propertyType == typeof(float))
                 {
                     return SortInternal(source, sortDirection, Expression.Lambda<Func<T, float>>(propertyReference, parameter));
+                }
+
+                if (propertyType == typeof(float?))
+                {
+                    return SortInternal(source, sortDirection, Expression.Lambda<Func<T, float?>>(propertyReference, parameter));
                 }
 
                 if (propertyType == typeof(double))
@@ -158,14 +188,29 @@ namespace Framework
                     return SortInternal(source, sortDirection, Expression.Lambda<Func<T, double>>(propertyReference, parameter));
                 }
 
+                if (propertyType == typeof(double?))
+                {
+                    return SortInternal(source, sortDirection, Expression.Lambda<Func<T, double?>>(propertyReference, parameter));
+                }
+
                 if (propertyType == typeof(decimal))
                 {
                     return SortInternal(source, sortDirection, Expression.Lambda<Func<T, decimal>>(propertyReference, parameter));
                 }
 
+                if (propertyType == typeof(decimal?))
+                {
+                    return SortInternal(source, sortDirection, Expression.Lambda<Func<T, decimal?>>(propertyReference, parameter));
+                }
+
                 if ((propertyType == typeof(DateTime)))
                 {
                     return SortInternal(source, sortDirection, Expression.Lambda<Func<T, DateTime>>(propertyReference, parameter));
+                }
+
+                if ((propertyType == typeof(DateTime?)))
+                {
+                    return SortInternal(source, sortDirection, Expression.Lambda<Func<T, DateTime?>>(propertyReference, parameter));
                 }
 
                 if ((propertyType.IsEnum))
@@ -177,15 +222,36 @@ namespace Framework
                         return SortInternal(source, sortDirection, Expression.Lambda<Func<T, byte>>(Expression.Convert(propertyReference, enumType), parameter));
                     }
 
+                    if (enumType == typeof(byte?))
+                    {
+                        return SortInternal(source, sortDirection, Expression.Lambda<Func<T, byte?>>(Expression.Convert(propertyReference, enumType), parameter));
+                    }
+
                     if (enumType == typeof(int))
                     {
                         return SortInternal(source, sortDirection, Expression.Lambda<Func<T, int>>(Expression.Convert(propertyReference, enumType), parameter));
 
                     }
 
+                    if (enumType == typeof(int?))
+                    {
+                        return SortInternal(source, sortDirection, Expression.Lambda<Func<T, int?>>(Expression.Convert(propertyReference, enumType), parameter));
+
+                    }
+
                     if (enumType == typeof(short))
                     {
                         return SortInternal(source, sortDirection, Expression.Lambda<Func<T, short>>(Expression.Convert(propertyReference, enumType), parameter));
+                    }
+
+                    if (enumType == typeof(short?))
+                    {
+                        return SortInternal(source, sortDirection, Expression.Lambda<Func<T, short?>>(Expression.Convert(propertyReference, enumType), parameter));
+                    }
+
+                    if (enumType == typeof(long?))
+                    {
+                        return SortInternal(source, sortDirection, Expression.Lambda<Func<T, long?>>(Expression.Convert(propertyReference, enumType), parameter));
                     }
 
                     return SortInternal(source, sortDirection, Expression.Lambda<Func<T, long>>(Expression.Convert(propertyReference, enumType), parameter));
