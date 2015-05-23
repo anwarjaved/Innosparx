@@ -13,7 +13,7 @@ namespace Framework.Web.Mvc
 
     /// <summary>Represents an attribute that is used to restrict access by callers to an action method.</summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = true)]
-    [SecurityCritical]
+    
     public class SecureAttribute : FilterAttribute, IAuthorizationFilter
     {
         public SecureAttribute(string role)
@@ -104,7 +104,7 @@ namespace Framework.Web.Mvc
         /// <summary>Called when a process requests authorization.</summary>
         /// <param name="filterContext">The filter context, which encapsulates information for using <see cref="T:System.Web.Mvc.AuthorizeAttribute" />.</param>
         /// <exception cref="T:System.ArgumentNullException">The <paramref name="filterContext" /> parameter is null.</exception>
-        [SecurityCritical]
+        
         public virtual void OnAuthorization(AuthorizationContext filterContext)
         {
             if (filterContext == null)

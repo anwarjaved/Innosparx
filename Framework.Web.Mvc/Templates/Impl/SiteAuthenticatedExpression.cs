@@ -15,7 +15,7 @@ namespace Framework.Templates.Impl
     [InjectBind(typeof(ITemplateExpression), "site:isAuthenticated", LifetimeType.Singleton)]
     public class SiteAuthenticatedExpression : ITemplateExpression
     {
-        [SecurityCritical]
+        
         public void Render(string expression, bool inverted, dynamic properties, IEnumerable<ITemplatePart> parts, ITemplateContext context)
         {
             IWebContext webContext = Container.Get<IWebContext>();

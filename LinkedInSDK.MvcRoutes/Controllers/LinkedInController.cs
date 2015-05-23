@@ -11,7 +11,7 @@
 
     using LinkedInSDK;
 
-    [SecurityCritical]
+    
     [RouteArea("social")]
     [RoutePrefix("linkedin")]
     public class LinkedInController : Controller

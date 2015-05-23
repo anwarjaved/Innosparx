@@ -9,10 +9,10 @@
 
     using Framework.Logging;
 
-    [SecurityCritical]
+    
     public class ApiExceptionFilter : ExceptionFilterAttribute
     {
-        [SecurityCritical]
+        
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
             bool isUserException = false;

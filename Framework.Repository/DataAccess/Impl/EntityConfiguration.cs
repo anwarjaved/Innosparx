@@ -14,7 +14,7 @@ namespace Framework.DataAccess.Impl
     ///     Entity configuration.
     /// </summary>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public class EntityConfiguration : DbConfiguration
     {
         ///-------------------------------------------------------------------------------------------------

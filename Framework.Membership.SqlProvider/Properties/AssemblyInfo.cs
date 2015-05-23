@@ -18,8 +18,6 @@ using Framework.Ioc;
 [assembly: CLSCompliant(true)]
 [assembly: Guid("ddd7a3e7-ba7e-45d5-832e-cf8b95feb6c8")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityRules(SecurityRuleSet.Level2)]
 [assembly: ContainerAssembly]
 [assembly: PreApplicationStartMethod(typeof(SqlMembershipInitializer), "Init")]
 

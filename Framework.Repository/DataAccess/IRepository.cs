@@ -141,7 +141,7 @@ namespace Framework.DataAccess
         ///-------------------------------------------------------------------------------------------------
         IQueryable<TEntity> Query
         {
-            [SecuritySafeCritical]
+            
             get;
         }
 
@@ -231,7 +231,7 @@ namespace Framework.DataAccess
         ///     First entity or null.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         Task<TEntity> OneAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes);
 
         ///-------------------------------------------------------------------------------------------------
@@ -247,10 +247,10 @@ namespace Framework.DataAccess
         ///     Records Count.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null);
 
-        [SecuritySafeCritical]
+        
         Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate = null);
     }
 }

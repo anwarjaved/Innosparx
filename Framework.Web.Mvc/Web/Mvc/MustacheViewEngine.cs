@@ -12,7 +12,7 @@
     ///     Anwar Javed, 09/16/2013 7:55 PM.
     /// </remarks>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public class MustacheViewEngine : BuildManagerViewEngine
     {
         ///-------------------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@
         ///     A reference to the partial view.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         protected override IView CreatePartialView(ControllerContext controllerContext, string partialPath)
         {
             return new MustacheView(controllerContext, partialPath);
@@ -83,7 +83,7 @@
         ///     A reference to the view.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         protected override IView CreateView(ControllerContext controllerContext, string viewPath, string masterPath)
         {
             return new MustacheView(controllerContext, viewPath, masterPath, this.ViewPageActivator);

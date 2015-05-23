@@ -6,7 +6,7 @@
 
     using MaxmindSDK.Domain;
 
-    [SecurityCritical]
+    
     public class GeoIPCityMapping : EntityMapping<GeoIPCity>
     {
         public GeoIPCityMapping()

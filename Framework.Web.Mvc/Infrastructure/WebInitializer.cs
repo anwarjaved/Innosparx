@@ -18,7 +18,7 @@
     /// </summary>
     ///-------------------------------------------------------------------------------------------------
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [SecurityCritical]
+    
     public static class WebInitializer
     {
         ///-------------------------------------------------------------------------------------------------
@@ -26,7 +26,7 @@
         ///     Initialises this object.
         /// </summary>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static void Init()
         {
             BuildProvider.RegisterBuildProvider(".mustactml", typeof(RazorBuildProvider));

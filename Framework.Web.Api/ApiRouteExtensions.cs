@@ -10,7 +10,7 @@ namespace Framework
 
     public static class ApiRouteExtensions
     {
-        [SecurityCritical]
+        
         public static IEnumerable<RouteModel> ToRouteModel(this IEnumerable<RouteBase> routes)
         {
             return routes.Select(BuildModel)
@@ -22,7 +22,7 @@ namespace Framework
         }
 
 
-        [SecurityCritical]
+        
         private static RouteModel BuildModel(RouteBase routeBase)
         {
             RouteModel model = new RouteModel();

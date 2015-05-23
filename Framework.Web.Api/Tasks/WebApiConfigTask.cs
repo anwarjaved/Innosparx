@@ -20,7 +20,7 @@
     public class WebApiConfigTask : IBootstrapTask
     {
 
-        [SecurityCritical]
+        
         public void Execute()
         {
             if (HostingEnvironment.IsHosted)
@@ -30,7 +30,7 @@
             }
         }
 
-        [SecurityCritical]
+        
         private void Configure(HttpConfiguration configuration)
         {
             ConfigureRoutes(configuration);
@@ -44,13 +44,13 @@
             configuration.EnableCors(new EnableCorsAttribute("*", "*", "*", "*") { SupportsCredentials = true });
         }
 
-        [SecurityCritical]
+        
         private static void ConfigureFilters(HttpConfiguration configuration)
         {
             configuration.Filters.Add(new ApiExceptionFilter());
         }
 
-        [SecurityCritical]
+        
         private static void ConfigureRoutes(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();

@@ -6,10 +6,10 @@
     using Framework.Configuration;
     using Framework.Dynamic;
 
-    [SecurityCritical]
+    
     class FrameworkFilter : FilterAttribute, IResultFilter
     {
-        [SecurityCritical]
+        
         public void OnResultExecuting(ResultExecutingContext filterContext)
         {
             dynamic frameworkInfo = new ElasticObject("Framework");
@@ -25,7 +25,7 @@
 
         }
 
-        [SecurityCritical]
+        
         public void OnResultExecuted(ResultExecutedContext filterContext)
         {
         }

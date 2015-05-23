@@ -22,7 +22,7 @@
         /// <summary>
         /// Initializes this instance.
         /// </summary>
-        [SecurityCritical]
+        
         public static void Init()
         {
             Container.OverrideDefaultService<ILogAdapter>("DbLog");  

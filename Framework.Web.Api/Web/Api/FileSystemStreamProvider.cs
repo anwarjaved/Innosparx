@@ -15,7 +15,7 @@ namespace Framework.Web.Api
 {
     using Framework.FileSystem;
 
-    [SecurityCritical]
+    
     public class FileSystemStreamProvider : MultipartStreamProvider
     {
         private readonly IVirtualFileSystem fileSystem;
@@ -41,7 +41,7 @@ namespace Framework.Web.Api
                        : Guid.NewGuid().ToStringValue() + ".data";
         }
 
-        [SecurityCritical]
+        
         public override Stream GetStream(HttpContent parent, HttpContentHeaders headers)
         {
             if (parent == null)

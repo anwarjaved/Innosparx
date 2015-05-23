@@ -12,5 +12,3 @@ using System.Security;
 [assembly: CLSCompliant(true)]
 [assembly: Guid("ad16faf2-fce4-4da1-8e00-ebf9e37b8b47")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityRules(SecurityRuleSet.Level2)]

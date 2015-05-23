@@ -11,7 +11,7 @@
     ///     Anwar Javed, 09/12/2013 1:19 PM.
     /// </remarks>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public abstract class BaseHttpFilter : DisposableObject, IHttpFilter
     {
         ///-------------------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@
         ///     The application.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public virtual void Initialize(IHttpApplication application)
         {
         }
@@ -45,12 +45,12 @@
         ///     The application.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public virtual void OnBeginRequest(IHttpApplication application)
         {
         }
 
-        [SecurityCritical]
+        
         public virtual void OnEndRequest(IHttpApplication application)
         {
         }
@@ -68,7 +68,7 @@
         ///     The application.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public virtual void OnError(IHttpApplication application)
         {
         }
@@ -86,12 +86,12 @@
         ///     The application.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public virtual void OnPostMapRequest(IHttpApplication application)
         {
         }
 
-        [SecurityCritical]
+        
         public virtual void OnPostAuthenticate(IHttpApplication application)
         {
         }

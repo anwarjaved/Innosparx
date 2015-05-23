@@ -28,7 +28,7 @@
         ///     Pre-Init this Library.
         /// </summary>
         /// -------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static void PreInit()
         {
             JsonConvert.DefaultSettings = () =>

@@ -34,13 +34,13 @@
         private StreamWriter writer;
 
         [Inject]
-        [SecuritySafeCritical]
+        
         public FileLogAdapter()
             : this(LoggingConstants.LogFolder)
         {
         }
 
-        [SecuritySafeCritical]
+        
         public FileLogAdapter(string logFolderName)
         {
             this.logFolderName = logFolderName;
@@ -70,7 +70,7 @@
             }
         }
 
-        [SecurityCritical]
+        
         public void Write(ILogEntry entry)
         {
             this.entries.Enqueue(entry);
@@ -128,7 +128,7 @@
             return this.wrapper;
         }
 
-        [SecuritySafeCritical]
+        
         private void StartAppendTask()
         {
             if (!this.shuttingDown)
@@ -139,7 +139,7 @@
             }
         }
 
-        [SecuritySafeCritical]
+        
         private void WriteInternal()
         {
             ILogEntry entry;

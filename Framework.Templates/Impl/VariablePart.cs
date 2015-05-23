@@ -22,7 +22,7 @@
             this.variableName = match.Success ? match.Groups[1].Value : content;
         }
 
-        [SecurityCritical]
+        
         public void Render(ITemplateContext context)
         {
             object value = context.GetValue(this.variableName);

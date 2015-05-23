@@ -34,7 +34,7 @@ namespace Framework.DataAccess.Impl
         [Browsable(false)]
         public IUnitOfWork UnitOfWork { get; private set; }
 
-        [SecuritySafeCritical]
+        
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
         public virtual void Add(TEntity instance)
@@ -49,7 +49,7 @@ namespace Framework.DataAccess.Impl
             }
        }
 
-        [SecuritySafeCritical]
+        
         public virtual void Save(TEntity instance)
         {
             IDbSet<TEntity> dbSet = CreateSet();
@@ -74,7 +74,7 @@ namespace Framework.DataAccess.Impl
             }
         }
 
-        [SecuritySafeCritical]
+        
         private void SaveEntity(TEntity instance, IDbSet<TEntity> dbSet)
         {
             IEntity<Guid> entityWithGuid = instance as IEntity<Guid>;
@@ -158,7 +158,7 @@ namespace Framework.DataAccess.Impl
             }
         }
 
-        [SecuritySafeCritical]
+        
         private void SaveAggregateRoot(TEntity instance, IDbSet<TEntity> dbSet)
         {
             IAggregateRoot<Guid> entityWithGuid = instance as IAggregateRoot<Guid>;
@@ -254,7 +254,7 @@ namespace Framework.DataAccess.Impl
             }
         }
 
-        [SecuritySafeCritical]
+        
         public virtual void Remove(TEntity instance)
         {
             if (!IsAggregateEntity)
@@ -268,7 +268,7 @@ namespace Framework.DataAccess.Impl
 
         }
 
-        [SecuritySafeCritical]
+        
         public void Remove(Expression<Func<TEntity, bool>> predicate)
         {
             TEntity instance = this.One(predicate);
@@ -281,7 +281,7 @@ namespace Framework.DataAccess.Impl
             CreateSet().Remove(instance);
         }
 
-        [SecuritySafeCritical]
+        
         public virtual TEntity One(
             Expression<Func<TEntity, bool>> predicate = null,
             params Expression<Func<TEntity, object>>[] includes)
@@ -293,7 +293,7 @@ namespace Framework.DataAccess.Impl
                    set.FirstOrDefault(predicate);
         }
 
-        [SecuritySafeCritical]
+        
         public virtual Task<TEntity> OneAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includes)
         {
             var set = CreateIncludedSet(includes);
@@ -320,7 +320,7 @@ namespace Framework.DataAccess.Impl
                        : this.CreateIncludedSet(includes).Where(predicate).Select(@select).FirstOrDefault();
         }*/
 
-        [SecuritySafeCritical]
+        
         public virtual IQueryable<TEntity> Where(
             Expression<Func<TEntity, bool>> predicate = null,
             params Expression<Func<TEntity, object>>[] includes)
@@ -332,14 +332,14 @@ namespace Framework.DataAccess.Impl
 
         public IQueryable<TEntity> Query
         {
-            [SecuritySafeCritical]
+            
             get
             {
                 return this.CreateSet().AsExpandable();
             }
         }
 
-        [SecuritySafeCritical]
+        
         public virtual bool Exists(
             Expression<Func<TEntity, bool>> predicate = null)
         {
@@ -348,7 +348,7 @@ namespace Framework.DataAccess.Impl
             return (predicate == null) ? set.Any() : set.Any(predicate);
         }
 
-        [SecuritySafeCritical]
+        
         public virtual Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
             var set = CreateSet();
@@ -356,7 +356,7 @@ namespace Framework.DataAccess.Impl
             return (predicate == null) ? set.AnyAsync() : set.AnyAsync(predicate);
         }
 
-        [SecuritySafeCritical]
+        
         public virtual int Count(
             Expression<Func<TEntity, bool>> predicate = null)
         {
@@ -367,7 +367,7 @@ namespace Framework.DataAccess.Impl
                    set.Count(predicate);
         }
 
-        [SecuritySafeCritical]
+        
         public virtual Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
             var set = CreateSet();
@@ -377,7 +377,7 @@ namespace Framework.DataAccess.Impl
                    set.CountAsync(predicate);
         }
 
-        [SecuritySafeCritical]
+        
         private IDbSet<TEntity> CreateIncludedSet(
             IEnumerable<Expression<Func<TEntity, object>>> includes)
         {
@@ -394,7 +394,7 @@ namespace Framework.DataAccess.Impl
             return set;
         }
 
-        [SecuritySafeCritical]
+        
         private IDbSet<TEntity> CreateSet()
         {
             return this.UnitOfWork.Context.CreateSet<TEntity>();

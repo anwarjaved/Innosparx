@@ -15,6 +15,4 @@ using Framework.Ioc;
 [assembly: CLSCompliant(true)]
 [assembly: Guid("9bb58a6e-2871-4ee0-933c-998c3e01c0e4")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityRules(SecurityRuleSet.Level2)]
 [assembly: ContainerAssembly]

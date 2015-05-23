@@ -17,8 +17,7 @@ using Framework.Ioc;
 [assembly: CLSCompliant(true)]
 [assembly: Guid("0A2C0281-A3C5-4C82-B786-0B1AFF3692DA")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityRules(SecurityRuleSet.Level2)]
+
 [assembly: ContainerAssembly]
 [assembly:ThemeInfo(
     ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located

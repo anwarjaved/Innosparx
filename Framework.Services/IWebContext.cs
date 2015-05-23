@@ -10,7 +10,7 @@
     using Framework.Configuration;
     using Framework.Membership;
 
-    [SecurityCritical]
+    
     public interface IWebContext
     {
         //HttpContextBase Context { get; }
@@ -29,7 +29,7 @@
 
         Config Config { get; }
         RequestContext RequestContext { get; }
-        HttpServerUtilityBase Server { [SecurityCritical] get; }
+        HttpServerUtilityBase Server {  get; }
 
         T GetFromContext<T>(string key);
 

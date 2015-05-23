@@ -12,7 +12,7 @@ namespace Framework.Templates.Impl
     [InjectBind(typeof(ITemplateExpression), "site:user", LifetimeType.Singleton)]
     public class SiteUserExpression : ITemplateExpression
     {
-        [SecurityCritical]
+        
         public void Render(string expression, bool inverted, dynamic properties, IEnumerable<ITemplatePart> parts, ITemplateContext context)
         {
             IWebContext webContext = Container.Get<IWebContext>();
@@ -63,7 +63,7 @@ namespace Framework.Templates.Impl
 
         }
 
-        [SecurityCritical]
+        
         private static void RenderPreviewMode(ITemplateContext context, string name)
         {
             switch (name)

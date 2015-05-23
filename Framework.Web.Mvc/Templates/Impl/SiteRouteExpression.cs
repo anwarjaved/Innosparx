@@ -20,7 +20,7 @@
     {
         private static readonly Regex MarkerRegex = new Regex(@"\{(\w+)\}", RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
-        [SecurityCritical]
+        
         public void Render(string expression, bool inverted, dynamic properties, IEnumerable<ITemplatePart> parts, ITemplateContext context)
         {
             IWebContext webContext = Container.Get<IWebContext>();

@@ -29,7 +29,7 @@
         ///     .
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static IHtmlString RenderCssClassIfController(this UrlHelper url, string controller, string cssClass)
         {
             if (url.IsCurrentController(controller))

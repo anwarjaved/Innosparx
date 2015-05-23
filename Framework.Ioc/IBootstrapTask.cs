@@ -16,7 +16,7 @@ namespace Framework
         /// <summary>
         /// Executes this task.
         /// </summary>
-        [SecurityCritical]
+        
         void Execute();
     }
 }

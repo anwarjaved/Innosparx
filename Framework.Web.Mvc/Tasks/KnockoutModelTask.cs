@@ -18,7 +18,7 @@
 
         private static readonly object SyncLock = new object();
 
-        [SecurityCritical]
+        
         public void Execute()
         {
             if (HostingEnvironment.IsHosted)

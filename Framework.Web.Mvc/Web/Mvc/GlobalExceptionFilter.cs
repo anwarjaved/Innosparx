@@ -9,10 +9,10 @@
 
     using Framework.Logging;
 
-    [SecurityCritical]
+    
     public class GlobalExceptionFilter : HandleErrorAttribute
     {
-        [SecurityCritical]
+        
         public override void OnException(ExceptionContext filterContext)
         {
             bool isUserException = false;

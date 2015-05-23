@@ -18,7 +18,5 @@ using Framework.Services.Infrastructure;
 [assembly: CLSCompliant(true)]
 [assembly: Guid("dc531d27-39df-40dd-a37d-03d4a64d6367")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityRules(SecurityRuleSet.Level2)]
 [assembly: ContainerAssembly]
 [assembly: PreApplicationStartMethod(typeof(SqlEmailServiceInitializer), "Init")]

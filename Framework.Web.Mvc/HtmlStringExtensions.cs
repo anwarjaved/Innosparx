@@ -29,7 +29,7 @@ namespace Framework
         ///     tag as an IHtmlString.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         internal static IHtmlString ToHtmlString(string tag)
         {
             return MvcHtmlString.Create(tag);
@@ -44,13 +44,13 @@ namespace Framework
         ///     .
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         internal static IHtmlString Empty()
         {
             return MvcHtmlString.Empty;
         }
 
-        [SecuritySafeCritical]
+        
         internal static IHtmlString ToHtmlString(StringBuilder tag)
         {
             return MvcHtmlString.Create(tag.ToString());
@@ -72,7 +72,7 @@ namespace Framework
         ///     tag as an IHtmlString.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public static IHtmlString ToHtmlString(this TagBuilder builder, TagRenderMode mode = TagRenderMode.SelfClosing)
         {
             return MvcHtmlString.Create(builder.ToString(mode));

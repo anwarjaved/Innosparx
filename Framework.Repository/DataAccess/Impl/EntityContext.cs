@@ -18,7 +18,7 @@
     ///     Data context.
     /// </summary>
     /// -------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     [Browsable(false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     [DbConfigurationType(typeof(EntityConfiguration))]
@@ -67,7 +67,7 @@
         ///     The instance.
         /// </param>
         /// -------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public virtual void MarkAsModified<TEntity>(TEntity instance)
             where TEntity : class, IBaseEntity
         {
@@ -85,7 +85,7 @@
         ///     The instance.
         /// </param>
         /// -------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public virtual void MarkAsDeleted<TEntity>(TEntity instance)
             where TEntity : class, IBaseEntity
         {
@@ -111,7 +111,7 @@
         ///     The entity.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public virtual void Detach<TEntity>(TEntity entity)
         {
             ((System.Data.Entity.Infrastructure.IObjectContextAdapter)this).ObjectContext.Detach(entity);
@@ -133,13 +133,13 @@
         ///     The type&lt; t entity&gt;
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public virtual Type GetEntityType<TEntity>(TEntity entity) where TEntity : IBaseEntity
         {
             return System.Data.Entity.Core.Objects.ObjectContext.GetObjectType(entity.GetType());
         }
 
-        [SecuritySafeCritical]
+        
         public virtual Type GetEntityType(Type type)
         {
             return System.Data.Entity.Core.Objects.ObjectContext.GetObjectType(type);
@@ -158,7 +158,7 @@
         ///     The new set&lt; t entity&gt;
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public virtual IDbSet<TEntity> CreateSet<TEntity>()
             where TEntity : class
         {
@@ -170,19 +170,19 @@
         ///     Rolls backs any pending changes.
         /// </summary>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public void Rollback()
         {
             ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
         }
 
-        [SecuritySafeCritical]
+        
         DbEntityEntry<TEntity> IEntityContext.Entry<TEntity>(TEntity entity)
         {
             return this.Entry(entity);
         }
 
-        [SecuritySafeCritical]
+        
         DbEntityEntry IEntityContext.Entry(object entity)
         {
             return this.Entry(entity);
@@ -218,13 +218,13 @@
             return this.Database.SqlQuery<TElement>(sql, parameters);
         }
 
-        [SecuritySafeCritical]
+        
         int IEntityContext.ExecuteSqlCommand(string sql, params object[] parameters)
         {
             return this.ExecuteSqlCommand(sql, parameters);
         }
 
-        [SecuritySafeCritical]
+        
         IEnumerable<TElement> IEntityContext.SqlQuery<TElement>(string sql, params object[] parameters)
         {
             return this.SqlQuery<TElement>(sql, parameters);
@@ -232,19 +232,19 @@
 
         Action<string> IEntityContext.Log
         {
-            [SecuritySafeCritical]
+            
             get;
-            [SecuritySafeCritical]
+            
             set;
         }
 
-        [SecuritySafeCritical]
+        
         int IEntityContext.SaveChanges()
         {
             return this.SaveChanges();
         }
 
-        [SecuritySafeCritical]
+        
         Task<int> IEntityContext.SaveChangesAsync()
         {
             return this.SaveChangesAsync();
@@ -252,7 +252,7 @@
 
         DbChangeTracker IEntityContext.ChangeTracker
         {
-            [SecuritySafeCritical]
+            
             get
             {
                 return this.ChangeTracker;
@@ -275,7 +275,7 @@
         ///     The builder that defines the model for the context being created.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             if (modelBuilder == null)

@@ -20,10 +20,10 @@
     /// </remarks>
     ///-------------------------------------------------------------------------------------------------
     [InjectBind(typeof(IHttpFilter), "LanguageHttpFilter", LifetimeType.Singleton)]
-    [SecurityCritical]
+    
     public class LanguageHttpFilter : BaseHttpFilter
     {
-        [SecurityCritical]
+        
         public override void OnBeginRequest(IHttpApplication application)
         {
             if (ConfigManager.Application.LocalizationEnabled)

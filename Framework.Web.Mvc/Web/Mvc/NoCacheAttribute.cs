@@ -9,10 +9,10 @@ using System.Web.Mvc;
 
 namespace Framework.Web.Mvc
 {
-    [SecurityCritical]
+    
     public class NoCacheAttribute : ActionFilterAttribute
     {
-        [SecurityCritical]
+        
         public override void OnResultExecuting(ResultExecutingContext filterContext)
         {
             filterContext.HttpContext.Response.Cache.SetExpires(DateTime.UtcNow.AddDays(-1));

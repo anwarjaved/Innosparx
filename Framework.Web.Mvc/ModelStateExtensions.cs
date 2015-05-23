@@ -25,7 +25,7 @@ namespace Framework
         ///     The exception.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static void AddModelError(this ModelStateDictionary state, Exception exception)
         {
             if (exception != null)

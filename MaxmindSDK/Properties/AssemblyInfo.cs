@@ -16,4 +16,3 @@ using System.Web;
 [assembly: CLSCompliant(true)]
 [assembly: Guid("3eebc678-6315-4a00-b794-ba53a91014c7")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AllowPartiallyTrustedCallers]

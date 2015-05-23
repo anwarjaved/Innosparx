@@ -9,7 +9,7 @@
     [InjectBind(typeof(ILogAdapter), "DebugLog", LifetimeType.Singleton)]
     public class DebugLogAdapter : ILogAdapter
     {
-        [SecurityCritical]
+        
         public void Write(ILogEntry entry)
         {
             Debug.WriteLine(Logger.CompiledTextTemplate.Render(entry));

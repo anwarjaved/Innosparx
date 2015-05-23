@@ -30,7 +30,7 @@
         ///     .
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public static IHtmlString AddGeneratorMetaTag(this HtmlHelper htmlHelper, string generator = "")
         {
             if (string.IsNullOrWhiteSpace(generator))

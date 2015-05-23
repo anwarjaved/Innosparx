@@ -25,7 +25,7 @@ namespace Framework.Membership
     /// </remarks>
     ///-------------------------------------------------------------------------------------------------
     [InjectBind(typeof(IHttpFilter), "MembershipAuthenticationFilter", LifetimeType.Singleton)]
-    [SecurityCritical]
+    
     public class MembershipAuthenticationFilter : BaseHttpFilter
     {
         ///-------------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ namespace Framework.Membership
         ///     The application.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public override void Initialize(IHttpApplication application)
         {
             if (!HostingEnvironment.IsSharedHost)
@@ -68,7 +68,7 @@ namespace Framework.Membership
             context.Items[MembershipConstants.SuppressAuthenticationKey] = true;
         }
 
-        [SecurityCritical]
+        
         public override void OnEndRequest(IHttpApplication application)
         {
             var context = application.Context;
@@ -126,7 +126,7 @@ namespace Framework.Membership
             }
         }
 
-        [SecurityCritical]
+        
         public override void OnPostMapRequest(IHttpApplication application)
         {
             var ctx = application.Context;

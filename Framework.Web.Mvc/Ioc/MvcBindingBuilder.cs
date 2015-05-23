@@ -18,13 +18,13 @@ namespace Framework.Ioc
             return ((typeof(IController).IsAssignableFrom(type) && type.IsPublic) && !type.IsAbstract) && !type.IsInterface;
         }
 
-        [SecuritySafeCritical]
+        
         public void Build(IBindingDependencyBuilder dependencyBuilder, IReadOnlyList<Assembly> assemblies)
         {
             BuildInternal(dependencyBuilder, assemblies);
         }
 
-        [SecurityCritical]
+        
         private static void BuildInternal(IBindingDependencyBuilder dependencyBuilder, IReadOnlyList<Assembly> assemblies)
         {
             var definations = FindDependenciesType(assemblies);

@@ -12,7 +12,7 @@
     using Framework.Rest.OAuth;
     using Framework.Services;
 
-    [SecurityCritical]
+    
     [RouteArea("social")]
     [RoutePrefix("facebook")]
     public class FacebookController : Controller

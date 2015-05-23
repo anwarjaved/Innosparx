@@ -14,7 +14,7 @@
     ///     Generic type parameter.
     /// </typeparam>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public abstract class ValueTypeMapping<T> : ComplexTypeConfiguration<T> where T : class, IValueObject
     {
     }

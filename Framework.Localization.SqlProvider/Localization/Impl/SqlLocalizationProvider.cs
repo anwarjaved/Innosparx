@@ -42,7 +42,7 @@
         ///     IReadOnlyList{ILanguageResource}.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public IPagedList<ILanguageResource> Get(int page = 0, int size = 10)
         {
             using (SqlLocalizationContext configContext = new SqlLocalizationContext(this.nameOrConnectionString))
@@ -73,7 +73,7 @@
         ///     IReadOnlyList{ILanguageResource}.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public IPagedList<ILanguageResource> Get(string sortBy, string sortDirection, int page = 0, int size = 10)
         {
             using (SqlLocalizationContext configContext = new SqlLocalizationContext(this.nameOrConnectionString))
@@ -101,7 +101,7 @@
         ///     IReadOnlyList{ILanguageResource}.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public IPagedList<ILanguageResource> GetByCategory(string category, int page = 0, int size = 10)
         {
             return this.GetByCategory(category, null, page, size);
@@ -132,7 +132,7 @@
         ///     IReadOnlyList{ILanguageResource}.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public IPagedList<ILanguageResource> GetByCategory(string category, string sortBy, string sortDirection, int page = 0, int size = 10)
         {
             return this.GetByCategory(category, null, sortBy, sortDirection, page, size);
@@ -160,7 +160,7 @@
         ///     IReadOnlyList{ILanguageResource}.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public IPagedList<ILanguageResource> GetByCategory(string category, string text, int page = 0, int size = 10)
         {
            
@@ -203,7 +203,7 @@
         ///     IReadOnlyList{ILanguageResource}.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public IPagedList<ILanguageResource> GetByCategory(string category, string text, string sortBy, string sortDirection, int page = 0, int size = 10)
         {
             using (SqlLocalizationContext configContext = new SqlLocalizationContext(this.nameOrConnectionString))
@@ -230,7 +230,7 @@
         ///     IReadOnlyList{ILanguageResource}.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public IReadOnlyList<ILanguageResource> Get(string key)
         {
             key = key.ToLower();
@@ -263,7 +263,7 @@
         ///     A list of.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public IPagedList<ILanguageResource> Find(string text, int page = 0, int size = 10)
         {
             using (SqlLocalizationContext configContext = new SqlLocalizationContext(this.nameOrConnectionString))
@@ -297,7 +297,7 @@
         ///     A list of.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public IPagedList<ILanguageResource> Find(string text, string sortBy, string sortDirection, int page = 0, int size = 10)
         {
             using (SqlLocalizationContext configContext = new SqlLocalizationContext(this.nameOrConnectionString))
@@ -322,7 +322,7 @@
         ///     IReadOnlyList{ILanguageResource}.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public ILanguageResource Get(string key, LanguageCode code)
         {
             key = key.ToLower();
@@ -351,7 +351,7 @@
         ///     IReadOnlyList{ILanguageResource}.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public IPagedList<ILanguageResource> Get(LanguageCode code, int page = 0, int size = 10)
         {
             using (SqlLocalizationContext configContext = new SqlLocalizationContext(this.nameOrConnectionString))
@@ -388,7 +388,7 @@
         ///     (Optional) The category.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public void SaveResource(
             string key,
             string text,
@@ -447,7 +447,7 @@
         ///     (Optional) the code.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public void RemoveResource(string key, LanguageCode code = LanguageCode.English)
         {
             key = key.ToLower();

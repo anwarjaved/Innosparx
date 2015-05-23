@@ -32,7 +32,7 @@
         ///     Absolute Url.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static string AbsoluteAction(this UrlHelper url, string action, string controller)
         {
             Uri requestUrl = url.RequestContext.HttpContext.Request.Url;
@@ -64,7 +64,7 @@
         ///     Absolute Url.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static string AbsoluteAction(this UrlHelper url, string action, string controller, RouteValueDictionary routeValues = null)
         {
             Uri requestUrl = url.RequestContext.HttpContext.Request.Url;
@@ -81,7 +81,7 @@
         /// <param name="controller">The controller.</param>
         /// <param name="routeValues">The route values.</param>
         /// <returns>Absolute Url.</returns>
-        [SecurityCritical]
+        
         public static string AbsoluteAction(this UrlHelper url, string action, string controller, object routeValues = null)
         {
             Uri requestUrl = url.RequestContext.HttpContext.Request.Url;
@@ -99,7 +99,7 @@
         /// <returns>
         /// <see langword="true"/> If the specified controller is current controller; otherwise, <see langword="false"/>.
         /// </returns>
-        [SecurityCritical]
+        
         public static bool IsCurrentController(this UrlHelper urlHelper, string controller)
         {
             return urlHelper.RequestContext.RouteData.Values["controller"] != null && urlHelper.RequestContext.RouteData.Values["controller"].ToString().Equals(controller, StringComparison.OrdinalIgnoreCase);
@@ -113,7 +113,7 @@
         /// <returns>
         /// <see langword="true"/> If the specified action is current action.; otherwise, <see langword="false"/>.
         /// </returns>
-        [SecurityCritical]
+        
         public static bool IsCurrentAction(this UrlHelper urlHelper, string action)
         {
             return urlHelper.RequestContext.RouteData.Values["action"] != null && urlHelper.RequestContext.RouteData.Values["action"].ToString().Equals(action, StringComparison.OrdinalIgnoreCase);
@@ -128,7 +128,7 @@
         /// <returns>
         /// <see langword="true"/> If the specified controller action is current controller action; otherwise, <see langword="false"/>.
         /// </returns>
-        [SecurityCritical]
+        
         public static bool IsCurrentControllerAction(this UrlHelper urlHelper, string action, string controller)
         {
             return urlHelper.IsCurrentController(controller) && urlHelper.IsCurrentAction(action);
@@ -147,7 +147,7 @@
         ///     The current controller name.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static string GetCurrentControllerName(this ViewContext viewContext)
         {
             return Convert.ToString(viewContext.Controller.ValueProvider.GetValue("controller").RawValue);
@@ -166,7 +166,7 @@
         ///     The current action name.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static string GetCurrentActionName(this ViewContext viewContext)
         {
             return Convert.ToString(viewContext.Controller.ValueProvider.GetValue("action").RawValue);

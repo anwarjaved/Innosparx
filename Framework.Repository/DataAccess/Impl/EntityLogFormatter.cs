@@ -11,7 +11,7 @@ namespace Framework.DataAccess.Impl
     using System.Data.Entity.Infrastructure.Interception;
     using System.Security;
 
-    [SecurityCritical]
+    
     internal class EntityLogFormatter : DatabaseLogFormatter
     {
         public EntityLogFormatter(DbContext context, Action<string> writeAction)
@@ -19,7 +19,7 @@ namespace Framework.DataAccess.Impl
         {
         }
 
-        [SecurityCritical]
+        
         public override void LogCommand<TResult>(
         DbCommand command, DbCommandInterceptionContext<TResult> interceptionContext)
         {
@@ -30,7 +30,7 @@ namespace Framework.DataAccess.Impl
                 Environment.NewLine));
         }
 
-        [SecurityCritical]
+        
         public override void LogResult<TResult>(DbCommand command, DbCommandInterceptionContext<TResult> interceptionContext)
         {
             base.LogResult(command, interceptionContext);

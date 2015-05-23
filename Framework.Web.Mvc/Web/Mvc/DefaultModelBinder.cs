@@ -14,12 +14,12 @@ namespace Framework.Web.Mvc
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
-    [SecurityCritical]
+    
     public class DefaultModelBinder : System.Web.Mvc.DefaultModelBinder
     {
         private static readonly List<string> AllowedVerbs = new List<string>() { "POST", "PUT" };
 
-        [SecurityCritical]
+        
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             // first make sure we have a valid context

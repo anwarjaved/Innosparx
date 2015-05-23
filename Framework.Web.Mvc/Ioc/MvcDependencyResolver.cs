@@ -13,14 +13,14 @@ namespace Framework.Ioc
     using Framework.Activator;
     using Framework.Logging;
 
-    [SecurityCritical]
+    
     internal class MvcDependencyResolver : System.Web.Mvc.IDependencyResolver
     {
         private MvcDependencyResolver()
         {
         }
 
-        [SecurityCritical]
+        
         public object GetService(Type serviceType)
         {
             using (var benchmark = Benchmark.Start())
@@ -41,7 +41,7 @@ namespace Framework.Ioc
             }
         }
 
-        [SecurityCritical]
+        
         public IEnumerable<object> GetServices(Type serviceType)
         {
             using (var benchmark = Benchmark.Start())
@@ -65,7 +65,7 @@ namespace Framework.Ioc
         /// <summary>
         /// Registers all controllers in specified assembly.
         /// </summary>
-        [SecurityCritical]
+        
         public static void Register()
         {
             System.Web.Mvc.DependencyResolver.SetResolver(new MvcDependencyResolver());

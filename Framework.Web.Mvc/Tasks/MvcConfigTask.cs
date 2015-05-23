@@ -13,7 +13,7 @@
     [Order(0)]
     public class MvcConfigTask : IBootstrapTask
     {
-        [SecurityCritical]
+        
         public void Execute()
         {
             if (HostingEnvironment.IsHosted)
@@ -29,7 +29,7 @@
             }
         }
 
-        [SecurityCritical]
+        
         private static void ConfigureViewEngine()
         {
             ViewEngines.Engines.Clear();
@@ -38,7 +38,7 @@
             ViewEngines.Engines.Add(new WebFormViewEngine());
         }
 
-        [SecurityCritical]
+        
         private static void ConfigureBinders()
         {
             ValueProviderFactories.Factories.Remove(
@@ -46,7 +46,7 @@
             ModelBinders.Binders.DefaultBinder = new Framework.Web.Mvc.DefaultModelBinder();
         }
 
-        [SecurityCritical]
+        
         private static void ConfigureFilters(Config config)
         {
             var filters = GlobalFilters.Filters;
@@ -61,7 +61,7 @@
             filters.Add(new FrameworkFilter());
         }
 
-        [SecurityCritical]
+        
         private static void ConfigureRoutes()
         {
             var routes = RouteTable.Routes;

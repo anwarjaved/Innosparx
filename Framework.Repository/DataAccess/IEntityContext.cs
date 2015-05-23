@@ -16,7 +16,7 @@ namespace Framework.DataAccess
     ///     Interface for data context.
     /// </summary>
     ///-------------------------------------------------------------------------------------------------
-    [SecuritySafeCritical]
+    
     public interface IEntityContext
     {
         ///-------------------------------------------------------------------------------------------------

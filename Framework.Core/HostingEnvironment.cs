@@ -11,7 +11,7 @@
     /// </summary>
     public static class HostingEnvironment
     {
-        [SecurityCritical]
+        
         static HostingEnvironment()
         {
             try

@@ -6,10 +6,10 @@
 
     using Framework.Logging;
 
-    [SecurityCritical]
+    
     class LogFilter : FilterAttribute, IResultFilter
     {
-        [SecurityCritical]
+        
         public void OnResultExecuting(ResultExecutingContext filterContext)
         {
             var controllerName = Convert.ToString(filterContext.Controller.ValueProvider.GetValue("controller").RawValue);
@@ -19,7 +19,7 @@
             Logger.Info(message, WebConstants.FilterComponent);
         }
 
-        [SecurityCritical]
+        
         public void OnResultExecuted(ResultExecutedContext filterContext)
         {
             var controllerName = Convert.ToString(filterContext.Controller.ValueProvider.GetValue("controller").RawValue);

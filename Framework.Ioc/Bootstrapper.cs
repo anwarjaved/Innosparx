@@ -12,7 +12,7 @@ namespace Framework
 
     using Container = Framework.Ioc.Container;
 
-    [SecuritySafeCritical]
+    
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class Bootstrapper
     {

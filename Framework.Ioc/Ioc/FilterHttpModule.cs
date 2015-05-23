@@ -9,10 +9,10 @@
     using Framework.Web;
     using Framework.Web.Impl;
 
-    [SecurityCritical]
+    
     internal class FilterHttpModule : IHttpModule
     {
-        [SecuritySafeCritical]
+        
         void IHttpModule.Dispose()
         {
             IReadOnlyList<IHttpFilter> filters = Container.TryGetAll<IHttpFilter>();
@@ -23,13 +23,13 @@
             }
         }
 
-        [SecuritySafeCritical]
+        
         void IHttpModule.Init(HttpApplication context)
         {
             Initialize(context);
         }
 
-        [SecurityCritical]
+        
         private static void Initialize(HttpApplication context)
         {
             IHttpApplication application = new HttpApplicationProxy(context);
@@ -37,7 +37,7 @@
             BindEvents(context);
         }
 
-        [SecurityCritical]
+        
         private static void BindEvents(HttpApplication context)
         {
             context.BeginRequest += (sender, e) => OrderedFilters.ForEach(x => x.OnBeginRequest(new HttpApplicationProxy((HttpApplication)sender)));
@@ -49,7 +49,7 @@
 
         private static IEnumerable<IHttpFilter> OrderedFilters
         {
-            [SecurityCritical]
+            
             get
             {
                 Type priorityType = typeof(OrderAttribute);

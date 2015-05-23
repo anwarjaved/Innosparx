@@ -27,7 +27,7 @@
         /// An HTML select element with an option subelement for each item in the list.
         /// </returns>
         /// <exception cref="T:System.ArgumentException">The <paramref name="name"/> parameter is null or empty.</exception>
-        [SecuritySafeCritical]
+        
         public static IHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<CheckBoxListItem> checkBoxList, RenderMode renderMode)
         {
             return htmlHelper.CheckBoxListHelper(name, checkBoxList, renderMode, null);
@@ -45,7 +45,7 @@
         /// An HTML select element with an option subelement for each item in the list..
         /// </returns>
         /// <exception cref="T:System.ArgumentException">The <paramref name="name"/> parameter is null or empty.</exception>
-        [SecuritySafeCritical]
+        
         public static IHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<CheckBoxListItem> checkBoxList, RenderMode renderMode, IDictionary<string, object> htmlAttributes)
         {
             return htmlHelper.CheckBoxListHelper(name, checkBoxList, renderMode, htmlAttributes);
@@ -63,7 +63,7 @@
         /// An HTML select element with an option subelement for each item in the list..
         /// </returns>
         /// <exception cref="T:System.ArgumentException">The <paramref name="name"/> parameter is null or empty.</exception>
-        [SecuritySafeCritical]
+        
         public static IHtmlString CheckBoxList(this HtmlHelper htmlHelper, string name, IEnumerable<CheckBoxListItem> checkBoxList, RenderMode renderMode, object htmlAttributes)
         {
             return htmlHelper.CheckBoxListHelper(name, checkBoxList, renderMode, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
@@ -82,7 +82,7 @@
         /// An HTML select element for each property in the object that is represented by the expression.
         /// </returns>
         /// <exception cref="T:System.ArgumentNullException">The <paramref name="expression"/> parameter is null.</exception>
-        [SecuritySafeCritical]
+        
         public static IHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<CheckBoxListItem> checkBoxList, RenderMode renderMode)
         {
             return htmlHelper.CheckBoxListHelper(ExpressionHelper.GetExpressionText(expression), checkBoxList, renderMode, null);
@@ -102,7 +102,7 @@
         /// An HTML select element for each property in the object that is represented by the expression.
         /// </returns>
         /// <exception cref="T:System.ArgumentNullException">The <paramref name="expression"/> parameter is null.</exception>
-        [SecuritySafeCritical]
+        
         public static IHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<CheckBoxListItem> checkBoxList, RenderMode renderMode, IDictionary<string, object> htmlAttributes)
         {
             return htmlHelper.CheckBoxListHelper(ExpressionHelper.GetExpressionText(expression), checkBoxList, renderMode, htmlAttributes);
@@ -122,13 +122,13 @@
         /// An HTML select element for each property in the object that is represented by the expression.
         /// </returns>
         /// <exception cref="T:System.ArgumentNullException">The <paramref name="expression"/> parameter is null.</exception>
-        [SecuritySafeCritical]
+        
         public static IHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, IEnumerable<CheckBoxListItem> checkBoxList, RenderMode renderMode, object htmlAttributes)
         {
             return htmlHelper.CheckBoxListHelper(ExpressionHelper.GetExpressionText(expression), checkBoxList, renderMode, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
-        [SecuritySafeCritical]
+        
         private static IHtmlString CheckBoxListHelper(this HtmlHelper htmlHelper, string name, IEnumerable<CheckBoxListItem> checkBoxList, RenderMode renderMode, IDictionary<string, object> htmlAttributes)
         {
             ModelState modelState;

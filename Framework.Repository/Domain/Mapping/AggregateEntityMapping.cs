@@ -20,7 +20,7 @@
     ///     Generic type parameter.
     /// </typeparam>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public abstract class AggregateEntityMapping<T, V> : EntityMapping<T, V>
         where T : AggregateEntity<V>
     {

@@ -11,7 +11,7 @@
     /// Class ServiceEntityMapping.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [SecurityCritical]
+    
     public abstract class ServiceEntityMapping<T> : ServiceEntityMapping<T, Guid>
         where T : ServiceEntity
     {

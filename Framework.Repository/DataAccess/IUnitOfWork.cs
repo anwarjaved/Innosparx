@@ -26,7 +26,7 @@
         [EditorBrowsable(EditorBrowsableState.Never)]
         IEntityContext Context
         {
-            [SecurityCritical]
+            
             get;
         }
 

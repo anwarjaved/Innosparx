@@ -284,7 +284,7 @@ namespace Framework.Domain
             }
         }
 
-        [SecurityCritical]
+        
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             this.entities.GetObjectData(info, context);

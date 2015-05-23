@@ -17,7 +17,7 @@ namespace PayPalSDK.Controllers
 
     using PayPalSDK.WebsiteStandard;
 
-    [SecurityCritical]
+    
     [RouteArea("payment/gateway/paypal")]
     [RoutePrefix("wps")]
     public class PayPalStandardController : Controller

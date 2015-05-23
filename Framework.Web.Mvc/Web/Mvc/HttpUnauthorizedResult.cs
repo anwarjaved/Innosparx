@@ -11,13 +11,13 @@ namespace Framework.Web.Mvc
     using System.Web.Mvc;
     using System.Web.Security;
 
-    [SecurityCritical]
+    
     public class HttpUnauthorizedResult : System.Web.Mvc.HttpUnauthorizedResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Web.Mvc.HttpUnauthorizedResult"/> class.
         /// </summary>
-        [SecurityCritical]
+        
         public HttpUnauthorizedResult()
         {
         }
@@ -26,7 +26,7 @@ namespace Framework.Web.Mvc
         /// Initializes a new instance of the <see cref="T:System.Web.Mvc.HttpUnauthorizedResult"/> class using the status description.
         /// </summary>
         /// <param name="statusDescription">The status description.</param>
-        [SecurityCritical]
+        
         public HttpUnauthorizedResult(string statusDescription)
             : base(statusDescription)
         {
@@ -34,7 +34,7 @@ namespace Framework.Web.Mvc
 
         /// <summary>Enables processing of the result of an action method by a custom type that inherits from the <see cref="T:System.Web.Mvc.ActionResult" /> class.</summary>
         /// <param name="context">The context in which the result is executed. The context information includes the controller, HTTP content, request context, and route data.</param>
-        [SecurityCritical]
+        
         public override void ExecuteResult(ControllerContext context)
         {
             if (context == null)

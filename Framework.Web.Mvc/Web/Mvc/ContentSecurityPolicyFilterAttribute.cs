@@ -12,7 +12,7 @@
     ///     Anwar Javed, 09/25/2013 4:07 PM.
     /// </remarks>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public class ContentSecurityPolicyFilterAttribute : ActionFilterAttribute
     {
         ///-------------------------------------------------------------------------------------------------
@@ -28,7 +28,7 @@
         ///     The filter context.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var response = filterContext.HttpContext.Response;

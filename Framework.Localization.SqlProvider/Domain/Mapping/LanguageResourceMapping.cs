@@ -9,7 +9,7 @@ namespace Framework.Domain.Mapping
     using System.Data.Entity.ModelConfiguration;
     using System.Security;
 
-    [SecurityCritical]
+    
     internal class LanguageResourceMapping: EntityTypeConfiguration<LanguageResource>
     {
         public LanguageResourceMapping()

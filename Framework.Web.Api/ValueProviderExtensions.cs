@@ -38,7 +38,7 @@ namespace Framework
         ///     The value object for the specified key.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static T GetValueOrDefault<T>(this System.Web.Http.ModelBinding.ModelBindingContext modelBindingContext, string key) where T : struct
         {
             var result = modelBindingContext.ValueProvider.GetValue(key);
@@ -72,7 +72,7 @@ namespace Framework
         ///     The value or default.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static string GetValueOrDefault(this System.Web.Http.ModelBinding.ModelBindingContext modelBindingContext, string key)
         {
             var result = modelBindingContext.ValueProvider.GetValue(key);

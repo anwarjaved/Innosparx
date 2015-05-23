@@ -35,7 +35,7 @@
         ///     An instance of DropDownMenu.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static DropDownMenu DropDownMenu(this HtmlHelper htmlHelper, MenuOrientation orientation = MenuOrientation.Horizontal, string cssClass = null, string selectedCssClass = null, SelectionMode? selectionMode = null)
         {
             return new DropDownMenu(htmlHelper, orientation) { CssClass = cssClass, SelectedCssClass = selectedCssClass, SelectionMode = selectionMode};
@@ -63,7 +63,7 @@
         ///     An instance of DropDownMenu.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static DropDownMenu DropDownMenu(this HtmlHelper htmlHelper, string cssClass = null, string selectedCssClass = null, SelectionMode? selectionMode = null)
         {
             return htmlHelper.DropDownMenu(MenuOrientation.Horizontal, cssClass, selectedCssClass, selectionMode);

@@ -17,7 +17,7 @@
         ///     The context to use.
         /// </param>
         /// -------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         void Render(ITemplateContext context);
     }
 }

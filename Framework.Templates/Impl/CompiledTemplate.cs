@@ -28,7 +28,7 @@
 
         public IEnumerable<ITemplatePart> Parts { get; private set; }
 
-        [SecurityCritical]
+        
         public string Render(object data, Func<string, string> templateLocator = null)
         {
             var sb = new StringBuilder();
@@ -44,7 +44,7 @@
             return sb.ToString();
         }
 
-        [SecurityCritical]
+        
         public void Render(TextWriter writer, object data, Func<string, string> templateLocator = null)
         {
             using (var context = new TemplateContext(writer, data, false, templateLocator))

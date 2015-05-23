@@ -6,10 +6,10 @@
     using System.Reflection;
     using System.Security;
 
-    [SecurityCritical]
+    
     internal class AssemblyComparer : IComparer<Assembly>
     {
-        [SecuritySafeCritical]
+        
         int IComparer<Assembly>.Compare(Assembly assembly1, Assembly assembly2)
         {
             if (assembly1.IsDefined(typeof(OrderAttribute)) && assembly2.IsDefined(typeof(OrderAttribute)))

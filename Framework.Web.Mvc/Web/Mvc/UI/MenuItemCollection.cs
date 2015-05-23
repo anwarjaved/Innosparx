@@ -9,7 +9,7 @@
     /// Represents Collection of Menu Items.
     /// </summary>
     /// <typeparam name="T">Type of Menu.</typeparam>
-    [SecurityCritical]
+    
     public class MenuItemCollection<T> : Collection<T> where T : MenuItem, IHtmlRenderer
     {
         /// <summary>
@@ -35,7 +35,7 @@
         ///     The writer.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public void Render(IMenuSelection menuSelection, HtmlHelper htmlHelper, HtmlTextWriter writer)
         {
             if (this.Items.Count > 0)

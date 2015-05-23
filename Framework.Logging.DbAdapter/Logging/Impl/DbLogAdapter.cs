@@ -44,7 +44,7 @@ namespace Framework.Logging.Impl
             }
         }
 
-        [SecurityCritical]
+        
         public void Write(ILogEntry entry)
         {
             this.entries.Enqueue(entry);

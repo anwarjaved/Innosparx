@@ -9,10 +9,10 @@ namespace Framework.Web.Api
     using System.Web.Http.Controllers;
     using System.Web.Http.ModelBinding;
 
-    [SecurityCritical]
+    
     public class DataTableParamModelBinder : IModelBinder
     {
-        [SecurityCritical]
+        
         public bool BindModel(HttpActionContext actionContext, ModelBindingContext bindingContext)
         {
             if (bindingContext.ModelType == typeof(DataTableParamModel))

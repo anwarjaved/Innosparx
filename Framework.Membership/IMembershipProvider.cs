@@ -13,7 +13,7 @@ namespace Framework.Membership
     ///     Interface for membership provider.
     /// </summary>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public interface IMembershipProvider
     {
         ///-------------------------------------------------------------------------------------------------

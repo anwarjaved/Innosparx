@@ -16,7 +16,7 @@ namespace Framework.Domain.Mapping
     ///     Generic type parameter.
     /// </typeparam>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public abstract class ServiceEntityMapping<T, V> : EntityMapping<T, V>
         where T : ServiceEntity<V>
     {

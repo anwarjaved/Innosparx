@@ -20,7 +20,7 @@ namespace PayPalSDK.WebsiteStandard
         }
 
         public SingleItemPaymentDetails PaymentDetails { get; private set; }
-        [SecuritySafeCritical]
+        
         public override string GetRedirectUrl(string state, string successUrl, string failureUrl)
         {
             if (string.IsNullOrWhiteSpace(this.BusinessEmail))

@@ -11,7 +11,7 @@
     /// Class AggregateEntityMapping.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [SecurityCritical]
+    
     public abstract class AggregateEntityMapping<T> : AggregateEntityMapping<T, Guid>
         where T : AggregateEntity
     {

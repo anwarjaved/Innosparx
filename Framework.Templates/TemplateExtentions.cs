@@ -7,7 +7,7 @@
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class TemplateExtentions
     {
-        [SecurityCritical]
+        
         public static void Render(this IEnumerable<ITemplatePart> parts, ITemplateContext context)
         {
             if (parts != null)

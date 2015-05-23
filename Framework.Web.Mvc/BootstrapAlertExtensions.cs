@@ -30,31 +30,31 @@
             }
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Alert(this HtmlHelper helper, AlertType type, string text)
         {
             return helper.Alert(type, text, string.Empty, false);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Alert(this HtmlHelper helper, AlertType type, string text, string header)
         {
             return helper.Alert(type, text, header, false);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Alert(this HtmlHelper helper, AlertType type, string text, string header, bool close)
         {
             return Alert(helper, type, text, header, close, false);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Alert(this HtmlHelper helper, AlertType type, string text, bool close)
         {
             return Alert(helper, type, text, null, close, false);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Alert(this HtmlHelper helper, AlertType type, string text, string header, bool close, bool block)
         {
             return close
@@ -62,7 +62,7 @@
                        : Alert(helper, type, text, header, null, block);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Alert(this HtmlHelper helper, AlertType type, string text, string header, ButtonTag? closeButton, bool block)
         {
             var builder = new TagBuilder("div");
@@ -87,13 +87,13 @@
             return new MvcHtmlString(builder.ToString());
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString DismissButton(this HtmlHelper html, ButtonTag tag)
         {
             return html.Button(DefaultCloseSymbol, null, null, tag, false, false, new { @class = "close", data_dismiss = "alert" });
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString DismissButton(this HtmlHelper html, ButtonTag tag, string text)
         {
             return html.Button(text, null, null, tag, false, false, new { @class = "close", data_dismiss = "alert" });

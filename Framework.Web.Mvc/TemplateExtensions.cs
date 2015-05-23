@@ -15,7 +15,7 @@ namespace Framework
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class TemplateExtensions
     {
-        [SecuritySafeCritical]
+        
         public static void SetPreviewMode(this IWebContext context, bool value)
         {
             if (value)
@@ -28,7 +28,7 @@ namespace Framework
             }
         }
 
-        [SecuritySafeCritical]
+        
         public static bool InPreviewMode(this IWebContext context)
         {
             return context.Items[WebConstants.TemplatePreviewMode] != null;

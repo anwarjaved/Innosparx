@@ -40,7 +40,7 @@
         ///     The folder path to save.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static void Save(string folderPath)
         {
             IEnumerable<Assembly> assemblies = from Assembly assembly in ActivationManager.Assemblies
@@ -124,7 +124,7 @@
             }
         }
 
-        [SecuritySafeCritical]
+        
         private static string Build(IReadOnlyList<Type> list, CultureInfo currentCulture)
         {
             List<Type> extraTypes = new List<Type>();
@@ -420,7 +420,7 @@
             }
         }
 
-        [SecuritySafeCritical]
+        
         private static string WriteExtenders(PropertyInfo p, out bool isValidatable)
         {
             isValidatable = false;

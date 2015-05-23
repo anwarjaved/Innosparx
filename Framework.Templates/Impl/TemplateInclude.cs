@@ -11,7 +11,7 @@
             this.templateName = templateName;
         }
 
-        [SecurityCritical]
+        
         public void Render(ITemplateContext context)
         {
             object value = context.GetValue(this.templateName);

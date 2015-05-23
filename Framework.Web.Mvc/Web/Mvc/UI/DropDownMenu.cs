@@ -8,7 +8,7 @@
     /// <summary>
     /// Drop Down Menu.
     /// </summary>
-    [SecurityCritical]
+    
     public class DropDownMenu : Menu
     {
         /// <summary>
@@ -69,7 +69,7 @@
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="writer">The writer.</param>
-        [SecurityCritical]
+        
         public override void Render(HtmlHelper htmlHelper, HtmlTextWriter writer)
         {
             if (this.Items.Count > 0)

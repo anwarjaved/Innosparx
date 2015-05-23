@@ -9,7 +9,7 @@
 
     public class RequireHttpsHandler : DelegatingHandler
     {
-        [SecuritySafeCritical]
+        
         protected override Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
             CancellationToken cancellationToken)

@@ -44,7 +44,7 @@
         /// <returns>
         /// A quantized version of the image.
         /// </returns>
-        [SecuritySafeCritical]
+        
         public Bitmap Quantize(Image source)
         {
             // Get the size of the source image
@@ -195,7 +195,7 @@
         /// <param name="bounds">
         /// The bounding rectangle.
         /// </param>
-        [SecuritySafeCritical]
+        
         protected virtual void SecondPass(BitmapData sourceData, Bitmap output, int width, int height, Rectangle bounds)
         {
             BitmapData outputData = null;

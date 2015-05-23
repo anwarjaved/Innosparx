@@ -13,7 +13,7 @@
     ///     Generic type parameter.
     /// </typeparam>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public abstract class EntityMapping<T, V> : BaseEntityMapping<T>
            where T : Entity<V>
     {

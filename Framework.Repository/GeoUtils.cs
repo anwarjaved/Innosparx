@@ -9,7 +9,7 @@ namespace Framework
     /// <summary>
     /// Geolocation helpers for Entity Framework types
     /// </summary>
-    [SecurityCritical]
+    
     public static class GeoUtils
     {
         /// <summary>

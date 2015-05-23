@@ -3,10 +3,10 @@
     using System.Security;
     using System.Web.Mvc;
 
-    [SecurityCritical]
+    
     public class ExportModelStateToTempData : ModelStateTempDataTransfer
     {
-        [SecurityCritical]
+        
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             //Only export when ModelState is not valid

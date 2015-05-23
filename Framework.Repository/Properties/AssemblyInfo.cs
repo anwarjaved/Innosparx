@@ -16,7 +16,5 @@ using Framework.Ioc;
 [assembly: CLSCompliant(true)]
 [assembly: Guid("628b0f83-bd49-4e6c-a817-919bb30e8df7")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityRules(SecurityRuleSet.Level2)]
 [assembly: ContainerAssembly]
 [assembly: PreApplicationStartMethod(typeof(Framework.Infrastructure.RepositoryInitializer), "Init")]

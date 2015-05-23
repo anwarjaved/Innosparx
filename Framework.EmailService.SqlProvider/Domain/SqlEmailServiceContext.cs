@@ -11,7 +11,7 @@ namespace Framework.Services.Domain
 
     using Framework.Services.Domain.Mapping;
 
-    [SecurityCritical]
+    
     public class SqlEmailServiceContext : DbContext
     {
         /// <summary>
@@ -42,7 +42,7 @@ namespace Framework.Services.Domain
         ///             classes directly.
         /// </remarks>
         /// <param name="modelBuilder">The builder that defines the model for the context being created. </param>
-        [SecurityCritical]
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -15,7 +15,7 @@
         private static readonly MethodInfo BindMethodDefinition = typeof(Container).GetMethod("Bind", new[] { typeof(string) });
         private static readonly MethodInfo ContainsMethodDefinition = typeof(Container).GetMethod("Contains", new[] { typeof(string) });
 
-        [SecurityCritical]
+        
         public static void ScanAll()
         {
             List<Assembly> refrencedAssemblies = new List<Assembly>(ActivationManager.Assemblies);

@@ -11,7 +11,7 @@
         /// <summary>
         /// Initializes this instance.
         /// </summary>
-        [SecurityCritical]
+        
         public static void Init()
         {
             Container.OverrideDefaultService<IEmailProvider>("SqlEmailProvider");

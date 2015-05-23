@@ -18,7 +18,5 @@ using Framework.Ioc;
 [assembly: CLSCompliant(true)]
 [assembly: Guid("a49039a9-29a0-4644-a53a-500f0049e099")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityRules(SecurityRuleSet.Level2)]
 [assembly: ContainerAssembly]
 [assembly: PreApplicationStartMethod(typeof(SqlMessageQueueInitializer), "Init")]

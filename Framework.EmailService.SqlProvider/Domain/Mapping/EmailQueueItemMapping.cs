@@ -9,7 +9,7 @@ namespace Framework.Services.Domain.Mapping
     using System.Data.Entity.ModelConfiguration;
     using System.Security;
 
-    [SecurityCritical]
+    
     internal class EmailQueueItemMapping: EntityTypeConfiguration<EmailQueueItem>
     {
         public EmailQueueItemMapping()

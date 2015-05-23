@@ -7,7 +7,7 @@
     /// <summary>
     /// Control Html Renderer Interface.
     /// </summary>
-    [SecurityCritical]
+    
     public interface IHtmlRenderer
     {
         /// <summary>

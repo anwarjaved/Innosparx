@@ -61,7 +61,7 @@ namespace Framework.Drawing
         /// <param name="sourcePixel">
         /// The p source pixel.
         /// </param>
-        [SecuritySafeCritical]
+        
         public Color32(IntPtr sourcePixel)
         {
             this = (Color32)Marshal.PtrToStructure(sourcePixel, typeof(Color32));

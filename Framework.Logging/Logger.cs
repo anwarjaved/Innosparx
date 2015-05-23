@@ -11,7 +11,7 @@
     /// <summary>
     ///     Provides support for reading or writing Logs.
     /// </summary>
-    [SecuritySafeCritical]
+    
     public static class Logger
     {
         private static readonly object SyncLock = new object();
@@ -329,7 +329,7 @@
             }
         }
 
-        [SecuritySafeCritical]
+        
         private static void LogInternal(ILogEntry entry)
         {
             if (!string.IsNullOrWhiteSpace(entry.Message))

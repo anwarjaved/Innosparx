@@ -503,7 +503,7 @@
         /// </summary>
         /// <author>Anwar</author>
         /// <date>11/9/2011</date>
-        [SecurityCritical]
+        
         public static void ScanAll()
         {
             DependencyBuilder.ScanAll();

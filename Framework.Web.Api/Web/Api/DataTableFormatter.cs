@@ -16,7 +16,7 @@ namespace Framework.Web.Api
     using Framework.Serialization;
     using Framework.Serialization.Json;
 
-    [SecurityCritical]
+    
     public class DataTableFormatter : MediaTypeFormatter 
     {
         public DataTableFormatter()
@@ -24,13 +24,13 @@ namespace Framework.Web.Api
             SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
         }
 
-        [SecurityCritical]
+        
         public override bool CanReadType(Type type)
         {
             return false;
         }
 
-        [SecurityCritical]
+        
         public override bool CanWriteType(Type type)
         {
             if (type == typeof(DataTableModel))
@@ -41,7 +41,7 @@ namespace Framework.Web.Api
             return false;
         }
 
-        [SecurityCritical]
+        
         public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, System.Net.Http.HttpContent content, System.Net.TransportContext transportContext)
         {
             return Task.Factory.StartNew(() =>

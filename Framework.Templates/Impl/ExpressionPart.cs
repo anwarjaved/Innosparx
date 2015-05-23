@@ -38,7 +38,7 @@
             this.parts = parts;
         }
 
-        [SecurityCritical]
+        
         public void Render(ITemplateContext context)
         {
             var templateExpression = Container.TryGet<ITemplateExpression>(this.expression);

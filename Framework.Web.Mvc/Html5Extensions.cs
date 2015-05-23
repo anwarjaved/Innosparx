@@ -14,7 +14,7 @@ namespace Framework
     ///     HTML 5 input extensions.
     /// </summary>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public static class Html5Extensions
     {
         ///-------------------------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ namespace Framework
         ///     An input element whose type attribute is set to <see cref="Html5InputType"/>.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static IHtmlString Html5TextBox(this HtmlHelper htmlHelper, string name, object value = null, Html5InputType inputType = Html5InputType.Text, string placeHolder = null, bool required = false, bool @readonly = false, bool disabled = false, bool autoFocus = false,
             bool autocomplete = true,
             object htmlAttributes = null)
@@ -117,7 +117,7 @@ namespace Framework
         ///     An input element whose type attribute is set to <see cref="Html5InputType"/>.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static IHtmlString Html5TextBoxFor<TModel, TProperty>(
             this HtmlHelper<TModel> htmlHelper,
             Expression<Func<TModel, TProperty>> expression,

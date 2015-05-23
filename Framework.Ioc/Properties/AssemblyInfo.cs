@@ -17,7 +17,5 @@ using Framework.Ioc;
 [assembly: CLSCompliant(true)]
 [assembly: Guid("19b649d0-2e64-4353-84b5-6bb42d909c0e")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityRules(SecurityRuleSet.Level2)]
 [assembly: System.Web.PreApplicationStartMethod(typeof(ActivationManager), "Run")]
 [assembly: ContainerAssembly]

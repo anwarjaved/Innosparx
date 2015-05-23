@@ -12,7 +12,7 @@
         ///     The entry to write.
         /// </param>
         /// -------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         void Write(ILogEntry entry);
     }
 }

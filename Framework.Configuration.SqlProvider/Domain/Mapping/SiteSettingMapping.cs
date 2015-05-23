@@ -8,7 +8,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    [SecurityCritical]
+    
     internal class SiteSettingMapping : EntityTypeConfiguration<SiteSetting>
     {
         public SiteSettingMapping()

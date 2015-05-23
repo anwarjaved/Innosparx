@@ -16,7 +16,7 @@ namespace Framework.Membership
     using Framework.Ioc;
     using Framework.Paging;
 
-    [SecurityCritical]
+    
     public static class MembershipManager
     {
         private static IAccountPolicy accountPolicy;

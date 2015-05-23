@@ -13,7 +13,7 @@ namespace Framework.Web.Api
 
     /// <summary>Specifies the authorization filter that verifies the request's <see cref="T:System.Security.Principal.IPrincipal" />.</summary>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, Inherited = true, AllowMultiple = true)]
-    [SecurityCritical]
+    
     public class SecureAttribute : AuthorizationFilterAttribute
     {
         public SecureAttribute(string role)
@@ -73,7 +73,7 @@ namespace Framework.Web.Api
         /// <summary>Calls when an action is being authorized.</summary>
         /// <param name="actionContext">The context.</param>
         /// <exception cref="T:System.ArgumentNullException">The context parameter is null.</exception>
-        [SecurityCritical]
+        
         public override void OnAuthorization(HttpActionContext actionContext)
         {
             if (actionContext == null)

@@ -58,7 +58,7 @@ namespace Framework.Configuration.Impl
         ///     The settings.
         /// </returns>
         /// -------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public Config GetConfig()
         {
             if (!this.loaded)
@@ -93,7 +93,7 @@ namespace Framework.Configuration.Impl
         ///     The config.
         /// </param>
         /// -------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public void SaveConfig(Config config = null)
         {
             if (config != null)
@@ -134,7 +134,7 @@ namespace Framework.Configuration.Impl
         /// </summary>
         /// <typeparam name="T">Type of the object.</typeparam>
         /// <returns>Specified Type.</returns>
-        [SecuritySafeCritical]
+        
         public T Get<T>() where T : class, new()
         {
             Type type = typeof(T);
@@ -153,7 +153,7 @@ namespace Framework.Configuration.Impl
             return (T)configValue;
         }
 
-        [SecuritySafeCritical]
+        
         private T BuildConfigObject<T>(string key) where T : class, new()
         {
             T configObject = new T();
@@ -175,7 +175,7 @@ namespace Framework.Configuration.Impl
         /// </summary>
         /// <typeparam name="T">Type of the object.</typeparam>
         /// <param name="configObject">The configuration object.</param>
-        [SecuritySafeCritical]
+        
         public void Save<T>(T configObject) where T : class, new()
         {
             Type type = typeof(T);

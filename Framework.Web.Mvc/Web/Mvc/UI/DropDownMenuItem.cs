@@ -8,7 +8,7 @@
     /// <summary>
     /// Drop Down MenuItem.
     /// </summary>
-    [SecurityCritical]
+    
     public class DropDownMenuItem : MenuItem
     {
         /// <summary>
@@ -65,7 +65,7 @@
         ///     The writer.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public override void Render(HtmlHelper htmlHelper, HtmlTextWriter writer)
         {
             List<string> classes = new List<string> { this.CssClass };

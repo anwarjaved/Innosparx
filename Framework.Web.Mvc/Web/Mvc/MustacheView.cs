@@ -25,7 +25,7 @@ namespace Framework.Web.Mvc
     ///     Anwar Javed, 09/16/2013 7:55 PM.
     /// </remarks>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public class MustacheView : BuildManagerCompiledView
     {
         private readonly string masterPath;
@@ -101,7 +101,7 @@ namespace Framework.Web.Mvc
         ///     An object that contains additional information that can be used in the view.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         protected override void RenderView(ViewContext viewContext, TextWriter writer, object instance)
         {
             dynamic model = viewContext.ViewData.Model.ToExpando();
@@ -111,7 +111,7 @@ namespace Framework.Web.Mvc
             compiledTemplate.Render(writer, model);
         }
 
-        [SecurityCritical]
+        
         private static ICompiledTemplate GetFromCache(string filePath)
         {
             string cacheKey = "{0}::{1}".FormatString(CacheKey, filePath);

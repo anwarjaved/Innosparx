@@ -96,7 +96,7 @@
 
         private string DebuggerDisplay
         {
-            [SecuritySafeCritical]
+            
             get { return string.Format("{0} ID: {1}", System.Data.Entity.Core.Objects.ObjectContext.GetObjectType(this.GetType()), this.ID); }
         }
     }

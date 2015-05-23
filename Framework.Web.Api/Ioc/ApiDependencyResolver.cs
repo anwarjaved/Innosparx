@@ -14,7 +14,7 @@ namespace Framework.Ioc
 
     using Framework.Activator;
 
-    [SecurityCritical]
+    
     internal class ApiDependencyResolver : ApiDependencyScope, System.Web.Http.Dependencies.IDependencyResolver
     {
         private ApiDependencyResolver()
@@ -24,19 +24,19 @@ namespace Framework.Ioc
         /// <summary>
         /// Registers all controllers in specified assembly.
         /// </summary>
-        [SecurityCritical]
+        
         public static void Register()
         {
             GlobalConfiguration.Configure(SetApiResolver);
         }
 
-        [SecurityCritical]
+        
         private static void SetApiResolver(HttpConfiguration config)
         {
             config.DependencyResolver = new ApiDependencyResolver();
         }
 
-        [SecurityCritical]
+        
         public IDependencyScope BeginScope()
         {
             return new ApiDependencyScope();

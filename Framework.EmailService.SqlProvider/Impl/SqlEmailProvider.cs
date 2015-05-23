@@ -29,7 +29,7 @@
 
         }
    
-        [SecuritySafeCritical]
+        
         public string Save(EmailMessage message)
         {
             using (SqlEmailServiceContext configContext = new SqlEmailServiceContext(this.nameOrConnectionString))
@@ -45,7 +45,7 @@
             }
         }
 
-        [SecuritySafeCritical]
+        
         public EmailMessage Get(string id)
         {
             using (SqlEmailServiceContext configContext = new SqlEmailServiceContext(this.nameOrConnectionString))
@@ -66,7 +66,7 @@
             return null;
         }
 
-        [SecuritySafeCritical]
+        
         public void Update(string id, EmailMessage message)
         {
             using (SqlEmailServiceContext configContext = new SqlEmailServiceContext(this.nameOrConnectionString))
@@ -80,7 +80,7 @@
             }
         }
 
-        [SecuritySafeCritical]
+        
         public void RemoveAll(DateTime date)
         {
             using (SqlEmailServiceContext configContext = new SqlEmailServiceContext(this.nameOrConnectionString))

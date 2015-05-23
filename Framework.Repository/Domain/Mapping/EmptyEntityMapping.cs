@@ -14,7 +14,7 @@
     ///     Generic type parameter.
     /// </typeparam>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public abstract class EmptyEntityMapping<T> : EntityTypeConfiguration<T>
         where T : BaseEntity
     {

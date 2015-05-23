@@ -11,7 +11,7 @@
     /// Class EntityMapping.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    [SecurityCritical]
+    
     public abstract class EntityMapping<T> : EntityMapping<T, Guid>
         where T : Entity
     {

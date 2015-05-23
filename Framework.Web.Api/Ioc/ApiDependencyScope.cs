@@ -9,10 +9,10 @@ namespace Framework.Ioc
     using Framework.Infrastructure;
     using Framework.Logging;
 
-    [SecurityCritical]
+    
     internal class ApiDependencyScope : IDependencyScope
     {
-        [SecurityCritical]
+        
         public object GetService(Type serviceType)
         {
             using (var benchmark = Benchmark.Start())
@@ -33,7 +33,7 @@ namespace Framework.Ioc
             }
         }
 
-        [SecurityCritical]
+        
         public IEnumerable<object> GetServices(Type serviceType)
         {
             using (var benchmark = Benchmark.Start())
@@ -54,7 +54,7 @@ namespace Framework.Ioc
             }
         }
 
-        [SecuritySafeCritical]
+        
         void IDisposable.Dispose()
         {
         }

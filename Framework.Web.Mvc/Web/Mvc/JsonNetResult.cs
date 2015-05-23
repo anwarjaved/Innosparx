@@ -10,7 +10,7 @@
 
     using Newtonsoft.Json;
 
-    [SecurityCritical]
+    
     public class JsonNetResult : ActionResult
     {
         public Encoding ContentEncoding { get; set; }
@@ -40,7 +40,7 @@
         /// <summary>Enables processing of the result of an action method by a custom type that inherits from the <see cref="T:System.Web.Mvc.ActionResult" /> class.</summary>
         /// <param name="context">The context within which the result is executed.</param>
         /// <exception cref="T:System.ArgumentNullException">The <paramref name="context" /> parameter is null.</exception>
-        [SecurityCritical]
+        
         public override void ExecuteResult(ControllerContext context)
         {
             if (context == null)

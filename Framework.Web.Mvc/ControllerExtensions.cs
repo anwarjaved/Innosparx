@@ -40,7 +40,7 @@ namespace Framework
         ///     The view result.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static ViewResult MustacheView(this Controller controller, string viewName, string masterName, object model)
         {
             if (model != null)
@@ -76,7 +76,7 @@ namespace Framework
         ///     The view result.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static ViewResult MustacheView(this Controller controller, string viewName, string masterName)
         {
             return controller.MustacheView(viewName, masterName, null);
@@ -106,7 +106,7 @@ namespace Framework
         ///     The view result.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static ViewResult MustacheView(this Controller controller, string viewName, object model)
         {
             return controller.MustacheView(viewName, null, model);
@@ -133,7 +133,7 @@ namespace Framework
         ///     The view result.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static ViewResult MustacheView(this Controller controller, string viewName)
         {
             return controller.MustacheView(viewName, null, null);
@@ -160,7 +160,7 @@ namespace Framework
         ///     The view result.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static ViewResult MustacheView(this Controller controller, object model)
         {
             return controller.MustacheView(null, null, model);
@@ -168,7 +168,7 @@ namespace Framework
 
         /// <summary>Creates a <see cref="T:System.Web.Mvc.ViewResult" /> object that renders a view to the response.</summary>
         /// <returns>The view result that renders a view to the response.</returns>
-        [SecurityCritical]
+        
         public static ViewResult MustacheView(this Controller controller)
         {
             return controller.MustacheView(null, null, null);

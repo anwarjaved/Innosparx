@@ -18,7 +18,5 @@ using Framework.Ioc;
 [assembly: CLSCompliant(true)]
 [assembly: Guid("7dde6683-4d10-4007-89a0-a8438836fd93")]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: AllowPartiallyTrustedCallers]
-[assembly: SecurityRules(SecurityRuleSet.Level2)]
 [assembly: PreApplicationStartMethod(typeof(SerializationInitializer), "PreInit")]
 [assembly: ContainerAssembly]

@@ -21,7 +21,7 @@
     ///     Membership provider.
     /// </summary>
     /// -------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     [InjectBind(typeof(IMembershipProvider), LifetimeType.Singleton)]
     [InjectBind(typeof(IMembershipProvider), "SqlMembership", LifetimeType.Singleton)]
     public class SqlMembershipProvider : IMembershipProvider
@@ -49,7 +49,7 @@
         /// all roles.
         /// </returns>
         /// -------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IReadOnlyList<IRole> GetAllRoles()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -75,7 +75,7 @@
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         public bool RoleExists(string roleName)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -90,7 +90,7 @@
 
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         public bool MembershipRoleExists<T>(string roleName) where T : Role, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -100,7 +100,7 @@
             return repository.Exists(a => a.Name.ToLower() == roleName.ToLower());
         }
 
-        [SecurityCritical]
+        
         bool IMembershipProvider.RoleExists<T>(string roleName)
         {
             Type type = typeof(T);
@@ -142,7 +142,7 @@
         ///     The new role.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IRole CreateRole(string roleName, string description)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -162,7 +162,7 @@ typeof(SqlMembershipProvider).GetMethod("CreateMemebershipRole", BindingFlags.Pu
 
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         public T CreateMemebershipRole<T>(string roleName, string description) where T : Role, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -178,7 +178,7 @@ typeof(SqlMembershipProvider).GetMethod("CreateMemebershipRole", BindingFlags.Pu
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         T IMembershipProvider.CreateRole<T>(string roleName, string description)
         {
             Type type = typeof(T);
@@ -213,7 +213,7 @@ typeof(SqlMembershipProvider).GetMethod("CreateMemebershipRole", BindingFlags.Pu
         ///     The role.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IRole GetRole(string roleName)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -229,7 +229,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
 
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         public T GetMemebershipRole<T>(string roleName) where T : Role, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -241,7 +241,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
 
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         T IMembershipProvider.GetRole<T>(string roleName)
         {
             Type type = typeof(T);
@@ -283,7 +283,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     all roles.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IPagedList<IRole> GetAllRoles(int pageIndex, int pageSize)
         {
 
@@ -314,7 +314,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     The roles for user.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IReadOnlyList<IRole> GetRolesForUser(string email)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -340,7 +340,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     all users.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IReadOnlyList<IUser> GetAllUsers()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -366,7 +366,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     all users.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IPagedList<IUser> GetAllUsers(int pageIndex, int pageSize)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -395,7 +395,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     all users&lt; t&gt;
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IPagedList<T> GetAllUsers<T>(int pageIndex, int pageSize) where T : IUser
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -418,7 +418,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     The found users.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IReadOnlyList<IUser> FindUsers(Expression<Func<IUser, bool>> predicate)
         {
 
@@ -443,7 +443,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     The found users in role.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IReadOnlyList<IUser> FindUsersInRole(string roleName)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -466,7 +466,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     The found users in role.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IReadOnlyList<IUser> FindUsersInRole(string[] roleNames)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -494,7 +494,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     The user.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IUser GetUser(Expression<Func<IUser, bool>> predicate, bool userIsOnline)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -538,7 +538,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     The membership user&lt; t&gt;
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public T GetMembershipUser<T>(Expression<Func<T, bool>> predicate, bool userIsOnline) where T : User, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -557,7 +557,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
             return user;
         }
 
-        [SecurityCritical]
+        
         T IMembershipProvider.GetUser<T>(Expression<Func<T, bool>> predicate, bool userIsOnline)
         {
             Type type = typeof(T);
@@ -604,7 +604,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     The user by email.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IUser GetUserByEmail(string email, bool userIsOnline)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -652,7 +652,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         public T GetMembershipUserByEmail<T>(string email, bool userIsOnline) where T : User, new()
         {
             Type type = typeof(T);
@@ -678,7 +678,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
             return user;
         }
 
-        [SecurityCritical]
+        
         T IMembershipProvider.GetUserByEmail<T>(string email, bool userIsOnline)
         {
             Type type = typeof(T);
@@ -730,7 +730,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
             return user;
         }
 
-        [SecurityCritical]
+        
         T IMembershipProvider.GetUserByEmail<T>(string email, Expression<Func<T, bool>> predicate, bool userIsOnline)
         {
             Type type = typeof(T);
@@ -765,7 +765,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     The user.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public void UpdateUser(IUser user)
         {
             User castUser = user as User;
@@ -780,7 +780,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
             }
         }
 
-        [SecurityCritical]
+        
         public void CheckPassword(IUser user, string password)
         {
             User castUser = user as User;
@@ -811,7 +811,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     The user.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public void DeleteUser(IUser user)
         {
             User castUser = user as User;
@@ -858,7 +858,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     A <see cref="IUser"/> object populated with the information for the newly created user.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IUser CreateUser(string email, string password, string firstName, string lastName, bool isVerified, params IRole[] roles)
         {
             AccountPasswordInfo accountPasswordInfo = new AccountPasswordInfo(email, password);
@@ -922,7 +922,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         public T CreateMembershipUser<T>(string email, string password, string firstName, string lastName, bool isVerified, Action<T> action = null, params IRole[] roles)
             where T : User, new()
         {
@@ -962,7 +962,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
 typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Public | BindingFlags.Instance);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         public void DeleteMemebershipRole<T>(string roleName) where T : Role, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -975,7 +975,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
             unitOfWork.Commit();
         }
 
-        [SecurityCritical]
+        
         void IMembershipProvider.DeleteRole<T>(string roleName)
         {
             Type type = typeof(T);
@@ -1039,7 +1039,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     The new user&lt; t&gt;
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public T CreateUser<T>(string email, string password, string firstName, string lastName, bool isVerified, Action<T> action, params IRole[] roles)
             where T : IUser, new()
         {
@@ -1080,7 +1080,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     all users&lt; t&gt;
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IReadOnlyList<T> GetAllUsers<T>() where T : IUser
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1106,7 +1106,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     true if user in role, false if not.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public bool IsUserInRole(string email, string roleName)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1129,7 +1129,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     The password.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public string GetPassword(string email)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1161,7 +1161,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     true if it succeeds, false if it fails.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public bool ChangePassword(string email, string oldPassword, string newPassword)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1214,7 +1214,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         public bool ChangeMembershipPassword<T>(string email, string oldPassword, string newPassword, Expression<Func<T, bool>> predicate) where T : User, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1274,7 +1274,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     true if it succeeds, false if it fails.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         bool IMembershipProvider.ChangePassword<T>(string email, string oldPassword, string newPassword, Expression<Func<T, bool>> predicate)
         {
             Type type = typeof(T);
@@ -1316,7 +1316,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     .
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public string ResetPassword(string email)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1359,7 +1359,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     .
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public string ResetMembershipPassword<T>(string email, Expression<Func<T, bool>> predicate) where T : User, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1387,7 +1387,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
             return string.Empty;
         }
 
-        [SecurityCritical]
+        
         string IMembershipProvider.ResetPassword<T>(string email, Expression<Func<T, bool>> predicate)
         {
             Type type = typeof(T);
@@ -1441,7 +1441,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     true if it succeeds, false if it fails.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public bool ValidateUser(string email, string password, Func<IUser, bool> validatorCallback = null)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1532,7 +1532,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [SecurityCritical]
+        
         public bool ValidateMembershipUser<T>(string email, string password, Expression<Func<T, bool>> predicate, Func<T, bool> validatorCallback = null) where T : User, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1599,7 +1599,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
             return false;
         }
 
-        [SecurityCritical]
+        
         bool IMembershipProvider.ValidateUser<T>(string email, string password, Expression<Func<T, bool>> predicate, Func<T, bool> validatorCallback)
         {
             Type type = typeof(T);
@@ -1640,7 +1640,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     true if it succeeds, false if it fails.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public bool UnlockUser(string email)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1672,7 +1672,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     The number of users online.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public int GetNumberOfUsersOnline()
         {
 
@@ -1699,7 +1699,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     List of names of the roles.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public void AddUsersToRoles(ICollection<string> emails, ICollection<string> roleNames)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1729,7 +1729,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </summary>
         /// <param name="emails">The emails.</param>
         /// <param name="roleNames">The role names.</param>
-        [SecurityCritical]
+        
         public void RemoveUsersFromRoles(ICollection<string> emails, ICollection<string> roleNames)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1767,7 +1767,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     The users in role.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public IReadOnlyList<IUser> GetUsersInRole(string roleName)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -1786,7 +1786,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     Name of the role.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public void DeleteRole(string roleName)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();

@@ -23,7 +23,7 @@
     /// LM ANWAR, 6/2/2013.
     /// </remarks>
     /// -------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public static class ActivationManager
     {
         internal static readonly string[] SkipList = { "EntityFramework", "Microsoft.", "System.", "Newtonsoft.Json", "mscorlib" };
@@ -191,7 +191,7 @@
             }
         }
 
-        [SecurityCritical]
+        
         private class StartMethodCallingModule : IHttpModule
         {
             private static readonly object SyncLock = new object();
@@ -204,7 +204,7 @@
                 this.designerMode = designerMode;
             }
 
-            [SecuritySafeCritical]
+            
             void IHttpModule.Init(HttpApplication context)
             {
                 lock (SyncLock)
@@ -219,7 +219,7 @@
                 }
             }
 
-            [SecuritySafeCritical]
+            
             void IHttpModule.Dispose()
             {
                 lock (SyncLock)

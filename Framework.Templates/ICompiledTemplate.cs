@@ -36,7 +36,7 @@
         ///     Processed string.
         /// </returns>
         /// -------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         string Render(object data, Func<string, string> templateLocator = null);
 
         /// -------------------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@
         ///     The template locator.
         /// </param>
         /// -------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         void Render(TextWriter writer, object data, Func<string, string> templateLocator = null);
     }
 }

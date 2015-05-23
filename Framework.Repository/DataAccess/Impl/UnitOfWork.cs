@@ -29,7 +29,7 @@ namespace Framework.DataAccess.Impl
     ///     Unit of work.
     /// </summary>
     ///-------------------------------------------------------------------------------------------------
-    [SecuritySafeCritical]
+    
     [Browsable(false)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     internal class UnitOfWork : DisposableObject, IUnitOfWork
@@ -113,7 +113,7 @@ namespace Framework.DataAccess.Impl
         [Browsable(false)]
         public IEntityContext Context
         {
-            [SecurityCritical]
+            
             get
             {
                 IEntityContext dbContext;
@@ -151,7 +151,7 @@ namespace Framework.DataAccess.Impl
         ///     .
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         public int Commit()
         {
             try
@@ -326,7 +326,7 @@ namespace Framework.DataAccess.Impl
         ///     Override This Method To Dispose Managed Resources.
         /// </summary>
         ///-------------------------------------------------------------------------------------------------
-        [SecuritySafeCritical]
+        
         protected override void DisposeResources()
         {
             IEntityContext dbContext;

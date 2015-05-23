@@ -15,7 +15,7 @@
     /// <para>To access the EventArgs of the fired event, use a RelayCommand&lt;EventArgs&gt;
     /// and leave the CommandParameter and CommandParameterValue empty!</para>
     /// </summary>
-    [SecurityCritical]
+    
     public class EventToCommand : TriggerAction<DependencyObject>
     {
         private object commandParameterValue;
@@ -120,7 +120,7 @@
         /// and leave the CommandParameter and CommandParameterValue empty!</para>
         /// </summary>
         /// <param name="parameter">The EventArgs of the fired event.</param>
-        [SecurityCritical]
+        
         protected override void Invoke(object parameter)
         {
             if (!this.AssociatedElementIsDisabled())
@@ -142,7 +142,7 @@
         /// <summary>
         /// Called when this trigger is attached to a FrameworkElement.
         /// </summary>
-        [SecurityCritical]
+        
         protected override void OnAttached()
         {
             base.OnAttached();

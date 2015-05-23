@@ -17,7 +17,7 @@
 
         public int? PostalCode { get; set; }
 
-        public DbGeography Location { [SecuritySafeCritical]get; [SecuritySafeCritical]set; }
+        public DbGeography Location { get; set; }
 
         public int? MetroCode { get; set; }
 

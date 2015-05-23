@@ -9,7 +9,7 @@
     /// <summary>
     ///  Represent a Menu Item.
     /// </summary>
-    [SecurityCritical]
+    
     public abstract class MenuItem : IHtmlRenderer, IMenuSelection
     {
         private string selectedCssClass;
@@ -42,7 +42,7 @@
         /// <value>The selected CSS class.</value>
         public string SelectedCssClass
         {
-            [SecurityCritical]
+            
             get
             {
                 return string.IsNullOrWhiteSpace(this.selectedCssClass) ? "selected" : this.selectedCssClass;
@@ -71,7 +71,7 @@
 
         SelectionMode? IMenuSelection.SelectionMode
         {
-            [SecurityCritical]
+            
             get
             {
                 return this.selectionMode.HasValue ? this.selectionMode.Value : SelectionMode.ControllerAction;
@@ -173,7 +173,7 @@
         ///     The writer.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public abstract void Render(HtmlHelper htmlHelper, HtmlTextWriter writer);
     }
 }

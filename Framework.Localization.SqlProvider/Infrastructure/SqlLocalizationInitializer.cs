@@ -19,7 +19,7 @@ namespace Framework.Infrastructure
         /// <summary>
         /// Initializes this instance.
         /// </summary>
-        [SecurityCritical]
+        
         public static void Init()
         {
             Container.OverrideDefaultService<ILanguageProvider>("SqlLocalization");

@@ -13,7 +13,7 @@
 
     using TwitterSDK;
 
-    [SecurityCritical]
+    
     [RouteArea("social")]
     [RoutePrefix("twitter")]
     public class TwitterController : Controller

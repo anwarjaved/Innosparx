@@ -8,13 +8,13 @@ namespace Framework
     using System.Web.WebPages;
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [SecurityCritical]
+    
     public static class ConditionalExtensions
     {
         /// <summary>
         /// A helper for performing conditional IF,ELSE logic using Razor
         /// </summary>
-        [SecurityCritical]
+        
         public static HelperResult IfElse(this HtmlHelper html, bool condition, Func<dynamic, HelperResult> trueString, Func<dynamic, HelperResult> falseString = null)
         {
             return new HelperResult(writer =>
@@ -39,14 +39,14 @@ namespace Framework
         /// <summary>
         /// A helper for performing conditional IF,ELSE logic using Razor
         /// </summary>
-        [SecurityCritical]
+        
         public static HelperResult LoginView(this HtmlHelper html, Func<dynamic, HelperResult> itemTemplate, Func<dynamic, HelperResult> anonymousTemplate = null)
         {
             bool isAuthenticated = html.ViewContext.HttpContext.Request.IsAuthenticated;
             return html.IfElse(isAuthenticated, itemTemplate, anonymousTemplate);
         }
 
-        [SecurityCritical]
+        
         public static HelperResult LoginViewForRole(this HtmlHelper html, string roleName, Func<dynamic, HelperResult> itemTemplate, Func<dynamic, HelperResult> anonymousTemplate = null)
         {
             var user = html.ViewContext.HttpContext.User;
@@ -56,7 +56,7 @@ namespace Framework
         /// <summary>
         /// A helper for performing conditional IF logic using Razor
         /// </summary>
-        [SecurityCritical]
+        
         public static HelperResult If(this HtmlHelper html, bool condition, Func<dynamic, HelperResult> action)
         {
             return html.IfElse(condition, action);

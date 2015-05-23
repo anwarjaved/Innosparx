@@ -20,7 +20,7 @@
     using Framework.Infrastructure;
     using Framework.Ioc;
 
-    [SecuritySafeCritical]
+    
     internal static class EntityContextFactory
     {
         private static AssemblyBuilder dbContextAssemblyBuilder;

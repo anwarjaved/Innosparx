@@ -7,7 +7,7 @@
     ///     Password information mapping.
     /// </summary>
     ///-------------------------------------------------------------------------------------------------
-    [SecurityCritical]
+    
     public class PasswordInfoMapping : ValueTypeMapping<PasswordInfo>
     {
         ///-------------------------------------------------------------------------------------------------

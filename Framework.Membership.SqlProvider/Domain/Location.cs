@@ -100,6 +100,6 @@
         ///     The geo address.
         /// </value>
         ///-------------------------------------------------------------------------------------------------
-        public DbGeography GeoAddress { [SecurityCritical]get; [SecurityCritical]set; }*/
+        public DbGeography GeoAddress { get; set; }*/
     }
 }

@@ -23,7 +23,7 @@
         ///     Initialises this object.
         /// </summary>
         ///-------------------------------------------------------------------------------------------------
-        [SecurityCritical]
+        
         public static void Init()
         {
             EntityContextFactory.Initalize();

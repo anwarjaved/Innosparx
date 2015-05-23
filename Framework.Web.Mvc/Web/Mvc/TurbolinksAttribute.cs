@@ -7,16 +7,16 @@ namespace Framework.Web.Mvc
     using System.Web.Routing;
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
-    [SecurityCritical]
+    
     public class TurbolinksAttribute : FilterAttribute, IActionFilter
     {
-        [SecurityCritical]
+        
         public virtual void OnActionExecuting(ActionExecutingContext filterContext)
         {
             // Do nothing
         }
 
-        [SecurityCritical]
+        
         public virtual void OnActionExecuted(ActionExecutedContext filterContext)
         {
             if (filterContext == null)

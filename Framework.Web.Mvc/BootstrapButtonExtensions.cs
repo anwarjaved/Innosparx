@@ -67,49 +67,49 @@
             }
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Button(this HtmlHelper html, string text)
         {
             return Button(html, text, ButtonType.Default);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Button(this HtmlHelper html, string text, ButtonType type)
         {
             return Button(html, text, type, ButtonSize.Default);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Button(this HtmlHelper html, string text, ButtonTag tag, object htmlAttributes)
         {
             return Button(html, text, ButtonType.Default, ButtonSize.Default, tag, false, false, htmlAttributes);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Button(this HtmlHelper html, string text, ButtonType type, ButtonSize size)
         {
             return Button(html, text, type, size, ButtonTag.Default);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Button(this HtmlHelper html, string text, ButtonType? type, ButtonSize? size, ButtonTag? tag)
         {
             return Button(html, text, type, size, tag, false, false);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Button(this HtmlHelper html, string text, ButtonType? type, ButtonSize? size, ButtonTag? tag, bool? block)
         {
             return Button(html, text, type, size, tag, block, false);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Button(this HtmlHelper html, string text, ButtonType? type, ButtonSize? size, ButtonTag? tag, bool? block, bool? disabled)
         {
             return Button(html, text, type, size, tag, block, disabled, null);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString Button(this HtmlHelper html, string text, ButtonType? type, ButtonSize? size, ButtonTag? tag, bool? block, bool? disabled, object htmlAttributes)
         {
             var tagName = (tag.HasValue ? tag.Value : ButtonTag.Default).ToHtmlTag();
@@ -161,13 +161,13 @@
             return new MvcHtmlString(builder.ToString(renderMode));
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString SubmitButton(this HtmlHelper html, string text)
         {
             return SubmitButton(html, text, ButtonType.Primary, ButtonSize.Default);
         }
 
-        [SecuritySafeCritical]
+        
         public static IHtmlString SubmitButton(this HtmlHelper html, string text, ButtonType? type, ButtonSize? size)
         {
             return Button(html, text, type, size, ButtonTag.InputSubmit);

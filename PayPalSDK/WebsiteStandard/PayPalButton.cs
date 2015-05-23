@@ -57,7 +57,7 @@
         [Category("PayPal")]
         public string BusinessEmail { get; set; }
 
-        [SecuritySafeCritical]
+        
         public abstract string GetRedirectUrl(string state, string successUrl, string failureUrl);
     }
 }

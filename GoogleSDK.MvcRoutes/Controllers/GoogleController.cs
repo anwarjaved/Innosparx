@@ -16,7 +16,7 @@
     using Framework.Rest.OAuth;
     using Framework.Services;
 
-    [SecurityCritical]
+    
     [RouteArea("social")]
     [RoutePrefix("google")]
     public class GoogleController : Controller

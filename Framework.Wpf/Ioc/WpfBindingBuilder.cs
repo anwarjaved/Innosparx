@@ -14,13 +14,13 @@ namespace Framework.Ioc
     [InjectBind(typeof(IAssemblyBindingBuilder), "WpfBindingBuilder", LifetimeType.Singleton)]
     public class WpfBindingBuilder : IAssemblyBindingBuilder
     {
-        [SecuritySafeCritical]
+        
         public void Build(IBindingDependencyBuilder dependencyBuilder, IReadOnlyList<Assembly> assemblies)
         {
             BuildInternal(dependencyBuilder, assemblies);
         }
 
-        [SecurityCritical]
+        
         private static void BuildInternal(IBindingDependencyBuilder dependencyBuilder, IEnumerable<Assembly> assemblies)
         {
             foreach (var type in from assembly in assemblies from type in assembly.GetExportableLoadableTypes() where IsViewModel(type) where !Container.Contains(type) select type)

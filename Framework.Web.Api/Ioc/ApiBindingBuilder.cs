@@ -13,13 +13,13 @@ namespace Framework.Ioc
     [InjectBind(typeof(IAssemblyBindingBuilder), "ApiBindingBuilder", LifetimeType.Singleton)]
     public class ApiBindingBuilder : IAssemblyBindingBuilder
     {
-        [SecuritySafeCritical]
+        
         public void Build(IBindingDependencyBuilder dependencyBuilder, IReadOnlyList<Assembly> assemblies)
         {
             BuildInternal(dependencyBuilder, assemblies);
         }
 
-        [SecurityCritical]
+        
         private static void BuildInternal(IBindingDependencyBuilder dependencyBuilder, IReadOnlyList<Assembly> assemblies)
         {
             var definations = FindDependenciesType(assemblies);

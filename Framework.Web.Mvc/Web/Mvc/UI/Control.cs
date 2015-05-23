@@ -8,7 +8,7 @@
     /// </summary>
     /// <author>Anwar</author>
     /// <datetime>1/25/2011 3:43 PM</datetime>
-    [SecurityCritical]
+    
     public abstract class Control
     {
         /// <summary>

@@ -13,7 +13,7 @@
     [InjectBind(typeof(ILogAdapter), "ConsoleLog", LifetimeType.Singleton)]
     public class ConsoleLogAdapter : ILogAdapter
     {
-        [SecurityCritical]
+        
         public void Write(ILogEntry entry)
         {
             Console.WriteLine(Logger.CompiledTextTemplate.Render(entry));

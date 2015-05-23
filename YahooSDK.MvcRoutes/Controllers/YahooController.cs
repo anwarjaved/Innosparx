@@ -11,7 +11,7 @@
     using Framework.Rest.OAuth;
     using Framework.Services;
 
-    [SecurityCritical]
+    
     [RouteArea("social")]
     [RoutePrefix("yahoo")]
     public class YahooController : Controller

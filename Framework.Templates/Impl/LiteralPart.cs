@@ -11,7 +11,7 @@
             this.content = content;
         }
 
-        [SecurityCritical]
+        
         public void Render(ITemplateContext context)
         {
             context.Write(this.content);

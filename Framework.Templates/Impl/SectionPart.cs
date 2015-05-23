@@ -28,7 +28,7 @@
             }
         }
 
-        [SecurityCritical]
+        
         public void Render(ITemplateContext context)
         {
             object value = context.GetValue(this.sectionName);

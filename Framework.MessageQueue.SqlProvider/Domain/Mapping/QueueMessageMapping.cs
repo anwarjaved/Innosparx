@@ -2,7 +2,7 @@
 {
     using System.Security;
 
-    [SecurityCritical]
+    
     public class QueueMessageMapping : EntityMapping<QueueMessage>
     {
         public QueueMessageMapping()

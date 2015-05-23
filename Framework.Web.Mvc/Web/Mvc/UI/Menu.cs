@@ -10,7 +10,7 @@
     /// <summary>
     /// Represents Menu.
     /// </summary>
-    [SecurityCritical]
+    
     public abstract class Menu : Control, IHtmlRenderer, IMenuSelection
     {
         private readonly HtmlHelper htmlHelper;
@@ -37,7 +37,7 @@
         /// <value>The selected CSS class.</value>
         public string SelectedCssClass
         {
-            [SecurityCritical]
+            
             get;
             set;
         }
@@ -48,7 +48,7 @@
         /// <value>The selection mode.</value>
         public SelectionMode? SelectionMode
         {
-            [SecurityCritical]
+            
             get;
             set;
         }
@@ -57,7 +57,7 @@
         /// Renders this menu.
         /// </summary>
         /// <returns>Output as MvcHtmlString.</returns>
-        [SecurityCritical]
+        
         public override IHtmlString Render()
         {
             StringBuilder builder = new StringBuilder();
@@ -74,7 +74,7 @@
         /// </summary>
         /// <param name="htmlHelper">The HTML helper.</param>
         /// <param name="writer">The writer.</param>
-        [SecurityCritical]
+        
         public abstract void Render(HtmlHelper htmlHelper, HtmlTextWriter writer);
     }
 }

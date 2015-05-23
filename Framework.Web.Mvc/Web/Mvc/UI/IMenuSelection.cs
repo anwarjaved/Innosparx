@@ -2,7 +2,7 @@
 {
     using System.Security;
 
-    [SecurityCritical]
+    
     public interface IMenuSelection
     {
         /// <summary>
