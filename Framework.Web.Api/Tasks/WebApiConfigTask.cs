@@ -41,7 +41,7 @@
             configuration.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new StringEnumConverter());
             configuration.Formatters.Insert(0, new DataTableFormatter());
 
-            configuration.EnableCors(new EnableCorsAttribute("*", "*", "*", "*") { SupportsCredentials = true });
+            configuration.EnableCors(new EnableCorsAttribute("*", "*", "*", "*") { SupportsCredentials = true, PreflightMaxAge = 3600 });
         }
 
         
