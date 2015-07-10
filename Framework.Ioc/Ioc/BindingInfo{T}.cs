@@ -24,6 +24,8 @@
             Type service = typeof(TImplementation);
 
             this.Instance = BindingCache.GetOrAdd(service, DependencyBuilder.GetInstance);
+            this.BindingType = BindingType.Type;
+            this.Implementation = typeof(TImplementation);
 
             return this;
         }
@@ -32,6 +34,8 @@
         {
             Type service = typeof(T);
             this.Instance = BindingCache.GetOrAdd(service, DependencyBuilder.GetInstance);
+            this.BindingType = BindingType.Self;
+            this.Implementation = typeof(T);
 
             return this;
         }
@@ -46,6 +50,8 @@
         public IBindingInfo<T> ToMethod(Func<T> method)
         {
             this.Instance = () => method();
+            this.BindingType = BindingType.Method;
+            this.Implementation = null;
 
             return this;
         }

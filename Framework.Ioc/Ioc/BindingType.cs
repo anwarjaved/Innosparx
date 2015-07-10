@@ -19,5 +19,9 @@
         /// Indicates that the binding is from one type to another.
         /// </summary>
         Type = 1,
+        /// <summary>
+        /// Indicates that the binding is from method.
+        /// </summary>
+        Method = 2
     }
 }

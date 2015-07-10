@@ -162,7 +162,7 @@ namespace Framework.DataAccess
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Counts the reci=ords by given predicate.
+        ///     Counts the records by given predicate.
         /// </summary>
         ///
         /// <param name="predicate">

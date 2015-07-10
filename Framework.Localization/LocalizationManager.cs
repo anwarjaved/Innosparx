@@ -540,18 +540,26 @@
 
                 string cultureKey = GetLanguageCode(uiCulture).ToString("G").ToLowerInvariant() + "[" + key + "]";
                 string defaultcultureKey = LanguageCode.English.ToString("G").ToLowerInvariant() + "[" + key + "]";
-                bool value = false;
+                LanguageResource resource = null;
 
                 if (dictionary.ContainsKey(cultureKey))
                 {
-                    value = dictionary[cultureKey].CanShowTooltip;
+                    resource = dictionary[cultureKey];
                 }
                 else if (dictionary.ContainsKey(defaultcultureKey))
                 {
-                    value = dictionary[defaultcultureKey].CanShowTooltip;
+                    resource = dictionary[defaultcultureKey];
                 }
 
-                return value;
+                if (resource != null && resource.CanShowTooltip)
+                {
+                    if (!string.IsNullOrWhiteSpace(resource.TooltipText))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
             }
             catch (Exception)
             {

@@ -25,6 +25,7 @@
             }
 
             this.Service = service;
+            this.Implementation = service;
             this.BindingType = BindingType.Self;
             this.LifetimeManager = new TransientLifetime();
             this.Name = name;
@@ -39,6 +40,13 @@
         /// Gets the service type that is controlled by the binding.
         /// </summary>
         public Type Service { get; private set; }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>   Gets the implementation type that is controlled by the binding. </summary>
+        ///
+        /// <value> The service. </value>
+        ///-------------------------------------------------------------------------------------------------
+        public Type Implementation { get; protected set; }
 
         public string Name { get; private set; }
 

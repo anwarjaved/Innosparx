@@ -94,7 +94,7 @@
             return newServiceTypeMethod.Compile();
         }
 
-        public static void BindInstance(Type serviceType, Type implmentedType, string name, LifetimeType lifetime)
+        public static void BindInstance(Type serviceType, Type implmentedType, string name, ILifetime lifetime, int? order = null)
         {
             MethodInfo bindInstanceMethod = MakeGenericBindMethod(serviceType);
             MethodInfo implementInstanceMethod = MakeGenericToMethod(serviceType, implmentedType);
@@ -110,16 +110,66 @@
 
             if (containsFunc())
             {
-                OrderAttribute priorityAttribute = implmentedType.GetCustomAttribute<OrderAttribute>();
-
-                int priority = priorityAttribute != null ? priorityAttribute.Value : int.MaxValue;
-
-                if (binding.Order.HasValue && priority < binding.Order.Value)
+                if (order == null)
                 {
-                    return;
-                }
+                    OrderAttribute priorityAttribute = implmentedType.GetCustomAttribute<OrderAttribute>();
 
-                binding.Order = priority;
+                    int priority = priorityAttribute != null ? priorityAttribute.Value : int.MaxValue;
+
+                    if (binding.Order.HasValue && priority < binding.Order.Value)
+                    {
+                        return;
+                    }
+
+                    binding.Order = priority;
+                }
+                else
+                {
+                    binding.Order = order;
+                }
+            }
+
+            MethodCallExpression implementCallExpression = Expression.Call(Expression.Constant(binding), implementInstanceMethod);
+            Func<IBindingInfo> implementer = Expression.Lambda<Func<IBindingInfo>>(implementCallExpression).Compile();
+
+            binding = implementer();
+            binding.LifetimeManager = lifetime;
+        }
+
+
+        public static void BindInstance(Type serviceType, Type implmentedType, string name, LifetimeType lifetime, int? order = null)
+        {
+            MethodInfo bindInstanceMethod = MakeGenericBindMethod(serviceType);
+            MethodInfo implementInstanceMethod = MakeGenericToMethod(serviceType, implmentedType);
+
+            MethodCallExpression methodCallExpression = Expression.Call(bindInstanceMethod, new Expression[] { Expression.Constant(name, typeof(string)) });
+
+            Func<IBindingInfo> binder = Expression.Lambda<Func<IBindingInfo>>(methodCallExpression).Compile();
+            IBindingInfo binding = binder();
+
+            MethodInfo containsMethod = MakeGenericContainsMethod(serviceType);
+            MethodCallExpression containsCallExpression = Expression.Call(containsMethod, new Expression[] { Expression.Constant(name, typeof(string)) });
+            Func<bool> containsFunc = Expression.Lambda<Func<bool>>(containsCallExpression).Compile();
+
+            if (containsFunc())
+            {
+                if (order == null)
+                {
+                    OrderAttribute priorityAttribute = implmentedType.GetCustomAttribute<OrderAttribute>();
+
+                    int priority = priorityAttribute != null ? priorityAttribute.Value : int.MaxValue;
+
+                    if (binding.Order.HasValue && priority < binding.Order.Value)
+                    {
+                        return;
+                    }
+
+                    binding.Order = priority;
+                }
+                else
+                {
+                    binding.Order = order;
+                }
             }
 
             MethodCallExpression implementCallExpression = Expression.Call(Expression.Constant(binding), implementInstanceMethod);

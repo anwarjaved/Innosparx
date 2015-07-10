@@ -764,7 +764,7 @@ namespace Framework.Membership
         public static T CreateUser<T>(string email, string password, Action<T> action)
             where T : IUser, new()
         {
-            return CreateUser(email, password, string.Empty, string.Empty, true, action);
+            return CreateUser<T>(email, password, string.Empty, string.Empty, true, action);
         }
 
         public static T CreateUser<T>(string email, string password, string firstName, string lastName, bool isVerified)

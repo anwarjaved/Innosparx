@@ -3,10 +3,17 @@
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
     using System.Linq;
     using System.Security;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
+    using Framework.Activator;
     using Framework.Collections;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     /// <summary>
     /// Dependency Container.
@@ -506,8 +513,136 @@
         
         public static void ScanAll()
         {
-            DependencyBuilder.ScanAll();
+            string path = HostingEnvironment.MapPath("~/App_Data/bindings.json");
+            if (File.Exists(path))
+            {
+                
+            }
+            else
+            {
+                DependencyBuilder.ScanAll();
+                using (Stream stream = new FileStream(path, FileMode.Create))
+                {
+                    Container.SaveTo(stream);
+                }
+            }
+            
         }
+
+        public static void LoadFrom(Stream stream)
+        {
+            StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+
+            dynamic deserializeObject = JsonConvert.DeserializeObject(reader.ReadToEnd());
+            reader.Dispose();
+            if (deserializeObject.defaultBindings != null)
+            {
+                foreach (var binding in deserializeObject.defaultBindings)
+                {
+                    if (binding.type != null && binding.name != null)
+                    {
+                        Type type = Type.GetType(binding.type, false);
+
+                        if (type != null)
+                        {
+                            Container.OverrideDefaultService(type, binding.name);
+                        }
+                    }
+
+                }
+            }
+
+            if (deserializeObject.allBindings != null)
+            {
+                foreach (var bindingInfo in deserializeObject.allBindings)
+                {
+                    if (bindingInfo.type != null && bindingInfo.bindings != null)
+                    {
+                        Type type = Type.GetType(bindingInfo.type, false);
+
+                        if (type != null)
+                        {
+                            foreach (var binding in bindingInfo.bindings)
+                            {
+                                Type service = Type.GetType(binding.service, false);
+                                Type implementation = Type.GetType(binding.implementation, false);
+
+                                if (service != null && implementation != null)
+                                {
+                                    string name = binding.name;
+                                    int? order = null;
+
+                                    if (binding.order != null)
+                                    {
+                                        order = Convert.ToInt32(binding.order);
+                                    }
+
+                                    var scopeType = Type.GetType(binding.scope, false);
+                                    ILifetime lifetime = scopeType == null
+                                                             ? new TransientLifetime()
+                                                             : Activator.CreateInstance(scopeType);
+
+
+                                    DependencyBuilder.BindInstance(service, implementation, name, lifetime, order);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+        private static string GetTypeNameWithAssembly(string assemblyQualifiedName)
+        {
+            assemblyQualifiedName = Regex.Replace(assemblyQualifiedName, @", Version=\d+.\d+.\d+.\d+", string.Empty);
+
+            assemblyQualifiedName = Regex.Replace(assemblyQualifiedName, @", Culture=\w+", string.Empty);
+
+            return Regex.Replace(assemblyQualifiedName, @", PublicKeyToken=\w+", string.Empty);
+        }
+
+        private static void SaveTo(Stream stream)
+        {
+            dynamic json = new JObject();
+
+            var defaultBindings = new JArray();
+
+            foreach (var binding in Container.DefaultBinding)
+            {
+                defaultBindings.Add(new { type = GetTypeNameWithAssembly(binding.Key.AssemblyQualifiedName), name = binding.Value });
+            }
+
+            json.defaultBindings = defaultBindings;
+
+            var allBindings = new JArray();
+            foreach (var bindingType in Container.Bindings.Keys)
+            {
+                var bindingArray = new JArray();
+
+                foreach (var binding in Container.Bindings[bindingType].Where(x => x.BindingType != BindingType.Method))
+                {
+                    bindingArray.Add(new
+                    {
+                        service = GetTypeNameWithAssembly(binding.Service.AssemblyQualifiedName),
+                        implementation = GetTypeNameWithAssembly(binding.Implementation.AssemblyQualifiedName),
+                        name = binding.Name,
+                        order = binding.Order,
+                        scope = GetTypeNameWithAssembly(binding.LifetimeManager.GetType().AssemblyQualifiedName)
+                    });
+                }
+
+                allBindings.Add(new { type = GetTypeNameWithAssembly(bindingType.AssemblyQualifiedName), bindings = bindingArray });
+            }
+
+            json.allBindings = allBindings;
+            StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
+            writer.Write(JsonConvert.SerializeObject(json));
+            writer.Flush();
+            writer.Dispose();
+        }
+
 
 
         private static IBindingInfo Resolve<TType>(string name = null)
