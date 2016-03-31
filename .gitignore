@@ -156,3 +156,5 @@ $RECYCLE.BIN/
 # Assembly Version Task
 AssemblyInfo.Version.cs
 AssemblyVersion.txt
+
+sa/

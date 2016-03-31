@@ -218,8 +218,9 @@
         public void Send(EmailMessage message, bool logEnabled = false)
         {
             var id = this.Provider.Save(message);
-
             queue.SendMessage(EmailServiceConstants.EmailQueueComponent, id);
+
+            ProcessEmail(id, false);
         }
     }
 }

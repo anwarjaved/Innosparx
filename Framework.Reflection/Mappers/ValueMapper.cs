@@ -28,7 +28,7 @@
         /// <returns><see langword="true" /> if this instance can map the specified type; otherwise, <see langword="false" />.</returns>
         public override bool CanMap(Type type)
         {
-            return type.IsValueType && !type.IsEnum && type != typeof(DateTime);
+            return type.IsPrimitive || type == typeof(string) || type == typeof(DateTime);
         }
     }
 }

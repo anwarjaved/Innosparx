@@ -6,9 +6,11 @@
     using System.Configuration;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Security;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Web.Compilation;
 
     using Framework.Activator;
     using Framework.Collections;
@@ -510,13 +512,34 @@
         /// </summary>
         /// <author>Anwar</author>
         /// <date>11/9/2011</date>
-        
+
         public static void ScanAll()
         {
-            string path = HostingEnvironment.MapPath("~/App_Data/bindings.json");
+            var path = HostingEnvironment.IsHosted
+                           ? HostingEnvironment.MapPath("~/App_Data/bindings.json")
+                           : Path.Combine(Environment.CurrentDirectory, "bindings.json");
             if (File.Exists(path))
             {
-                
+                using (Stream stream = new FileStream(path, FileMode.Open))
+                {
+                    Container.LoadFrom(stream);
+                    var assemblies = ActivationManager.Assemblies;
+
+
+                    var list = new List<Assembly>();
+
+                    foreach (var assembly in assemblies.AsParallel())
+                    {
+                        var attr = assembly.GetCustomAttribute<ContainerAssemblyAttribute>();
+
+                        if (attr != null && attr.PostBuild)
+                        {
+                            list.Add(assembly);
+                        }
+                    }
+                       
+                    DependencyBuilder.PostBuildScan(list);
+                }
             }
             else
             {
@@ -526,7 +549,6 @@
                     Container.SaveTo(stream);
                 }
             }
-            
         }
 
         public static void LoadFrom(Stream stream)
@@ -541,7 +563,7 @@
                 {
                     if (binding.type != null && binding.name != null)
                     {
-                        Type type = Type.GetType(binding.type, false);
+                        Type type = Type.GetType(ParseTypeName((string)binding.type), false);
 
                         if (type != null)
                         {
@@ -558,14 +580,14 @@
                 {
                     if (bindingInfo.type != null && bindingInfo.bindings != null)
                     {
-                        Type type = Type.GetType(bindingInfo.type, false);
+                        Type type = Type.GetType(ParseTypeName((string)bindingInfo.type), false);
 
                         if (type != null)
                         {
                             foreach (var binding in bindingInfo.bindings)
                             {
-                                Type service = Type.GetType(binding.service, false);
-                                Type implementation = Type.GetType(binding.implementation, false);
+                                Type service = Type.GetType(ParseTypeName((string)binding.service), false);
+                                Type implementation = Type.GetType(ParseTypeName((string)binding.implementation), false);
 
                                 if (service != null && implementation != null)
                                 {
@@ -577,10 +599,10 @@
                                         order = Convert.ToInt32(binding.order);
                                     }
 
-                                    var scopeType = Type.GetType(binding.scope, false);
+                                    Type scopeType = Type.GetType(ParseTypeName((string)binding.scope), false);
                                     ILifetime lifetime = scopeType == null
                                                              ? new TransientLifetime()
-                                                             : Activator.CreateInstance(scopeType);
+                                                             : (ILifetime)Activator.CreateInstance(scopeType);
 
 
                                     DependencyBuilder.BindInstance(service, implementation, name, lifetime, order);
@@ -593,6 +615,11 @@
 
         }
 
+        private static string ParseTypeName(string typeNameWithAssembly)
+        {
+            var split = typeNameWithAssembly.Split(',');
+            return typeNameWithAssembly;
+        }
 
         private static string GetTypeNameWithAssembly(string assemblyQualifiedName)
         {
@@ -621,19 +648,29 @@
             {
                 var bindingArray = new JArray();
 
+                var anyFound = false;
                 foreach (var binding in Container.Bindings[bindingType].Where(x => x.BindingType != BindingType.Method))
                 {
-                    bindingArray.Add(new
-                    {
-                        service = GetTypeNameWithAssembly(binding.Service.AssemblyQualifiedName),
-                        implementation = GetTypeNameWithAssembly(binding.Implementation.AssemblyQualifiedName),
-                        name = binding.Name,
-                        order = binding.Order,
-                        scope = GetTypeNameWithAssembly(binding.LifetimeManager.GetType().AssemblyQualifiedName)
-                    });
+                    dynamic bindingObject = new JObject();
+                    bindingObject.service = GetTypeNameWithAssembly(binding.Service.AssemblyQualifiedName);
+                    bindingObject.implementation = GetTypeNameWithAssembly(binding.Implementation.AssemblyQualifiedName);
+                    bindingObject.name = binding.Name;
+                    bindingObject.order = binding.Order;
+                    bindingObject.scope =
+                        GetTypeNameWithAssembly(binding.LifetimeManager.GetType().AssemblyQualifiedName);
+                    bindingArray.Add(bindingObject);
+
+                    anyFound = true;
                 }
 
-                allBindings.Add(new { type = GetTypeNameWithAssembly(bindingType.AssemblyQualifiedName), bindings = bindingArray });
+
+                if (anyFound)
+                {
+                    dynamic jBinding = new JObject();
+                    jBinding.type = GetTypeNameWithAssembly(bindingType.AssemblyQualifiedName);
+                    jBinding.bindings = bindingArray;
+                    allBindings.Add(jBinding);
+                }
             }
 
             json.allBindings = allBindings;
