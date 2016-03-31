@@ -7,7 +7,6 @@
     using System.Web.Mvc;
     using System.Web.Security;
 
-    using Framework.Logging;
 
     
     public class GlobalExceptionFilter : HandleErrorAttribute
@@ -69,7 +68,7 @@
 
             if (!isUserException)
             {
-                Logger.Error(filterContext.Exception, WebConstants.FilterComponent);
+                //Logger.Error(filterContext.Exception, WebConstants.FilterComponent);
             }
 
             base.OnException(filterContext);

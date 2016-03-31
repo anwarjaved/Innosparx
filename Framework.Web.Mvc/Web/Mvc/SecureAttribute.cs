@@ -8,7 +8,6 @@ namespace Framework.Web.Mvc
     using System.Web;
     using System.Web.Mvc;
 
-    using Framework.Membership;
 
 
     /// <summary>Represents an attribute that is used to restrict access by callers to an action method.</summary>

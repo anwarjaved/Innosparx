@@ -20,7 +20,6 @@ namespace Framework.DataAccess.Impl
     using System.Web.Configuration;
 
     using Framework.Domain;
-    using Framework.Logging;
 
     using Container = Framework.Ioc.Container;
 
@@ -73,31 +72,22 @@ namespace Framework.DataAccess.Impl
 
         private void OnObjectMaterialized(object sender, ObjectMaterializedEventArgs e)
         {
-            using (var benchmark = Benchmark.Start())
+            IBaseEntity entity = e.Entity as IBaseEntity;
+            var entityFormatters = Container.TryGetAll<IEntityFormatter>();
+
+            if (entity != null)
             {
-                IBaseEntity entity = e.Entity as IBaseEntity;
-                var entityFormatters = Container.TryGetAll<IEntityFormatter>();
-
-                if (entity != null)
+                foreach (var formatter in entityFormatters)
                 {
-                    foreach (var formatter in entityFormatters)
+                    if (formatter.OnLoad(e.Entity.GetType(), entity))
                     {
-                        if (formatter.OnLoad(e.Entity.GetType(), entity))
-                        {
-                            ((ObjectContext)sender).ObjectStateManager.GetObjectStateEntry(e.Entity).AcceptChanges();
-                        }
+                        ((ObjectContext)sender).ObjectStateManager.GetObjectStateEntry(e.Entity).AcceptChanges();
                     }
-
-                    entity.OnLoad(this);
                 }
 
-                benchmark.Stop();
-
-                if (LoggingEnabled)
-                {
-                    Logger.Info(Logger.Completed(benchmark.TotalTime, true, "Entity Loaded: {0}".FormatString(e.Entity.GetType().Name)), RepositoryConstants.RepositoryComponent);
-                }
+                entity.OnLoad(this);
             }
+
         }
 
         ///-------------------------------------------------------------------------------------------------
@@ -119,18 +109,10 @@ namespace Framework.DataAccess.Impl
                 IEntityContext dbContext;
                 if (!this.weakContext.TryGetTarget(out dbContext))
                 {
-                    using (var benchmark = Benchmark.Start())
-                    {
-                        dbContext = EntityContextFactory.CreateContext(this.connectionString);
-                        this.weakContext.SetTarget(dbContext);
-                        ((IObjectContextAdapter)dbContext).ObjectContext.ObjectMaterialized += this.OnObjectMaterialized;
+                    dbContext = EntityContextFactory.CreateContext(this.connectionString);
+                    this.weakContext.SetTarget(dbContext);
+                    ((IObjectContextAdapter)dbContext).ObjectContext.ObjectMaterialized += this.OnObjectMaterialized;
 
-                        if (LoggingEnabled)
-                        {
-                            dbContext.Log += s => Logger.Info(s, RepositoryConstants.RepositoryComponent);
-                            Logger.Info(Logger.Completed(benchmark.TotalTime, true, "new EntityContext('{0}')".FormatString(this.connectionString)), RepositoryConstants.RepositoryComponent);
-                        }
-                    }
 
                 }
 
@@ -356,18 +338,8 @@ namespace Framework.DataAccess.Impl
         ///-------------------------------------------------------------------------------------------------
         public IRepository<TEntity> Get<TEntity>() where TEntity : class, IBaseEntity
         {
-            using (var benchmark = Benchmark.Start())
-            {
-                Repository<TEntity> repository = new Repository<TEntity>(this);
-
-                benchmark.Stop();
-
-                if (LoggingEnabled)
-                {
-                    Logger.Info(Logger.Completed(benchmark.TotalTime, true, "Get Repository: {0}".FormatString(typeof(TEntity).Name)), RepositoryConstants.RepositoryComponent);
-                }
-                return repository;
-            }
+            Repository<TEntity> repository = new Repository<TEntity>(this);
+            return repository;
         }
 
         ///-------------------------------------------------------------------------------------------------

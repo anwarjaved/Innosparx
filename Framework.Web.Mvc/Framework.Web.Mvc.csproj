@@ -99,10 +99,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\MvcConfigTask.cs" />
     <Compile Include="Tasks\KnockoutModelTask.cs" />
-    <Compile Include="TemplateExtensions.cs" />
-    <Compile Include="Templates\Impl\SiteAuthenticatedExpression.cs" />
-    <Compile Include="Templates\Impl\SiteRouteExpression.cs" />
-    <Compile Include="Templates\Impl\SiteUserExpression.cs" />
     <Compile Include="UrlHelperExtensions.cs" />
     <Compile Include="WebExtensions.cs" />
     <Compile Include="Web\Mvc\ContentSecurityPolicyFilterAttribute.cs" />
@@ -115,7 +111,6 @@
     <Compile Include="Web\Mvc\IHtmlRenderer.cs" />
     <Compile Include="Web\Mvc\ImportModelStateFromTempData.cs" />
     <Compile Include="Web\Mvc\JsonNetResult.cs" />
-    <Compile Include="Web\Mvc\LogFilter.cs" />
     <Compile Include="Web\Mvc\ModelStateTempDataTransfer.cs" />
     <Compile Include="Web\Mvc\MustacheView.cs" />
     <Compile Include="Web\Mvc\MustacheViewEngine.cs" />
@@ -161,21 +156,9 @@
       <Project>{3584966a-5232-4799-b386-a4b717be672b}</Project>
       <Name>Framework.Knockout</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Framework.Logging\Framework.Logging.csproj">
-      <Project>{1ad267ae-fb9c-4b9f-8b18-8397b558a631}</Project>
-      <Name>Framework.Logging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Framework.Membership\Framework.Membership.csproj">
-      <Project>{e2a7f9e1-bc7c-45cc-a92f-cdeddcedd61f}</Project>
-      <Name>Framework.Membership</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Framework.Serialization\Framework.Serialization.csproj">
       <Project>{d7b764bf-07ce-4782-aa8a-8dcbd36be9f2}</Project>
       <Name>Framework.Serialization</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Framework.Services\Framework.Services.csproj">
-      <Project>{3781da8c-c96f-4570-99e6-4b955819a107}</Project>
-      <Name>Framework.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Framework.Templates\Framework.Templates.csproj">
       <Project>{9ce8c87e-8589-4a15-bff9-530d3904788d}</Project>

@@ -7,7 +7,6 @@
     using System.Text;
     using System.Web.Http.Filters;
 
-    using Framework.Logging;
 
     
     public class ApiExceptionFilter : ExceptionFilterAttribute
@@ -54,7 +53,6 @@
 
             if (!isUserException)
             {
-                Logger.Error(sb.ToString());
             }
 
             base.OnException(actionExecutedContext);
