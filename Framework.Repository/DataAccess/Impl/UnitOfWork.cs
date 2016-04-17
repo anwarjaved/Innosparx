@@ -20,7 +20,6 @@ namespace Framework.DataAccess.Impl
     using System.Web.Configuration;
 
     using Framework.Domain;
-    using Framework.Logging;
 
     using Container = Framework.Ioc.Container;
 
@@ -50,7 +49,7 @@ namespace Framework.DataAccess.Impl
         ///     (optional) the log enabled.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        public UnitOfWork(string nameOrConnectionString, bool logEnabled = false)
+        public UnitOfWork(string nameOrConnectionString)
         {
             if (string.IsNullOrWhiteSpace(nameOrConnectionString))
             {
@@ -67,36 +66,25 @@ namespace Framework.DataAccess.Impl
             }
 
             this.connectionString = nameOrConnectionString;
-            this.LoggingEnabled = logEnabled;
             this.weakContext = new WeakReference<IEntityContext>(null);
         }
 
         private void OnObjectMaterialized(object sender, ObjectMaterializedEventArgs e)
         {
-            using (var benchmark = Benchmark.Start())
+            IBaseEntity entity = e.Entity as IBaseEntity;
+            var entityFormatters = Container.TryGetAll<IEntityFormatter>();
+
+            if (entity != null)
             {
-                IBaseEntity entity = e.Entity as IBaseEntity;
-                var entityFormatters = Container.TryGetAll<IEntityFormatter>();
-
-                if (entity != null)
+                foreach (var formatter in entityFormatters)
                 {
-                    foreach (var formatter in entityFormatters)
+                    if (formatter.OnLoad(e.Entity.GetType(), entity))
                     {
-                        if (formatter.OnLoad(e.Entity.GetType(), entity))
-                        {
-                            ((ObjectContext)sender).ObjectStateManager.GetObjectStateEntry(e.Entity).AcceptChanges();
-                        }
+                        ((ObjectContext)sender).ObjectStateManager.GetObjectStateEntry(e.Entity).AcceptChanges();
                     }
-
-                    entity.OnLoad(this);
                 }
 
-                benchmark.Stop();
-
-                if (LoggingEnabled)
-                {
-                    Logger.Info(Logger.Completed(benchmark.TotalTime, true, "Entity Loaded: {0}".FormatString(e.Entity.GetType().Name)), RepositoryConstants.RepositoryComponent);
-                }
+                entity.OnLoad(this);
             }
         }
 
@@ -119,19 +107,9 @@ namespace Framework.DataAccess.Impl
                 IEntityContext dbContext;
                 if (!this.weakContext.TryGetTarget(out dbContext))
                 {
-                    using (var benchmark = Benchmark.Start())
-                    {
-                        dbContext = EntityContextFactory.CreateContext(this.connectionString);
-                        this.weakContext.SetTarget(dbContext);
-                        ((IObjectContextAdapter)dbContext).ObjectContext.ObjectMaterialized += this.OnObjectMaterialized;
-
-                        if (LoggingEnabled)
-                        {
-                            dbContext.Log += s => Logger.Info(s, RepositoryConstants.RepositoryComponent);
-                            Logger.Info(Logger.Completed(benchmark.TotalTime, true, "new EntityContext('{0}')".FormatString(this.connectionString)), RepositoryConstants.RepositoryComponent);
-                        }
-                    }
-
+                    dbContext = EntityContextFactory.CreateContext(this.connectionString);
+                    this.weakContext.SetTarget(dbContext);
+                    ((IObjectContextAdapter)dbContext).ObjectContext.ObjectMaterialized += this.OnObjectMaterialized;
                 }
 
                 return dbContext;
@@ -356,18 +334,9 @@ namespace Framework.DataAccess.Impl
         ///-------------------------------------------------------------------------------------------------
         public IRepository<TEntity> Get<TEntity>() where TEntity : class, IBaseEntity
         {
-            using (var benchmark = Benchmark.Start())
-            {
-                Repository<TEntity> repository = new Repository<TEntity>(this);
+            Repository<TEntity> repository = new Repository<TEntity>(this);
 
-                benchmark.Stop();
-
-                if (LoggingEnabled)
-                {
-                    Logger.Info(Logger.Completed(benchmark.TotalTime, true, "Get Repository: {0}".FormatString(typeof(TEntity).Name)), RepositoryConstants.RepositoryComponent);
-                }
-                return repository;
-            }
+            return repository;
         }
 
         ///-------------------------------------------------------------------------------------------------
@@ -390,7 +359,7 @@ namespace Framework.DataAccess.Impl
         ///     An instance of <see cref="IUnitOfWork"/>.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        public IUnitOfWork With(string nameOrConnectionString, bool logEnabled = false)
+        public IUnitOfWork With(string nameOrConnectionString)
         {
             if (string.IsNullOrWhiteSpace(nameOrConnectionString))
             {
@@ -399,22 +368,12 @@ namespace Framework.DataAccess.Impl
 
             if (!Container.Contains<IUnitOfWork>(nameOrConnectionString))
             {
-                Container.Bind<IUnitOfWork>(nameOrConnectionString).ToMethod(() => new UnitOfWork(nameOrConnectionString, logEnabled));
+                Container.Bind<IUnitOfWork>(nameOrConnectionString).ToMethod(() => new UnitOfWork(nameOrConnectionString));
             }
 
             return Container.Get<IUnitOfWork>(nameOrConnectionString);
         }
 
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Gets or sets a value indicating whether the log is enabled.
-        /// </summary>
-        ///
-        /// <value>
-        ///     true if log enabled, false if not.
-        /// </value>
-        ///-------------------------------------------------------------------------------------------------
-        public bool LoggingEnabled { get; set; }
 
         private static bool HasChanged(DbEntityEntry entity)
         {

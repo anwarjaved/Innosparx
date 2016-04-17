@@ -16,8 +16,6 @@
     using Framework.Activator;
     using Framework.Configuration;
     using Framework.DataAnnotations;
-    using Framework.Localization;
-    using Framework.Logging;
     using Framework.Serialization.Json;
 
     using Container = Framework.Ioc.Container;
@@ -86,46 +84,33 @@
             {
                 Directory.CreateDirectory(folderPath);
             }
+            string fileName = Path.Combine(folderPath, "models.js");
 
-            Array languages = localizationEnabled ? Enum.GetValues(typeof(LanguageCode)) : new[] { (byte)LanguageCode.English };
-
-            foreach (var value in languages)
+            if (!File.Exists(fileName))
             {
-                var language = ((LanguageCode)value);
-
-                string fileName = language == LanguageCode.English ? Path.Combine(folderPath, "models.js") : Path.Combine(folderPath, "models." + language.ToString("G").ToLowerInvariant() + ".js");
-
-                if (!File.Exists(fileName))
+                //Logger.Info(Logger.Executing("Building Knockout Model: {0}".FormatString(fileName)));
+                using (Benchmark benchmark = Benchmark.Start())
                 {
-                    Logger.Info(Logger.Executing("Building Knockout Model: {0}".FormatString(fileName)));
-                    using (Benchmark benchmark = Benchmark.Start())
+                    try
                     {
-                        try
+
+                        using (StreamWriter stream = new StreamWriter(fileName, false, Encoding.UTF8))
                         {
-                            CultureInfo currentCulture = new CultureInfo(LocalizationManager.GetLanguageLCID(language));
+                            stream.Write(Build(list));
 
-                            using (StreamWriter stream = new StreamWriter(fileName, false, Encoding.UTF8))
-                            {
-                                stream.Write(Build(list, currentCulture));
-
-                            }
-
-                            Logger.Info(Logger.Completed(benchmark.TotalTime, true, "Building Knockout Model: {0}".FormatString(fileName)), KOConstants.KnockoutBuilderComponent);
-
-                        }
-                        catch (Exception exception)
-                        {
-                            Logger.Error(Logger.Failed(benchmark.TotalTime, "Building Knockout Model: {0}".FormatString(fileName)), KOConstants.KnockoutBuilderComponent);
-                            Logger.Error(exception, KOConstants.KnockoutBuilderComponent);
                         }
                     }
-
+                    catch (Exception exception)
+                    {
+                    }
                 }
+
             }
+
         }
 
-        
-        private static string Build(IReadOnlyList<Type> list, CultureInfo currentCulture)
+
+        private static string Build(IReadOnlyList<Type> list)
         {
             List<Type> extraTypes = new List<Type>();
 
@@ -144,7 +129,7 @@
                         }
                         else if (type.IsEnum)
                         {
-                            WriteEnumModel(type, writer, currentCulture);
+                            WriteEnumModel(type, writer);
                         }
                         writer.Indent--;
                     }
@@ -160,7 +145,7 @@
                             }
                             else if (type.IsEnum)
                             {
-                                WriteEnumModel(type, writer, currentCulture);
+                                WriteEnumModel(type, writer);
                             }
                             writer.Indent--;
                         }
@@ -531,7 +516,7 @@
             return sb.ToString();
         }
 
-        private static void WriteEnumModel(Type type, IndentedTextWriter writer, CultureInfo currentCulture)
+        private static void WriteEnumModel(Type type, IndentedTextWriter writer)
         {
             writer.WriteLine("var " + type.Name + " = [");
             int index = 1;
@@ -548,7 +533,7 @@
                 string description = null;
                 if (attribs != null)
                 {
-                    description = attribs.GetLocalizedDescription(currentCulture);
+                    description = attribs.GetLocalizedDescription();
                 }
                 if (string.IsNullOrWhiteSpace(description))
                 {
@@ -575,7 +560,7 @@
                 string description = null;
                 if (attribs != null)
                 {
-                    description = attribs.GetLocalizedDescription(currentCulture);
+                    description = attribs.GetLocalizedDescription();
                 }
                 if (string.IsNullOrWhiteSpace(description))
                 {

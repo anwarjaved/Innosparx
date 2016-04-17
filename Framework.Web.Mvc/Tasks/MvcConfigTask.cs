@@ -50,7 +50,6 @@
         private static void ConfigureFilters(Config config)
         {
             var filters = GlobalFilters.Filters;
-            filters.Add(new LogFilter());
 
             if (config.Application.EnableTurboLinks)
             {

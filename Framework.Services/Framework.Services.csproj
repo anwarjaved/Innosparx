@@ -64,17 +64,9 @@
       <Project>{d2b3e2d2-9496-4f51-9db0-6ec0379dd3ad}</Project>
       <Name>Framework.Ioc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Framework.Logging\Framework.Logging.csproj">
-      <Project>{1ad267ae-fb9c-4b9f-8b18-8397b558a631}</Project>
-      <Name>Framework.Logging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Framework.Membership\Framework.Membership.csproj">
       <Project>{e2a7f9e1-bc7c-45cc-a92f-cdeddcedd61f}</Project>
       <Name>Framework.Membership</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Framework.MessageQueue\Framework.MessageQueue.csproj">
-      <Project>{116F75D4-5677-4779-897C-E15D485F647B}</Project>
-      <Name>Framework.MessageQueue</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

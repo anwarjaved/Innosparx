@@ -95,27 +95,12 @@
         /// <param name="nameOrConnectionString">
         ///     The name or connection string.
         /// </param>
-        /// <param name="logEnabled">
-        ///     (optional) the log enabled.
-        /// </param>
         ///
         /// <returns>
         ///     An instance of <see cref="IUnitOfWork"/>.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        IUnitOfWork With(string nameOrConnectionString, bool logEnabled = true);
+        IUnitOfWork With(string nameOrConnectionString);
 
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Gets a value indicating whether the log is enabled.
-        /// </summary>
-        ///
-        /// <value>
-        ///     true if log enabled, false if not.
-        /// </value>
-        ///-------------------------------------------------------------------------------------------------
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool LoggingEnabled { get; }
     }
 }

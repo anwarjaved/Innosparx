@@ -11,7 +11,6 @@ namespace Framework.Ioc
     using System.Web.UI;
 
     using Framework.Activator;
-    using Framework.Logging;
 
     
     internal class MvcDependencyResolver : System.Web.Mvc.IDependencyResolver
@@ -23,43 +22,15 @@ namespace Framework.Ioc
         
         public object GetService(Type serviceType)
         {
-            using (var benchmark = Benchmark.Start())
-            {
-                var service = Container.TryGet(serviceType);
-
-                benchmark.Stop();
-                if (service == null)
-                {
-                    Logger.Warn(Logger.Completed(benchmark.TotalTime, false, serviceType.Name), WebConstants.IoCComponent);
-                }
-                else
-                {
-                    Logger.Info(Logger.Completed(benchmark.TotalTime, true, serviceType.Name), WebConstants.IoCComponent);
-                }
-
-                return service;
-            }
+            var service = Container.TryGet(serviceType);
+            return service;
         }
 
         
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            using (var benchmark = Benchmark.Start())
-            {
-                IReadOnlyList<object> services = Container.TryGetAll(serviceType);
-
-                benchmark.Stop();
-                if (services.Count == 0)
-                {
-                    Logger.Warn(Logger.Completed(benchmark.TotalTime, false, serviceType.Name), WebConstants.IoCComponent);
-                }
-                else
-                {
-                    Logger.Info(Logger.Completed(benchmark.TotalTime, true, serviceType.Name), WebConstants.IoCComponent);
-                }
-
-                return services;
-            }
+            IReadOnlyList<object> services = Container.TryGetAll(serviceType);
+            return services;
         }
 
         /// <summary>

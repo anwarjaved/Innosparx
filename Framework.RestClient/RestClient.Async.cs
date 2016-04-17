@@ -9,7 +9,6 @@ namespace Framework.Rest
     using System.Net;
     using System.Text;
 
-    using Framework.Logging;
     using Framework.Reflection;
     using Framework.Serialization;
     using Framework.Serialization.Json;
@@ -400,11 +399,6 @@ namespace Framework.Rest
                 response.Status = ResponseStatus.Error;
                 response.ErrorMessage = ex.Message;
                 response.ErrorException = new RestException(ex.Message, response.StatusCode, response.ErrorException);
-            }
-
-            if (LogEnabled)
-            {
-                Logger.Info(sb.ToString(), RestConstants.RestComponent);
             }
 
             return response;
