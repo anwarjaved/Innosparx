@@ -1840,8 +1840,8 @@ namespace Framework.Membership
                                    new Claim(ClaimTypes.Name, account.FirstName),
                                    new Claim(ClaimTypes.Surname, account.LastName),
                                    new Claim(ClaimTypes.NameIdentifier, account.ID.ToString()),
-                                   new Claim(ClaimTypes.Email, account.Email),
-                                   new Claim(ClaimTypes.MobilePhone, account.Phone)
+                                   new Claim(ClaimTypes.Email, account.Email ?? ""),
+                                   new Claim(ClaimTypes.MobilePhone, account.Phone ?? "")
                                };
 
                 list.AddRange(account.Roles.Select(r => r.Name).Select(role => new Claim(ClaimTypes.Role, role)));
@@ -1870,8 +1870,8 @@ namespace Framework.Membership
                                  new Claim(ClaimTypes.Name, account.FirstName ?? ""),
                                  new Claim(ClaimTypes.Surname, account.LastName ?? ""),
                                  new Claim(ClaimTypes.NameIdentifier, account.ID.ToString()),
-                                 new Claim(ClaimTypes.Email, account.Email),
-                                   new Claim(ClaimTypes.MobilePhone, account.Phone)
+                                 new Claim(ClaimTypes.Email, account.Email ?? ""),
+                                   new Claim(ClaimTypes.MobilePhone, account.Phone ?? "")
                              };
 
                 claimList.AddRange(account.Roles.Select(r => r.Name).Select(role => new Claim(ClaimTypes.Role, role)));
