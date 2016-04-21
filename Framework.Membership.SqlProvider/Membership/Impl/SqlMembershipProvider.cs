@@ -7,6 +7,7 @@
     using System.Linq.Expressions;
     using System.Reflection;
     using System.Security;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     using Framework.DataAccess;
@@ -41,6 +42,9 @@
 
         private static readonly MethodInfo ResetMembershipPasswordMethodDefinition = typeof(SqlMembershipProvider).GetMethod("ResetMembershipPassword", BindingFlags.Public | BindingFlags.Instance);
 
+        private static readonly Regex EmailRegex = new Regex(@"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
+
         /// -------------------------------------------------------------------------------------------------
         /// <summary>
         /// Gets all roles.
@@ -49,7 +53,7 @@
         /// all roles.
         /// </returns>
         /// -------------------------------------------------------------------------------------------------
-        
+
         public IReadOnlyList<IRole> GetAllRoles()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -306,8 +310,8 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     Thrown when the requested operation is invalid.
         /// </exception>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         ///
         /// <returns>
@@ -315,16 +319,16 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        public IReadOnlyList<IRole> GetRolesForUser(string email)
+        public IReadOnlyList<IRole> GetRolesForUser(string emailOrPhone)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
             IRepository<User> repository = unitOfWork.Get<User>();
 
-            User account = repository.One(u => u.Email == email.ToLower(), u => u.Roles);
+            User account = repository.One(u => u.Email == emailOrPhone.ToLower() || u.Phone == emailOrPhone, u => u.Roles);
 
             if (account == null)
             {
-                throw new InvalidOperationException("No User Exists with specified email.");
+                throw new InvalidOperationException("No User Exists with specified emailOrPhone.");
             }
 
             return account.Roles.ToList();
@@ -585,15 +589,15 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Gets user by email.
+        ///     Gets user by emailOrPhone.
         /// </summary>
         ///
         /// <exception cref="NotImplementedException">
         ///     Thrown when the requested operation is unimplemented.
         /// </exception>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="userIsOnline">
         ///     true to update the last-activity date/time stamp for the user; false to return user
@@ -601,17 +605,17 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         /// </param>
         ///
         /// <returns>
-        ///     The user by email.
+        ///     The user by emailOrPhone.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        public IUser GetUserByEmail(string email, bool userIsOnline)
+        public IUser GetUserByEmailOrPhone(string emailOrPhone, bool userIsOnline)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
             IRepository<User> repository = unitOfWork.Get<User>();
 
-            User user = repository.One(u => u.Email == email.ToLower(), u => u.Roles);
+            User user = repository.One(u => u.Email == emailOrPhone.ToLower() || u.Phone == emailOrPhone, u => u.Roles);
 
             if (userIsOnline && user != null)
             {
@@ -625,7 +629,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Gets membership user by email.
+        ///     Gets membership user by emailOrPhone.
         /// </summary>
         ///
         /// <remarks>
@@ -640,7 +644,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     Generic type parameter.
         /// </typeparam>
         /// <param name="email">
-        ///     The email.
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="userIsOnline">
         ///     true to update the last-activity date/time stamp for the user; false to return user
@@ -648,7 +652,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         /// </param>
         ///
         /// <returns>
-        ///     The membership user by email&lt; t&gt;
+        ///     The membership user by emailOrPhone&lt; t&gt;
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -666,7 +670,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
 
             IRepository<T> repository = unitOfWork.Get<T>();
 
-            T user = repository.One(u => u.Email == email.ToLower(), u => u.Roles);
+            T user = repository.One(u => u.Email == email.ToLower() || u.Phone == email, u => u.Roles);
 
             if (userIsOnline && user != null)
             {
@@ -679,7 +683,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         }
 
         
-        T IMembershipProvider.GetUserByEmail<T>(string email, bool userIsOnline)
+        T IMembershipProvider.GetUserByEmailOrPhone<T>(string emailOrPhone, bool userIsOnline)
         {
             Type type = typeof(T);
 
@@ -698,7 +702,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
                 new Expression[]
                 {
 
-                    Expression.Constant(email, typeof(string)), Expression.Constant(userIsOnline, typeof(bool))
+                    Expression.Constant(emailOrPhone, typeof(string)), Expression.Constant(userIsOnline, typeof(bool))
                 });
 
             Func<SqlMembershipProvider, T> func = Expression.Lambda<Func<SqlMembershipProvider, T>>(callExpression, instance).Compile();
@@ -718,7 +722,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
 
             IRepository<T> repository = unitOfWork.Get<T>();
 
-            T user = repository.Where(u => u.Email == email.ToLower(), u => u.Roles).Where(predicate).FirstOrDefault();
+            T user = repository.Where(u => u.Email == email.ToLower() || u.Phone == email, u => u.Roles).Where(predicate).FirstOrDefault();
 
             if (userIsOnline && user != null)
             {
@@ -731,7 +735,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         }
 
         
-        T IMembershipProvider.GetUserByEmail<T>(string email, Expression<Func<T, bool>> predicate, bool userIsOnline)
+        T IMembershipProvider.GetUserByEmailOrPhone<T>(string emailOrPhone, Expression<Func<T, bool>> predicate, bool userIsOnline)
         {
             Type type = typeof(T);
 
@@ -749,7 +753,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
                 method,
                 new Expression[]
                 {
-                    Expression.Constant(email, typeof(string)), Expression.Constant(predicate, typeof(Expression<Func<T, bool>>)), Expression.Constant(userIsOnline, typeof(bool))
+                    Expression.Constant(emailOrPhone, typeof(string)), Expression.Constant(predicate, typeof(Expression<Func<T, bool>>)), Expression.Constant(userIsOnline, typeof(bool))
                 });
 
             Func<SqlMembershipProvider, T> func = Expression.Lambda<Func<SqlMembershipProvider, T>>(callExpression, instance).Compile();
@@ -835,8 +839,8 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     Thrown when the requested operation is unimplemented.
         /// </exception>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="password">
         ///     The password.
@@ -859,20 +863,28 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        public IUser CreateUser(string email, string password, string firstName, string lastName, bool isVerified, params IRole[] roles)
+        public IUser CreateUser(string emailOrPhone, string password, string firstName, string lastName, bool isVerified, params IRole[] roles)
         {
-            AccountPasswordInfo accountPasswordInfo = new AccountPasswordInfo(email, password);
+            AccountPasswordInfo accountPasswordInfo = new AccountPasswordInfo(emailOrPhone, password);
             string encryptedPassword = MembershipManager.PasswordStrategy.Encrypt(accountPasswordInfo);
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
             IRepository<User> repository = unitOfWork.Get<User>();
             User user = new User
                         {
-                            Email = email,
                             Password = new PasswordInfo() { Value = encryptedPassword, Salt = accountPasswordInfo.PasswordSalt, },
                             FirstName = firstName,
                             LastName = lastName,
                             IsVerified = isVerified
                         };
+
+            if (EmailRegex.IsMatch(emailOrPhone))
+            {
+                user.Email = emailOrPhone;
+            }
+            else
+            {
+                user.Phone = emailOrPhone;
+            }
 
             if (roles != null)
             {
@@ -896,7 +908,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
         ///     Generic type parameter.
         /// </typeparam>
         /// <param name="email">
-        ///     The email.
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="password">
         ///     The password.
@@ -932,12 +944,20 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
             IRepository<T> repository = unitOfWork.Get<T>();
             T user = new T
             {
-                Email = email,
                 Password = new PasswordInfo() { Value = encryptedPassword, Salt = accountPasswordInfo.PasswordSalt, },
                 FirstName = firstName,
                 LastName = lastName,
                 IsVerified = isVerified
             };
+
+            if (EmailRegex.IsMatch(email))
+            {
+                user.Email = email;
+            }
+            else
+            {
+                user.Phone = email;
+            }
 
             if (roles != null)
             {
@@ -1013,8 +1033,8 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// <typeparam name="T">
         ///     Generic type parameter.
         /// </typeparam>
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="password">
         ///     The password.
@@ -1040,7 +1060,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        public T CreateUser<T>(string email, string password, string firstName, string lastName, bool isVerified, Action<T> action, params IRole[] roles)
+        public T CreateUser<T>(string emailOrPhone, string password, string firstName, string lastName, bool isVerified, Action<T> action, params IRole[] roles)
             where T : IUser, new()
         {
             Type type = typeof(T);
@@ -1058,7 +1078,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
                 method,
                 new Expression[]
                 {
-                    Expression.Constant(email, typeof(string)), Expression.Constant(password, typeof(string)), Expression.Constant(firstName, typeof(string)),
+                    Expression.Constant(emailOrPhone, typeof(string)), Expression.Constant(password, typeof(string)), Expression.Constant(firstName, typeof(string)),
                     Expression.Constant(lastName, typeof(string)), Expression.Constant(isVerified, typeof(bool)), Expression.Constant(action, typeof(Action<T>)),
                     Expression.Constant(roles, typeof(IRole[]))
                 });
@@ -1092,11 +1112,11 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Query if 'email' is user in role.
+        ///     Query if 'emailOrPhone' is user in role.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="roleName">
         ///     Name of the role.
@@ -1107,13 +1127,13 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        public bool IsUserInRole(string email, string roleName)
+        public bool IsUserInRole(string emailOrPhone, string roleName)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
             IRepository<User> repository = unitOfWork.Get<User>();
 
-            return repository.Exists(u => u.Email == email.ToLower() && u.Roles.Any(x => x.Name == roleName));
+            return repository.Exists(u => (u.Email == emailOrPhone.ToLower() || u.Phone == emailOrPhone) && u.Roles.Any(x => x.Name == roleName));
         }
 
         ///-------------------------------------------------------------------------------------------------
@@ -1121,8 +1141,8 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     Gets a password.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         ///
         /// <returns>
@@ -1130,14 +1150,14 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        public string GetPassword(string email)
+        public string GetPassword(string emailOrPhone)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
             IRepository<User> repository = unitOfWork.Get<User>();
 
 
-            var account = repository.One(u => u.Email == email.ToLower());
+            var account = repository.One(u => u.Email == emailOrPhone.ToLower() || u.Phone == emailOrPhone);
 
             return MembershipManager.PasswordStrategy.Decrypt(account.Password.Value, account.Password.Salt);
         }
@@ -1147,8 +1167,8 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     Change password.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="oldPassword">
         ///     The old password.
@@ -1162,14 +1182,14 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        public bool ChangePassword(string email, string oldPassword, string newPassword)
+        public bool ChangePassword(string emailOrPhone, string oldPassword, string newPassword)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
             IRepository<User> repository = unitOfWork.Get<User>();
 
 
-            var account = repository.One(u => u.Email == email.ToLower());
+            var account = repository.One(u => u.Email == emailOrPhone.ToLower() || u.Phone == emailOrPhone);
 
             if (account != null && !account.IsLockedOut && account.IsVerified && !account.IsSuspended)
             {
@@ -1200,7 +1220,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     Generic type parameter.
         /// </typeparam>
         /// <param name="email">
-        ///     The email.
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="oldPassword">
         ///     The old password.
@@ -1221,7 +1241,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
 
             IRepository<T> repository = unitOfWork.Get<T>();
 
-            IQueryable<T> queryable = repository.Where(u => u.Email == email.ToLower());
+            IQueryable<T> queryable = repository.Where(u => u.Email == email.ToLower() || u.Phone == email);
             if (predicate != null)
             {
                 queryable = queryable.Where(predicate);
@@ -1260,8 +1280,8 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// <typeparam name="T">
         ///     Generic type parameter.
         /// </typeparam>
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="oldPassword">
         ///     The old password.
@@ -1275,7 +1295,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        bool IMembershipProvider.ChangePassword<T>(string email, string oldPassword, string newPassword, Expression<Func<T, bool>> predicate)
+        bool IMembershipProvider.ChangePassword<T>(string emailOrPhone, string oldPassword, string newPassword, Expression<Func<T, bool>> predicate)
         {
             Type type = typeof(T);
 
@@ -1293,7 +1313,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
                 method,
                 new Expression[]
                 {
-                    Expression.Constant(email, typeof(string)), 
+                    Expression.Constant(emailOrPhone, typeof(string)), 
                     Expression.Constant(oldPassword, typeof(string)),
                      Expression.Constant(newPassword, typeof(string)),
                                       Expression.Constant(predicate, typeof(Expression<Func<T, bool>>)),
@@ -1305,11 +1325,11 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Resets the password described by email.
+        ///     Resets the password described by emailOrPhone.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         ///
         /// <returns>
@@ -1317,14 +1337,14 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        public string ResetPassword(string email)
+        public string ResetPassword(string emailOrPhone)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
             IRepository<User> repository = unitOfWork.Get<User>();
 
 
-            var account = repository.One(u => u.Email == email.ToLower());
+            var account = repository.One(u => u.Email == emailOrPhone.ToLower() || u.Phone == emailOrPhone);
 
             if (account != null && account.IsVerified && !account.IsSuspended)
             {
@@ -1341,7 +1361,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Resets the membership password described by email.
+        ///     Resets the membership password described by emailOrPhone.
         /// </summary>
         ///
         /// <remarks>
@@ -1352,7 +1372,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     Generic type parameter.
         /// </typeparam>
         /// <param name="email">
-        ///     The email.
+        ///     The emailOrPhone.
         /// </param>
         ///
         /// <returns>
@@ -1366,7 +1386,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
 
             IRepository<T> repository = unitOfWork.Get<T>();
 
-            IQueryable<T> queryable = repository.Where(u => u.Email == email.ToLower());
+            IQueryable<T> queryable = repository.Where(u => u.Email == email.ToLower() || u.Phone == email);
 
             if (predicate != null)
             {
@@ -1388,7 +1408,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         }
 
         
-        string IMembershipProvider.ResetPassword<T>(string email, Expression<Func<T, bool>> predicate)
+        string IMembershipProvider.ResetPassword<T>(string emailOrPhone, Expression<Func<T, bool>> predicate)
         {
             Type type = typeof(T);
 
@@ -1406,7 +1426,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
                 method,
                 new Expression[]
                 {
-                        Expression.Constant(email, typeof (string)),
+                        Expression.Constant(emailOrPhone, typeof (string)),
                         Expression.Constant(predicate, typeof (Expression<Func<T, bool>>)),
                 });
 
@@ -1427,8 +1447,8 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     Thrown when one or more arguments have unsupported or illegal values.
         /// </exception>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="password">
         ///     The password.
@@ -1442,13 +1462,13 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        public bool ValidateUser(string email, string password, Func<IUser, bool> validatorCallback = null)
+        public bool ValidateUser(string emailOrPhone, string password, Func<IUser, bool> validatorCallback = null)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
             IRepository<User> repository = unitOfWork.Get<User>();
 
-            var account = repository.One(u => u.Email == email.ToLower());
+            var account = repository.One(u => u.Email == emailOrPhone.ToLower() || u.Phone == emailOrPhone);
 
 
             if (account != null && account.IsVerified && !account.IsSuspended && !account.IsLockedOut)
@@ -1518,7 +1538,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     Generic type parameter.
         /// </typeparam>
         /// <param name="email">
-        ///     The email.
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="password">
         ///     The password.
@@ -1539,7 +1559,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
 
             IRepository<T> repository = unitOfWork.Get<T>();
 
-            IQueryable<T> queryable = repository.Where(u => u.Email == email.ToLower());
+            IQueryable<T> queryable = repository.Where(u => u.Email == email.ToLower() || u.Phone == email);
             if (predicate != null)
             {
                 queryable = queryable.Where(predicate);
@@ -1600,7 +1620,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         }
 
         
-        bool IMembershipProvider.ValidateUser<T>(string email, string password, Expression<Func<T, bool>> predicate, Func<T, bool> validatorCallback)
+        bool IMembershipProvider.ValidateUser<T>(string emailOrPhone, string password, Expression<Func<T, bool>> predicate, Func<T, bool> validatorCallback)
         {
             Type type = typeof(T);
 
@@ -1618,7 +1638,7 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
                 method,
                 new Expression[]
                 {
-                        Expression.Constant(email, typeof(string)), Expression.Constant(password, typeof(string)),
+                        Expression.Constant(emailOrPhone, typeof(string)), Expression.Constant(password, typeof(string)),
                         Expression.Constant(predicate, typeof(Expression<Func<T, bool>>)),
                     Expression.Constant(validatorCallback, typeof(Func<T, bool>))
                 });
@@ -1632,8 +1652,8 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     Unlocks the user.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         ///
         /// <returns>
@@ -1641,14 +1661,14 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         
-        public bool UnlockUser(string email)
+        public bool UnlockUser(string emailOrPhone)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
             IRepository<User> repository = unitOfWork.Get<User>();
 
 
-            var account = repository.One(u => u.Email == email.ToLower());
+            var account = repository.One(u => u.Email == emailOrPhone.ToLower() || u.Phone == emailOrPhone);
             if (account != null)
             {
                 account.IsLockedOut = false;
@@ -1692,25 +1712,25 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         ///     Adds the users to roles to 'roleNames'.
         /// </summary>
         ///
-        /// <param name="emails">
-        ///     The emails.
+        /// <param name="emailsOrPhones">
+        ///     The emailsOrPhones.
         /// </param>
         /// <param name="roleNames">
         ///     List of names of the roles.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
         
-        public void AddUsersToRoles(ICollection<string> emails, ICollection<string> roleNames)
+        public void AddUsersToRoles(ICollection<string> emailsOrPhones, ICollection<string> roleNames)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
             IRepository<User> repository = unitOfWork.Get<User>();
             IRepository<Role> roleRepository = unitOfWork.Get<Role>();
 
             var roles = roleRepository.Where(r => roleNames.Contains(r.Name));
-            foreach (string email in emails)
+            foreach (string email in emailsOrPhones)
             {
                 string userEmail = email;
-                User account = repository.One(u => u.Email == userEmail.ToLower(), u => u.Roles);
+                User account = repository.One(u => u.Email == userEmail.ToLower() || u.Phone == userEmail, u => u.Roles);
 
                 foreach (Role role in roles)
                 {
@@ -1727,20 +1747,20 @@ typeof(SqlMembershipProvider).GetMethod("DeleteMemebershipRole", BindingFlags.Pu
         /// <summary>
         /// Removes the users from roles.
         /// </summary>
-        /// <param name="emails">The emails.</param>
+        /// <param name="emailsOrPhones">The emailsOrPhones.</param>
         /// <param name="roleNames">The role names.</param>
         
-        public void RemoveUsersFromRoles(ICollection<string> emails, ICollection<string> roleNames)
+        public void RemoveUsersFromRoles(ICollection<string> emailsOrPhones, ICollection<string> roleNames)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
             IRepository<User> repository = unitOfWork.Get<User>();
             IRepository<Role> roleRepository = unitOfWork.Get<Role>();
 
             var roles = roleRepository.Where(r => roleNames.Contains(r.Name));
-            foreach (string email in emails)
+            foreach (string emailOrPhone in emailsOrPhones)
             {
-                string userEmail = email;
-                User account = repository.One(u => u.Email == userEmail.ToLower(), u => u.Roles);
+                string value = emailOrPhone;
+                User account = repository.One(u => u.Email == value.ToLower() || u.Phone == value, u => u.Roles);
 
                 foreach (Role role in roles)
                 {

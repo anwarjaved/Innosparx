@@ -105,15 +105,15 @@ namespace Framework.Membership
         ///     Gets roles for user.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         ///
         /// <returns>
         ///     The roles for user.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        IReadOnlyList<IRole> GetRolesForUser(string email);
+        IReadOnlyList<IRole> GetRolesForUser(string emailOrPhone);
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
@@ -230,11 +230,11 @@ namespace Framework.Membership
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Gets user by email.
+        ///     Gets user by emailOrPhone.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="userIsOnline">
         ///     true to update the last-activity date/time stamp for the user; false to return user
@@ -242,18 +242,18 @@ namespace Framework.Membership
         /// </param>
         ///
         /// <returns>
-        ///     The user by email.
+        ///     The user by emailOrPhone.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        IUser GetUserByEmail(string email, bool userIsOnline);
+        IUser GetUserByEmailOrPhone(string emailOrPhone, bool userIsOnline);
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Gets user by email.
+        ///     Gets user by emailOrPhone.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="userIsOnline">
         ///     true to update the last-activity date/time stamp for the user; false to return user
@@ -261,23 +261,23 @@ namespace Framework.Membership
         /// </param>
         ///
         /// <returns>
-        ///     The user by email.
+        ///     The user by emailOrPhone.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        T GetUserByEmail<T>(string email, bool userIsOnline) where T : IUser, new();
+        T GetUserByEmailOrPhone<T>(string emailOrPhone, bool userIsOnline) where T : IUser, new();
 
         /// <summary>
-        /// Gets user by email.
+        /// Gets user by emailOrPhone.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="email">The email.</param>
+        /// <param name="emailOrPhone">The emailOrPhone.</param>
         /// <param name="predicate">The predicate.</param>
         /// <param name="userIsOnline">true to update the last-activity date/time stamp for the user; false to return user
         /// information without updating the last-activity date/time stamp for the user.</param>
-        /// <returns>The user by email.</returns>
+        /// <returns>The user by emailOrPhone.</returns>
         /// -------------------------------------------------------------------------------------------------
         /// -------------------------------------------------------------------------------------------------
-        T GetUserByEmail<T>(string email, Expression<Func<T, bool>> predicate, bool userIsOnline) where T : IUser, new();
+        T GetUserByEmailOrPhone<T>(string emailOrPhone, Expression<Func<T, bool>> predicate, bool userIsOnline) where T : IUser, new();
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
@@ -293,7 +293,7 @@ namespace Framework.Membership
         /// <summary>
         /// Adds a new membership user to the data source.
         /// </summary>
-        /// <param name="email">The e-mail address for the new user.</param>
+        /// <param name="emailOrPhone">The e-mail address for the new user.</param>
         /// <param name="password">The password for the new user.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
@@ -302,15 +302,15 @@ namespace Framework.Membership
         /// <returns>
         /// A <see cref="IUser"/> object populated with the information for the newly created user.
         /// </returns>
-        IUser CreateUser(string email, string password, string firstName, string lastName, bool isVerified, params IRole[] roles);
+        IUser CreateUser(string emailOrPhone, string password, string firstName, string lastName, bool isVerified, params IRole[] roles);
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Query if 'email' is user in role.
+        ///     Query if 'emailOrPhone' is user in role.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="roleName">
         ///     Name of the role.
@@ -320,30 +320,30 @@ namespace Framework.Membership
         ///     true if user in role, false if not.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        bool IsUserInRole(string email, string roleName);
+        bool IsUserInRole(string emailOrPhone, string roleName);
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
         ///     Gets a password.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         ///
         /// <returns>
         ///     The password.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        string GetPassword(string email);
+        string GetPassword(string emailOrPhone);
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
         ///     Change password.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="oldPassword">
         ///     The old password.
@@ -356,15 +356,15 @@ namespace Framework.Membership
         ///     true if it succeeds, false if it fails.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        bool ChangePassword(string email, string oldPassword, string newPassword);
+        bool ChangePassword(string emailOrPhone, string oldPassword, string newPassword);
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
         ///     Change password.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="oldPassword">
         ///     The old password.
@@ -377,45 +377,45 @@ namespace Framework.Membership
         ///     true if it succeeds, false if it fails.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        bool ChangePassword<T>(string email, string oldPassword, string newPassword, Expression<Func<T, bool>> predicate) where T : IUser, new();
+        bool ChangePassword<T>(string emailOrPhone, string oldPassword, string newPassword, Expression<Func<T, bool>> predicate) where T : IUser, new();
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Resets the password described by email.
+        ///     Resets the password described by emailOrPhone.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         ///
         /// <returns>
         ///     .
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        string ResetPassword(string email);
+        string ResetPassword(string emailOrPhone);
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
-        ///     Resets the password described by email.
+        ///     Resets the password described by emailOrPhone.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         ///
         /// <returns>
         ///     .
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        string ResetPassword<T>(string email, Expression<Func<T, bool>> predicate) where T : IUser, new();
+        string ResetPassword<T>(string emailOrPhone, Expression<Func<T, bool>> predicate) where T : IUser, new();
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
         ///     Validate user.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="password">
         ///     The password for the new user.
@@ -428,15 +428,15 @@ namespace Framework.Membership
         ///     true if it succeeds, false if it fails.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        bool ValidateUser(string email, string password, Func<IUser, bool> validatorCallback = null);
+        bool ValidateUser(string emailOrPhone, string password, Func<IUser, bool> validatorCallback = null);
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
         ///     Validate user.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="password">
         ///     The password for the new user.
@@ -449,22 +449,22 @@ namespace Framework.Membership
         ///     true if it succeeds, false if it fails.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        bool ValidateUser<T>(string email, string password, Expression<Func<T, bool>> predicate = null, Func<T, bool> validatorCallback = null) where T : IUser, new();
+        bool ValidateUser<T>(string emailOrPhone, string password, Expression<Func<T, bool>> predicate = null, Func<T, bool> validatorCallback = null) where T : IUser, new();
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
         ///     Unlocks the user.
         /// </summary>
         ///
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         ///
         /// <returns>
         ///     true if it succeeds, false if it fails.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        bool UnlockUser(string email);
+        bool UnlockUser(string emailOrPhone);
 
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
@@ -482,21 +482,21 @@ namespace Framework.Membership
         ///     Adds the users to roles to 'roleNames'.
         /// </summary>
         ///
-        /// <param name="emails">
-        ///     The emails.
+        /// <param name="emailsOrPhones">
+        ///     The emailsOrPhones.
         /// </param>
         /// <param name="roleNames">
         ///     List of names of the roles.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        void AddUsersToRoles(ICollection<string> emails, ICollection<string> roleNames);
+        void AddUsersToRoles(ICollection<string> emailsOrPhones, ICollection<string> roleNames);
 
         /// <summary>
         /// Removes the users from roles.
         /// </summary>
-        /// <param name="emails">The emails.</param>
+        /// <param name="emailsOrPhones">The emailsOrPhones.</param>
         /// <param name="roleNames">The role names.</param>
-        void RemoveUsersFromRoles(ICollection<string> emails, ICollection<string> roleNames);
+        void RemoveUsersFromRoles(ICollection<string> emailsOrPhones, ICollection<string> roleNames);
 
 
         ///-------------------------------------------------------------------------------------------------
@@ -534,8 +534,8 @@ namespace Framework.Membership
         /// <typeparam name="T">
         ///     Generic type parameter.
         /// </typeparam>
-        /// <param name="email">
-        ///     The email.
+        /// <param name="emailOrPhone">
+        ///     The emailOrPhone.
         /// </param>
         /// <param name="password">
         ///     The password.
@@ -560,7 +560,7 @@ namespace Framework.Membership
         ///     The new user&lt; t&gt;
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        T CreateUser<T>(string email, string password, string firstName, string lastName, bool isVerified, Action<T> action = null, params IRole[] roles)
+        T CreateUser<T>(string emailOrPhone, string password, string firstName, string lastName, bool isVerified, Action<T> action = null, params IRole[] roles)
             where T : IUser, new();
     }
 }

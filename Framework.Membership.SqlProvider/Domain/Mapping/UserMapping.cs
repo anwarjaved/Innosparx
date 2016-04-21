@@ -17,7 +17,7 @@
         ///-------------------------------------------------------------------------------------------------
         public UserMapping()
         {
-            this.Property(c => c.Email).IsRequired().IsUnicode().HasMaxLength(256);
+            this.Property(c => c.Email).IsOptional().IsUnicode().HasMaxLength(256);
             this.Property(c => c.FirstName).IsRequired().IsUnicode().HasMaxLength(256);
             this.Property(c => c.LastName).IsUnicode().HasMaxLength(256);
             this.Property(c => c.IsVerified);
@@ -30,7 +30,6 @@
             this.Property(c => c.IsLockedOut);
             this.Property(c => c.LastPasswordChangedDate);
             this.Property(a => a.Phone).IsUnicode().HasMaxLength(20).IsOptional();
-            this.Property(a => a.CompanyName).IsUnicode().HasMaxLength(256).IsOptional();
 
             this.ToTable("Users");
             this.HasMany(u => u.Roles).WithMany(r => r.Users).Map(
