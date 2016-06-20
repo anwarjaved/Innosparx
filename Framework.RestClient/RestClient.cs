@@ -93,7 +93,5 @@
 
             return ResponseMode.None;
         }
-
-        public bool LogEnabled { get; set; }
     }
 }

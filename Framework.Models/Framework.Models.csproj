@@ -54,8 +54,6 @@
     <Compile Include="PagingStyle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteModel.cs" />
-    <Compile Include="SystemLogGroupModel.cs" />
-    <Compile Include="SystemLogModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\key.snk">
@@ -75,10 +73,6 @@
     <ProjectReference Include="..\Framework.Knockout\Framework.Knockout.csproj">
       <Project>{3584966a-5232-4799-b386-a4b717be672b}</Project>
       <Name>Framework.Knockout</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Framework.Logging\Framework.Logging.csproj">
-      <Project>{1ad267ae-fb9c-4b9f-8b18-8397b558a631}</Project>
-      <Name>Framework.Logging</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

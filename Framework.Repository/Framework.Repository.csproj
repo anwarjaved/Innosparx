@@ -134,10 +134,6 @@
       <Project>{d2b3e2d2-9496-4f51-9db0-6ec0379dd3ad}</Project>
       <Name>Framework.Ioc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Framework.Logging\Framework.Logging.csproj">
-      <Project>{1ad267ae-fb9c-4b9f-8b18-8397b558a631}</Project>
-      <Name>Framework.Logging</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(ProjectDir)\..\AssemblyInfo.Version.Targets" />

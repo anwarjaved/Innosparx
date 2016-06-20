@@ -29,8 +29,6 @@
             this.Property(c => c.LastLoginDate);
             this.Property(c => c.IsLockedOut);
             this.Property(c => c.LastPasswordChangedDate);
-            this.Property(a => a.Phone).IsUnicode().HasMaxLength(20).IsOptional();
-            this.Property(a => a.CompanyName).IsUnicode().HasMaxLength(256).IsOptional();
 
             this.ToTable("Users");
             this.HasMany(u => u.Roles).WithMany(r => r.Users).Map(

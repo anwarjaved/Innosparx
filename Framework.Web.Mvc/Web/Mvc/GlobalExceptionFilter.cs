@@ -7,7 +7,6 @@
     using System.Web.Mvc;
     using System.Web.Security;
 
-    using Framework.Logging;
 
     
     public class GlobalExceptionFilter : HandleErrorAttribute
@@ -15,7 +14,6 @@
         
         public override void OnException(ExceptionContext filterContext)
         {
-            bool isUserException = false;
             if (filterContext.HttpContext.Request.ContentType.StartsWith(
                 "application/json", StringComparison.OrdinalIgnoreCase))
             {
@@ -41,14 +39,12 @@
                         ApiException failure = (ApiException)exception;
                         sb.Append(failure.GetExceptionMessage());
                         statusCode = failure.StatusCode;
-                        isUserException = true;
                     }
                     else if (exceptionType == typeof(ApplicationException))
                     {
                         ApplicationException applicationException = (ApplicationException)exception;
                         sb.Append(applicationException.GetExceptionMessage());
                         statusCode = HttpStatusCode.Forbidden;
-                        isUserException = true;
                     }
                     else
                     {
@@ -65,11 +61,6 @@
                         Data = new { ErrorMessage = sb.ToString(), StatusCode = statusCode }
                     };
                 }
-            }
-
-            if (!isUserException)
-            {
-                Logger.Error(filterContext.Exception, WebConstants.FilterComponent);
             }
 
             base.OnException(filterContext);

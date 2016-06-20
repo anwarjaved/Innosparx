@@ -7,7 +7,6 @@ namespace Framework.Ioc
     using System.Web.Http.Dependencies;
 
     using Framework.Infrastructure;
-    using Framework.Logging;
 
     
     internal class ApiDependencyScope : IDependencyScope
@@ -20,14 +19,6 @@ namespace Framework.Ioc
                 var service = Container.TryGet(serviceType);
 
                 benchmark.Stop();
-                if (service == null)
-                {
-                    Logger.Warn(Logger.Completed(benchmark.TotalTime, false, serviceType.Name), ApiConstants.IoCComponent);
-                }
-                else
-                {
-                    Logger.Info(Logger.Completed(benchmark.TotalTime, true, serviceType.Name), ApiConstants.IoCComponent);
-                }
 
                 return service;
             }
@@ -41,14 +32,6 @@ namespace Framework.Ioc
                 IReadOnlyList<object> services = Container.TryGetAll(serviceType);
 
                 benchmark.Stop();
-                if (services.Count == 0)
-                {
-                    Logger.Warn(Logger.Completed(benchmark.TotalTime, false, serviceType.Name), ApiConstants.IoCComponent);
-                }
-                else
-                {
-                    Logger.Info(Logger.Completed(benchmark.TotalTime, true, serviceType.Name), ApiConstants.IoCComponent);
-                }
 
                 return services;
             }

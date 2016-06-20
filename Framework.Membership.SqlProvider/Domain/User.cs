@@ -170,29 +170,6 @@ namespace Framework.Domain
             return this.Roles.Cast<IRole>().ToList();
         }
 
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Gets or sets the phone.
-        /// </summary>
-        ///
-        /// <value>
-        ///     The phone.
-        /// </value>
-        ///-------------------------------------------------------------------------------------------------
-        public string Phone { get; set; }
-
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Gets or sets the name of the company.
-        /// </summary>
-        ///
-        /// <value>
-        ///     The name of the company.
-        /// </value>
-        ///-------------------------------------------------------------------------------------------------
-        public string CompanyName { get; set; }
-
-
         private EntityCollection<Role> roles;
 
         ///-------------------------------------------------------------------------------------------------
@@ -219,27 +196,6 @@ namespace Framework.Domain
         public bool IsInRole(string roleName)
         {
             return this.Roles.Any(p => string.Compare(roleName, p.Name, StringComparison.OrdinalIgnoreCase) == 0);
-        }
-
-        private Location location;
-
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Gets or sets the location.
-        /// </summary>
-        ///
-        /// <value>
-        ///     The location.
-        /// </value>
-        ///-------------------------------------------------------------------------------------------------
-        public virtual Location Location
-        {
-            get
-            {
-                return this.location ?? (this.location = new Location());
-            }
-
-            set { this.location = value; }
         }
 
         private PasswordInfo password;

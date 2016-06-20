@@ -20,7 +20,6 @@ namespace Framework.DataAccess.Impl
     using System.Web.Configuration;
 
     using Framework.Domain;
-    using Framework.Logging;
 
     using Container = Framework.Ioc.Container;
 
@@ -50,7 +49,7 @@ namespace Framework.DataAccess.Impl
         ///     (optional) the log enabled.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        public UnitOfWork(string nameOrConnectionString, bool logEnabled = false)
+        public UnitOfWork(string nameOrConnectionString)
         {
             if (string.IsNullOrWhiteSpace(nameOrConnectionString))
             {
@@ -67,7 +66,6 @@ namespace Framework.DataAccess.Impl
             }
 
             this.connectionString = nameOrConnectionString;
-            this.LoggingEnabled = logEnabled;
             this.weakContext = new WeakReference<IEntityContext>(null);
         }
 
@@ -92,11 +90,6 @@ namespace Framework.DataAccess.Impl
                 }
 
                 benchmark.Stop();
-
-                if (LoggingEnabled)
-                {
-                    Logger.Info(Logger.Completed(benchmark.TotalTime, true, "Entity Loaded: {0}".FormatString(e.Entity.GetType().Name)), RepositoryConstants.RepositoryComponent);
-                }
             }
         }
 
@@ -124,12 +117,6 @@ namespace Framework.DataAccess.Impl
                         dbContext = EntityContextFactory.CreateContext(this.connectionString);
                         this.weakContext.SetTarget(dbContext);
                         ((IObjectContextAdapter)dbContext).ObjectContext.ObjectMaterialized += this.OnObjectMaterialized;
-
-                        if (LoggingEnabled)
-                        {
-                            dbContext.Log += s => Logger.Info(s, RepositoryConstants.RepositoryComponent);
-                            Logger.Info(Logger.Completed(benchmark.TotalTime, true, "new EntityContext('{0}')".FormatString(this.connectionString)), RepositoryConstants.RepositoryComponent);
-                        }
                     }
 
                 }
@@ -361,11 +348,6 @@ namespace Framework.DataAccess.Impl
                 Repository<TEntity> repository = new Repository<TEntity>(this);
 
                 benchmark.Stop();
-
-                if (LoggingEnabled)
-                {
-                    Logger.Info(Logger.Completed(benchmark.TotalTime, true, "Get Repository: {0}".FormatString(typeof(TEntity).Name)), RepositoryConstants.RepositoryComponent);
-                }
                 return repository;
             }
         }
@@ -382,15 +364,12 @@ namespace Framework.DataAccess.Impl
         /// <param name="nameOrConnectionString">
         ///     The context.
         /// </param>
-        /// <param name="logEnabled">
-        ///     (optional) the log enabled.
-        /// </param>
         ///
         /// <returns>
         ///     An instance of <see cref="IUnitOfWork"/>.
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
-        public IUnitOfWork With(string nameOrConnectionString, bool logEnabled = false)
+        public IUnitOfWork With(string nameOrConnectionString)
         {
             if (string.IsNullOrWhiteSpace(nameOrConnectionString))
             {
@@ -399,22 +378,11 @@ namespace Framework.DataAccess.Impl
 
             if (!Container.Contains<IUnitOfWork>(nameOrConnectionString))
             {
-                Container.Bind<IUnitOfWork>(nameOrConnectionString).ToMethod(() => new UnitOfWork(nameOrConnectionString, logEnabled));
+                Container.Bind<IUnitOfWork>(nameOrConnectionString).ToMethod(() => new UnitOfWork(nameOrConnectionString));
             }
 
             return Container.Get<IUnitOfWork>(nameOrConnectionString);
         }
-
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Gets or sets a value indicating whether the log is enabled.
-        /// </summary>
-        ///
-        /// <value>
-        ///     true if log enabled, false if not.
-        /// </value>
-        ///-------------------------------------------------------------------------------------------------
-        public bool LoggingEnabled { get; set; }
 
         private static bool HasChanged(DbEntityEntry entity)
         {

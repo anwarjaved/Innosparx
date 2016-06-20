@@ -53,8 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Location.cs" />
-    <Compile Include="Domain\Mapping\LocationMapping.cs" />
     <Compile Include="Domain\Mapping\PasswordInfoMapping.cs" />
     <Compile Include="Domain\Mapping\RoleMapping.cs" />
     <Compile Include="Domain\Mapping\UserMapping.cs" />
