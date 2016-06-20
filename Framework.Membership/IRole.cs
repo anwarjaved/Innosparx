@@ -45,5 +45,7 @@ namespace Framework.Membership
         /// </value>
         ///-------------------------------------------------------------------------------------------------
         string Description { get; set; }
+
+        int? Permissions { get; set; }
     }
 }

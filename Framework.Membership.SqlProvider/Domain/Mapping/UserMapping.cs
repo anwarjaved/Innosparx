@@ -29,7 +29,6 @@
             this.Property(c => c.LastLoginDate);
             this.Property(c => c.IsLockedOut);
             this.Property(c => c.LastPasswordChangedDate);
-
             this.ToTable("Users");
             this.HasMany(u => u.Roles).WithMany(r => r.Users).Map(
                 m => m.MapLeftKey("UserID").MapRightKey("RoleID").ToTable("UsersInRoles"));

@@ -19,6 +19,8 @@
         {
             this.Property(c => c.Name).IsRequired().IsUnicode().HasMaxLength(64);
             this.Property(c => c.Description).IsUnicode();
+            this.Property(x => x.Permissions).IsOptional();
+
             this.ToTable("Roles");
         }
     }

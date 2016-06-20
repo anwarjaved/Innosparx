@@ -45,5 +45,7 @@
         {
             get { return this.users ?? (this.users = this.CreateCollection<User>()); }
         }
+
+        public int? Permissions { get; set; }
     }
 }

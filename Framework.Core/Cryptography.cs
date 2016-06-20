@@ -204,7 +204,7 @@
         public static string Decrypt(string cipherText, string password)
         {
             byte[] cipherBytes = Convert.FromBase64String(cipherText);
-            Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118 });
+            Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118, 8, 34, 60 });
             byte[] decryptedData = Decrypt(cipherBytes, pdb.GetBytes(0x20), pdb.GetBytes(0x10));
             return Encoding.UTF8.GetString(decryptedData, 0, decryptedData.Length);
         }
@@ -217,7 +217,7 @@
         /// <returns>Decrypted Bytes.</returns>
         public static byte[] Decrypt(byte[] cipherData, string password)
         {
-            Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118 });
+            Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118, 8, 34, 60 });
             return Decrypt(cipherData, pdb.GetBytes(0x20), pdb.GetBytes(0x10));
         }
 
@@ -229,14 +229,14 @@
         /// <param name="password">The password.</param>
         public static void Decrypt(string fileIn, string fileOut, string password)
         {
-            using (Aes aes = new AesManaged())
+            using (Rijndael aes = Rijndael.Create())
             {
                 int bytesRead;
                 FileStream inputStream = new FileStream(fileIn, FileMode.Open, FileAccess.Read);
                 FileStream outputStream = new FileStream(fileOut, FileMode.OpenOrCreate, FileAccess.Write);
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118 });
-                aes.Key = pdb.GetBytes(0x20);
-                aes.IV = pdb.GetBytes(0x10);
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, salt: new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118, 8, 34, 60 });
+                aes.Key = pdb.GetBytes(32);
+                aes.IV = pdb.GetBytes(16);
                 CryptoStream cs = new CryptoStream(outputStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
                 byte[] buffer = new byte[FrameworkConstants.BufferSize];
                 do
@@ -259,12 +259,12 @@
         /// <returns>Decrypted Bytes.</returns>
         public static byte[] Decrypt(byte[] cipherData, byte[] key, byte[] iv)
         {
-            using (Aes aes = new AesManaged())
+            using (Rijndael rijndael = Rijndael.Create())
             {
                 MemoryStream ms = new MemoryStream();
-                aes.Key = key;
-                aes.IV = iv;
-                CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write);
+                rijndael.Key = key;
+                rijndael.IV = iv;
+                CryptoStream cs = new CryptoStream(ms, rijndael.CreateDecryptor(), CryptoStreamMode.Write);
                 cs.Write(cipherData, 0, cipherData.Length);
                 cs.Close();
                 return ms.ToArray();
@@ -279,8 +279,8 @@
         /// <returns>Encrypted Bytes.</returns>
         public static byte[] Encrypt(byte[] clearData, string password)
         {
-            Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118 });
-            return Encrypt(clearData, pdb.GetBytes(0x20), pdb.GetBytes(0x10));
+            Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118, 8, 34, 60 });
+            return Encrypt(clearData, pdb.GetBytes(32), pdb.GetBytes(16));
         }
 
         /// <summary>
@@ -292,8 +292,8 @@
         public static string Encrypt(string clearText, string password)
         {
             byte[] clearBytes = Encoding.UTF8.GetBytes(clearText);
-            Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118 });
-            return Convert.ToBase64String(Encrypt(clearBytes, pdb.GetBytes(0x20), pdb.GetBytes(0x10)));
+            Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118, 8, 34, 60 });
+            return Convert.ToBase64String(Encrypt(clearBytes, pdb.GetBytes(32), pdb.GetBytes(16)));
         }
 
         /// <summary>
@@ -305,12 +305,12 @@
         /// <returns>Encrypted Bytes.</returns>
         public static byte[] Encrypt(byte[] clearData, byte[] key, byte[] iv)
         {
-            using (Aes aes = new AesManaged())
+            using (Rijndael rijndael = Rijndael.Create())
             {
                 MemoryStream ms = new MemoryStream();
-                aes.Key = key;
-                aes.IV = iv;
-                CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write);
+                rijndael.Key = key;
+                rijndael.IV = iv;
+                CryptoStream cs = new CryptoStream(ms, rijndael.CreateEncryptor(), CryptoStreamMode.Write);
                 cs.Write(clearData, 0, clearData.Length);
                 cs.Close();
                 return ms.ToArray();
@@ -325,15 +325,15 @@
         /// <param name="password">The password.</param>
         public static void Encrypt(string fileIn, string fileOut, string password)
         {
-            using (Aes aes = new AesManaged())
+            using (Rijndael rijndael = Rijndael.Create())
             {
                 int bytesRead;
                 FileStream inputStream = new FileStream(fileIn, FileMode.Open, FileAccess.Read);
                 FileStream outputStream = new FileStream(fileOut, FileMode.OpenOrCreate, FileAccess.Write);
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118 });
-                aes.Key = pdb.GetBytes(32);
-                aes.IV = pdb.GetBytes(16);
-                CryptoStream cs = new CryptoStream(outputStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, new byte[] { 73, 118, 97, 110, 32, 77, 101, 100, 118, 101, 100, 101, 118, 8, 34, 60 });
+                rijndael.Key = pdb.GetBytes(32);
+                rijndael.IV = pdb.GetBytes(16);
+                CryptoStream cs = new CryptoStream(outputStream, rijndael.CreateEncryptor(), CryptoStreamMode.Write);
                 byte[] buffer = new byte[FrameworkConstants.BufferSize];
                 do
                 {
