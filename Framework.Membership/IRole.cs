@@ -46,6 +46,6 @@ namespace Framework.Membership
         ///-------------------------------------------------------------------------------------------------
         string Description { get; set; }
 
-        int? Permissions { get; set; }
+        ICollection<IUserGroupRolePermission> Permissions { get; }
     }
 }

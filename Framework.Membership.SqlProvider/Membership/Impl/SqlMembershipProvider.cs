@@ -126,23 +126,17 @@
             return func(this);
         }
 
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Creates a role.
-        /// </summary>
+        /// <summary>   Creates a role. </summary>
         ///
-        /// <param name="roleName">
-        ///     Name of the role.
-        /// </param>
-        /// <param name="description">
-        ///     The description.
-        /// </param>
+        /// <author>    Anwar Javed. </author>
+        /// <date>  Tue, 21 June 2016 4:58 PM. </date>
         ///
-        /// <returns>
-        ///     The new role.
-        /// </returns>
-        ///-------------------------------------------------------------------------------------------------
-        
+        /// <param name="roleName">     Name of the role. </param>
+        /// <param name="description">  The description. </param>
+        ///
+        /// <returns>   The new role. </returns>
+        ///
+        /// ### <param name="permissions">  The permissions. </param>
         public IRole CreateRole(string roleName, string description)
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
@@ -163,13 +157,19 @@ typeof(SqlMembershipProvider).GetMethod("CreateMemebershipRole", BindingFlags.Pu
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         
-        public T CreateMemebershipRole<T>(string roleName, string description) where T : Role, new()
+        public T CreateMemebershipRole<T>(string roleName, string description, Action<T> action = null) where T : Role, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
             IRepository<T> repository = unitOfWork.Get<T>();
 
             T role = new T { Name = roleName, Description = description };
+
+            if (action != null)
+            {
+                action(role);
+            }
+
             repository.Save(role);
 
             unitOfWork.Commit();
@@ -179,7 +179,7 @@ typeof(SqlMembershipProvider).GetMethod("CreateMemebershipRole", BindingFlags.Pu
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         
-        T IMembershipProvider.CreateRole<T>(string roleName, string description)
+        T IMembershipProvider.CreateRole<T>(string roleName, string description, Action<T> action = null)
         {
             Type type = typeof(T);
 
@@ -194,7 +194,7 @@ typeof(SqlMembershipProvider).GetMethod("CreateMemebershipRole", BindingFlags.Pu
             MethodCallExpression callExpression = Expression.Call(
                 instance,
                 method,
-                new Expression[] { Expression.Constant(roleName, typeof(string)), Expression.Constant(description, typeof(string)) });
+                new Expression[] { Expression.Constant(roleName, typeof(string)), Expression.Constant(description, typeof(string)), Expression.Constant(action, typeof(Action<T>))  });
 
             Func<SqlMembershipProvider, T> func = Expression.Lambda<Func<SqlMembershipProvider, T>>(callExpression, instance).Compile();
             return func(this);
@@ -223,14 +223,14 @@ typeof(SqlMembershipProvider).GetMethod("CreateMemebershipRole", BindingFlags.Pu
             return repository.One(r => string.Compare(r.Name, roleName, StringComparison.OrdinalIgnoreCase) == 0);
         }
 
-        private static readonly MethodInfo GetMemebershipRoleDefinition =
-typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Public | BindingFlags.Instance);
+        private static readonly MethodInfo GetMembershipRoleDefinition =
+typeof(SqlMembershipProvider).GetMethod("GetMembershipRole", BindingFlags.Public | BindingFlags.Instance);
 
 
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         
-        public T GetMemebershipRole<T>(string roleName) where T : Role, new()
+        public T GetMembershipRole<T>(string roleName) where T : Role, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
@@ -251,7 +251,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMemebershipRole", BindingFlags.Publi
                 throw new InvalidCastException("T must be type of Role");
             }
 
-            MethodInfo method = GetMemebershipRoleDefinition.MakeGenericMethod(type);
+            MethodInfo method = GetMembershipRoleDefinition.MakeGenericMethod(type);
 
             var instance = Expression.Parameter(typeof(SqlMembershipProvider), "instance");
             MethodCallExpression callExpression = Expression.Call(

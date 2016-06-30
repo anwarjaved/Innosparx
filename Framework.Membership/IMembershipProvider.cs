@@ -44,26 +44,23 @@ namespace Framework.Membership
 
         bool RoleExists<T>(string roleName) where T : IRole, new();
 
-
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Creates a role.
-        /// </summary>
+        /// <summary>   Creates a role. </summary>
         ///
-        /// <param name="roleName">
-        ///     Name of the role.
-        /// </param>
-        /// <param name="description">
-        ///     The description.
-        /// </param>
+        /// <param name="roleName">     Name of the role. </param>
+        /// <param name="description">  The description. </param>
         ///
-        /// <returns>
-        ///     The new role.
-        /// </returns>
-        ///-------------------------------------------------------------------------------------------------
+        /// <returns>   The new role. </returns>
         IRole CreateRole(string roleName, string description);
 
-        T CreateRole<T>(string roleName, string description) where T : IRole, new();
+        /// <summary>   Creates a role. </summary>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="roleName">     Name of the role. </param>
+        /// <param name="descriptio">   The descriptio. </param>
+        /// <param name="action">       the action. </param>
+        ///
+        /// <returns>   The new role. </returns>
+        T CreateRole<T>(string roleName, string descriptio, Action<T> action = null) where T : IRole, new();
 
 
         ///-------------------------------------------------------------------------------------------------
@@ -80,6 +77,7 @@ namespace Framework.Membership
         /// </returns>
         ///-------------------------------------------------------------------------------------------------
         IRole GetRole(string roleName);
+
         T GetRole<T>(string roleName) where T : IRole, new();
 
         ///-------------------------------------------------------------------------------------------------
@@ -358,25 +356,15 @@ namespace Framework.Membership
         ///-------------------------------------------------------------------------------------------------
         bool ChangePassword(string email, string oldPassword, string newPassword);
 
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Change password.
-        /// </summary>
+        /// <summary>   Change password. </summary>
         ///
-        /// <param name="email">
-        ///     The email.
-        /// </param>
-        /// <param name="oldPassword">
-        ///     The old password.
-        /// </param>
-        /// <param name="newPassword">
-        ///     The new password.
-        /// </param>
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="email">        The email. </param>
+        /// <param name="oldPassword">  The old password. </param>
+        /// <param name="newPassword">  The new password. </param>
+        /// <param name="predicate">    The predicate. </param>
         ///
-        /// <returns>
-        ///     true if it succeeds, false if it fails.
-        /// </returns>
-        ///-------------------------------------------------------------------------------------------------
+        /// <returns>   true if it succeeds, false if it fails. </returns>
         bool ChangePassword<T>(string email, string oldPassword, string newPassword, Expression<Func<T, bool>> predicate) where T : IUser, new();
 
         ///-------------------------------------------------------------------------------------------------
@@ -394,19 +382,13 @@ namespace Framework.Membership
         ///-------------------------------------------------------------------------------------------------
         string ResetPassword(string email);
 
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Resets the password described by email.
-        /// </summary>
+        /// <summary>   Resets the password described by email. </summary>
         ///
-        /// <param name="email">
-        ///     The email.
-        /// </param>
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="email">        The email. </param>
+        /// <param name="predicate">    The predicate. </param>
         ///
-        /// <returns>
-        ///     .
-        /// </returns>
-        ///-------------------------------------------------------------------------------------------------
+        /// <returns>   A string. </returns>
         string ResetPassword<T>(string email, Expression<Func<T, bool>> predicate) where T : IUser, new();
 
         ///-------------------------------------------------------------------------------------------------
@@ -430,25 +412,15 @@ namespace Framework.Membership
         ///-------------------------------------------------------------------------------------------------
         bool ValidateUser(string email, string password, Func<IUser, bool> validatorCallback = null);
 
-        ///-------------------------------------------------------------------------------------------------
-        /// <summary>
-        ///     Validate user.
-        /// </summary>
+        /// <summary>   Validate user. </summary>
         ///
-        /// <param name="email">
-        ///     The email.
-        /// </param>
-        /// <param name="password">
-        ///     The password for the new user.
-        /// </param>
-        /// <param name="validatorCallback">
-        ///     The validator Callback.
-        /// </param>
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="email">                The email. </param>
+        /// <param name="password">             The password for the new user. </param>
+        /// <param name="predicate">            The predicate. </param>
+        /// <param name="validatorCallback">    The validator Callback. </param>
         ///
-        /// <returns>
-        ///     true if it succeeds, false if it fails.
-        /// </returns>
-        ///-------------------------------------------------------------------------------------------------
+        /// <returns>   true if it succeeds, false if it fails. </returns>
         bool ValidateUser<T>(string email, string password, Expression<Func<T, bool>> predicate = null, Func<T, bool> validatorCallback = null) where T : IUser, new();
 
         ///-------------------------------------------------------------------------------------------------
