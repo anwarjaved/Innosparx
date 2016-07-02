@@ -1,6 +1,7 @@
 ﻿namespace Framework.IDMembership
 {
     using System;
+    using System.Collections.Generic;
 
     ///-------------------------------------------------------------------------------------------------
     /// <summary>
@@ -41,5 +42,7 @@
         /// </value>
         ///-------------------------------------------------------------------------------------------------
         string Description { get; set; }
+
+        ICollection<IUserGroupRolePermission> Permissions { get; }
     }
 }

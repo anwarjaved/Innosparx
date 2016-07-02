@@ -1,5 +1,7 @@
 ﻿namespace Framework.Domain
 {
+    using System.Collections.Generic;
+
     using Framework.IDMembership;
 
     ///-------------------------------------------------------------------------------------------------
@@ -44,6 +46,18 @@
         public virtual EntityCollection<User> Users
         {
             get { return this.users ?? (this.users = this.CreateCollection<User>()); }
+        }
+        private EntityCollection<UserGroupRolePermission> permissions;
+        public virtual EntityCollection<UserGroupRolePermission> Permissions
+        {
+            get { return this.permissions ?? (this.permissions = this.CreateCollection<UserGroupRolePermission>()); }
+        }
+        ICollection<IUserGroupRolePermission> IRole.Permissions
+        {
+            get
+            {
+                return (ICollection<IUserGroupRolePermission>)this.Permissions;
+            }
         }
     }
 }

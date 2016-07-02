@@ -223,6 +223,33 @@
             return GetRole(roleName);
         }
 
+        public static T CreateRole<T>(string roleName, string description = "", Action<T> action = null, bool throwIfRoleExists = false) 
+            where T : IRole, new()
+        {
+            if (string.IsNullOrEmpty(roleName))
+            {
+                throw new ArgumentNullException("roleName", "Role name cannot be empty or null.");
+            }
+            if (roleName.Contains(","))
+            {
+                throw new ArgumentException("Role names cannot contain commas.");
+            }
+            bool roleExists = RoleExists(roleName);
+            if (throwIfRoleExists && roleExists)
+            {
+                throw new InvalidOperationException("Role name already exists.");
+            }
+            if (!roleExists)
+            {
+                if (roleName.Length > 64)
+                {
+                    throw new ArgumentOutOfRangeException("roleName", "Role name cannot exceed 64 characters.");
+                }
+                IMembershipProvider provider = Container.Get<IMembershipProvider>();
+                return provider.CreateRole<T>(roleName, description, action);
+            }
+            return GetRole<T>(roleName);
+        }
         ///-------------------------------------------------------------------------------------------------
         /// <summary>
         ///     Gets a role.
@@ -276,6 +303,27 @@
             return provider.GetRole(roleName);
         }
 
+        public static T GetRole<T>(string roleName) where T : IRole, new()
+        {
+            if (string.IsNullOrEmpty(roleName))
+            {
+                throw new ArgumentNullException("roleName", "Role name cannot be empty or null.");
+            }
+            if (roleName.Contains(","))
+            {
+                throw new ArgumentException("Role names cannot contain commas.");
+            }
+            if (roleName.Length > 64)
+            {
+                throw new ArgumentOutOfRangeException("roleName", "Role name cannot exceed 64 characters.");
+            }
+            if (!RoleExists(roleName))
+            {
+                throw new InvalidOperationException("Role name not exists.");
+            }
+            IMembershipProvider provider = Container.Get<IMembershipProvider>();
+            return provider.GetRole<T>(roleName);
+        }
         public static IPagedList<IRole> GetAllRoles(int pageIndex, int pageSize)
         {
             IMembershipProvider provider = Container.Get<IMembershipProvider>();
@@ -1548,7 +1596,7 @@
                                  new Claim(ClaimTypes.NameIdentifier, account.UniqueID)
                              };
 
-                list.AddRange(account.Roles.Select(r => r.Name).Select(role => new Claim(ClaimTypes.Role, role)));
+                list.AddRange(account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions > 0)).SelectMany(r => r.Permissions).Select(p => new Claim(AppClaimTypes.UserGroupRolePermission, "{0}|{1}|{2}|{3}".FormatString(p.UserGroupID.ToStringValue(), p.Group.Name, p.Role.Name, p.Permissions))).ToList());
 
                 if (claims!= null && claims.Length > 0)
                 {
@@ -1577,6 +1625,7 @@
                              };
 
                 claimList.AddRange(account.Roles.Select(r => r.Name).Select(role => new Claim(ClaimTypes.Role, role)));
+                claimList.AddRange(account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions > 0)).SelectMany(r => r.Permissions).Select(p => new Claim(AppClaimTypes.UserGroupRolePermission, "{0}|{1}|{2}|{3}".FormatString(p.UserGroupID.ToStringValue(), p.Group.Name, p.Role.Name, p.Permissions))).ToList());
 
                 if (claims != null && claims.Length > 0)
                 {

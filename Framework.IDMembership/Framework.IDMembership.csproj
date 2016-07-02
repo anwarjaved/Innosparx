@@ -48,6 +48,8 @@
     <Compile Include="AppClaimTypes.cs" />
     <Compile Include="ClearTextStrategy.cs" />
     <Compile Include="CommonRoles.cs" />
+    <Compile Include="IUserGroup.cs" />
+    <Compile Include="IUserGroupRolePermission.cs" />
     <Compile Include="MembershipConstants.cs" />
     <Compile Include="HashPasswordStrategy.cs" />
     <Compile Include="IAccountPolicy.cs" />

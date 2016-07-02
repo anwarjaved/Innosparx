@@ -61,7 +61,7 @@
         ///-------------------------------------------------------------------------------------------------
         IRole CreateRole(string roleName, string description);
 
-        T CreateRole<T>(string roleName, string description) where T : IRole, new();
+        T CreateRole<T>(string roleName, string description, Action<T> action = null) where T : IRole, new();
 
 
         ///-------------------------------------------------------------------------------------------------

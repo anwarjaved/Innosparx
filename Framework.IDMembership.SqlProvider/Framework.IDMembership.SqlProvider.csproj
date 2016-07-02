@@ -55,10 +55,14 @@
   <ItemGroup>
     <Compile Include="Domain\Mapping\PasswordInfoMapping.cs" />
     <Compile Include="Domain\Mapping\RoleMapping.cs" />
+    <Compile Include="Domain\Mapping\UserGroupMapping.cs" />
+    <Compile Include="Domain\Mapping\UserGroupRolePermissionMapping.cs" />
     <Compile Include="Domain\Mapping\UserMapping.cs" />
     <Compile Include="Domain\PasswordInfo.cs" />
     <Compile Include="Domain\Role.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\UserGroup.cs" />
+    <Compile Include="Domain\UserGroupRolePermission.cs" />
     <Compile Include="Infrastructure\SqlMembershipInitializer.cs" />
     <Compile Include="IDMembership\Impl\SqlMembershipProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
