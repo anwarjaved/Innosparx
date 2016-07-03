@@ -179,7 +179,7 @@ typeof(SqlMembershipProvider).GetMethod("CreateMemebershipRole", BindingFlags.Pu
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         
-        T IMembershipProvider.CreateRole<T>(string roleName, string description, Action<T> action = null)
+        T IMembershipProvider.CreateRole<T>(string roleName, string description, Action<T> action)
         {
             Type type = typeof(T);
 
@@ -224,13 +224,13 @@ typeof(SqlMembershipProvider).GetMethod("CreateMemebershipRole", BindingFlags.Pu
         }
 
         private static readonly MethodInfo GetMembershipRoleDefinition =
-typeof(SqlMembershipProvider).GetMethod("GetMembershipRole", BindingFlags.Public | BindingFlags.Instance);
+typeof(SqlMembershipProvider).GetMethod("GetMembershipRoleInternal", BindingFlags.Public | BindingFlags.Instance);
 
 
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         
-        public T GetMembershipRole<T>(string roleName) where T : Role, new()
+        public T GetMembershipRoleInternal<T>(string roleName) where T : Role, new()
         {
             IUnitOfWork unitOfWork = Container.Get<IUnitOfWork>();
 
@@ -259,7 +259,7 @@ typeof(SqlMembershipProvider).GetMethod("GetMembershipRole", BindingFlags.Public
                 method,
                 new Expression[]
                 {
-
+                    Expression.Constant(roleName, typeof(string))
                     
                 });
 

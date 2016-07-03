@@ -1698,7 +1698,23 @@ namespace Framework.Membership
                                  new Claim(ClaimTypes.Email, account.Email)
                              };
 
-                list.AddRange(account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions > 0)).SelectMany(r => r.Permissions).Select(p => new Claim(AppClaimTypes.UserGroupRolePermission, "{0}|{1}|{2}|{3}".FormatString(p.UserGroupID.ToStringValue(), p.Group.Name, p.Role.Name, p.Permissions))).ToList());
+                var rolePermissions = account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions > 0))
+                    .SelectMany(r => r.Permissions).ToList();
+
+
+
+                foreach (var p in rolePermissions)
+                {
+                    var claim = new Claim(
+                        AppClaimTypes.UserGroupRolePermission,
+                        "{0}|{1}|{2}|{3}".FormatString(
+                            p.UserGroupID.ToStringValue(),
+                            p.Group.Name,
+                            p.Role.Name,
+                            p.Permissions));
+
+                    list.Add(claim);
+                }
 
                 if (claims!= null && claims.Length > 0)
                 {
