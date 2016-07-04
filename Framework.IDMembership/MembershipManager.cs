@@ -1596,7 +1596,16 @@
                                  new Claim(ClaimTypes.NameIdentifier, account.UniqueID)
                              };
 
-                list.AddRange(account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions != "")).SelectMany(r => r.Permissions).ToList().Select(p => new Claim(AppClaimTypes.UserGroupRolePermission, "{0}|{1}|{2}|{3}".FormatString(p.UserGroupID.ToStringValue(), p.Group.Name, p.Role.Name, p.Permissions))).ToList());
+                var roles = account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions != "")).ToList();
+
+                foreach (var role in roles)
+                {
+                    foreach (var p in role.Permissions)
+                    {
+                        list.Add(new Claim(AppClaimTypes.UserGroupRolePermission, "{0}|{1}|{2}|{3}".FormatString(p.UserGroupID.ToStringValue(), p.Group.Name, p.Role.Name, p.Permissions ?? ""));
+                    }
+                }
+
 
                 if (claims!= null && claims.Length > 0)
                 {
@@ -1624,8 +1633,8 @@
                                  new Claim(ClaimTypes.NameIdentifier, account.UniqueID)
                              };
 
-                claimList.AddRange(account.Roles.Select(r => r.Name).Select(role => new Claim(ClaimTypes.Role, role)));
-                claimList.AddRange(account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions != "")).SelectMany(r => r.Permissions).ToList().Select(p => new Claim(AppClaimTypes.UserGroupRolePermission, "{0}|{1}|{2}|{3}".FormatString(p.UserGroupID.ToStringValue(), p.Group.Name, p.Role.Name, p.Permissions))).ToList());
+                var roles = account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions != ""));
+                claimList.AddRange(roles.SelectMany(r => r.Permissions).ToList().Select(p => new Claim(AppClaimTypes.UserGroupRolePermission, "{0}|{1}|{2}|{3}".FormatString(p.UserGroupID.ToStringValue(), p.Group.Name, p.Role.Name, p.Permissions ?? ""))).ToList());
 
                 if (claims != null && claims.Length > 0)
                 {

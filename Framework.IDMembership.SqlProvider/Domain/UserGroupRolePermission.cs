@@ -14,12 +14,12 @@ namespace Framework.Domain
 
         public Guid RoleID { get; set; }
 
-        public Role Role { get; set; }
+        public virtual Role Role { get; set; }
 
 
         public string Permissions { get; set; }
 
-        public UserGroup Group { get; set; }
+        public virtual UserGroup Group { get; set; }
 
         IRole IUserGroupRolePermission.Role
         {
