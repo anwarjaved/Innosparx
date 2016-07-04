@@ -9,6 +9,5 @@ using System.Security;
 [assembly: AssemblyDescription("The library of helper extensions useful in other projects")]
 [assembly: AssemblyProduct("Inno Sparx Framework")]
 [assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
 [assembly: Guid("ad16faf2-fce4-4da1-8e00-ebf9e37b8b47")]
 [assembly: NeutralResourcesLanguage("en-US")]

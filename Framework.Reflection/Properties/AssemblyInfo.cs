@@ -14,7 +14,6 @@ using Framework.Ioc;
 [assembly: AssemblyCopyright("Copyright ©  2008-2014")]
 [assembly: AssemblyTrademark("Copyright ©  2008-2014, All right reserved.")]
 [assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
 [assembly: Guid("30628ca5-e6c6-4167-97b6-d5e358df1e12")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: ContainerAssembly]

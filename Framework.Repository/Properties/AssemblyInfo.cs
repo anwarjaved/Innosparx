@@ -13,7 +13,6 @@ using Framework.Ioc;
 [assembly: AssemblyCopyright("Copyright © 2008-2014")]
 [assembly: AssemblyTrademark("Copyright © 2008-2014, All right reserved.")]
 [assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
 [assembly: Guid("628b0f83-bd49-4e6c-a817-919bb30e8df7")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: ContainerAssembly]

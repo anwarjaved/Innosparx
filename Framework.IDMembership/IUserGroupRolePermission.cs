@@ -16,6 +16,6 @@ namespace Framework.IDMembership
 
         IUserGroup Group { get; }
 
-        long? Permissions { get; set; }
+        string Permissions { get; set; }
     }
 }

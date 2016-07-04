@@ -54,7 +54,6 @@ namespace Framework.Web.Mvc
         ///     The authorized roles.
         /// </param>
         ///-------------------------------------------------------------------------------------------------
-        [CLSCompliant(false)]
         public SecureAttribute(params string[] roles)
         {
             this.Roles = roles;

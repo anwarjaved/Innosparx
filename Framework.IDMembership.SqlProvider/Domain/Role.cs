@@ -52,11 +52,17 @@
         {
             get { return this.permissions ?? (this.permissions = this.CreateCollection<UserGroupRolePermission>()); }
         }
-        ICollection<IUserGroupRolePermission> IRole.Permissions
+        IEnumerable<IUserGroupRolePermission> IRole.Permissions
         {
             get
             {
-                return (ICollection<IUserGroupRolePermission>)this.Permissions;
+                List<IUserGroupRolePermission> list = new List<IUserGroupRolePermission>();
+                foreach (var userGroupRolePermission in this.Permissions)
+                {
+                    list.Add(userGroupRolePermission);
+                }
+
+                return list;
             }
         }
     }

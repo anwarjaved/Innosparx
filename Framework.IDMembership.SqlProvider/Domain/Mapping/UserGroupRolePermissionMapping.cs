@@ -13,7 +13,7 @@ namespace Framework.Domain.Mapping
             this.HasKey(x => new { x.RoleID, x.UserGroupID });
             this.HasRequired(x => x.Group).WithMany(y => y.Permissions).HasForeignKey(x => x.UserGroupID);
             this.HasRequired(x => x.Role).WithMany(y => y.Permissions).HasForeignKey(x => x.RoleID);
-            this.Property(x => x.Permissions).IsOptional();
+            this.Property(x => x.Permissions).IsOptional().HasMaxLength(4000);
             this.ToTable("UserGroupRolePermissions");
         }
     }

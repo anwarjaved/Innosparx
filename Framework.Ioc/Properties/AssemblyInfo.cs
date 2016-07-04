@@ -14,7 +14,6 @@ using Framework.Ioc;
 [assembly: AssemblyCopyright("Copyright © 2008-2014")]
 [assembly: AssemblyTrademark("Copyright © 2008-2014, All right reserved.")]
 [assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
 [assembly: Guid("19b649d0-2e64-4353-84b5-6bb42d909c0e")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: System.Web.PreApplicationStartMethod(typeof(ActivationManager), "Run")]

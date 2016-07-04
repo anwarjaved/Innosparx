@@ -15,7 +15,6 @@ using Framework.Ioc;
 [assembly: AssemblyCopyright("Copyright ©  2008-2014")]
 [assembly: AssemblyTrademark("Copyright ©  2008-2014, All right reserved.")]
 [assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
 [assembly: Guid("7dde6683-4d10-4007-89a0-a8438836fd93")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: PreApplicationStartMethod(typeof(SerializationInitializer), "PreInit")]

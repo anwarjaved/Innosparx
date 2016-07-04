@@ -24,7 +24,6 @@ namespace Framework
             this.types.Add(type2);
         }
 
-        [CLSCompliant(false)]
         public SkipAttribute(params Type[] types)
         {
             types.ForEach(x => this.types.Add(x));
