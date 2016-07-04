@@ -17,7 +17,7 @@ namespace Framework.Domain
         public virtual Role Role { get; set; }
 
 
-        public long? Permissions { get; set; }
+        public string Permissions { get; set; }
 
         public virtual UserGroup Group { get; set; }
 

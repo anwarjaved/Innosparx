@@ -1698,7 +1698,7 @@ namespace Framework.Membership
                                  new Claim(ClaimTypes.Email, account.Email)
                              };
 
-                var rolePermissions = account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions > 0))
+                var rolePermissions = account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions != ""))
                     .SelectMany(r => r.Permissions).ToList();
 
 
@@ -1744,7 +1744,7 @@ namespace Framework.Membership
                              };
 
                 claimList.AddRange(account.Roles.Select(r => r.Name).Select(role => new Claim(ClaimTypes.Role, role)));
-                claimList.AddRange(account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions > 0)).SelectMany(r => r.Permissions).Select(p => new Claim(AppClaimTypes.UserGroupRolePermission, "{0}|{1}|{2}|{3}".FormatString(p.UserGroupID.ToStringValue(), p.Group.Name, p.Role.Name, p.Permissions))).ToList());
+                claimList.AddRange(account.Roles.Where(x => x.Permissions.Any(y => y.Permissions != null && y.Permissions != "")).SelectMany(r => r.Permissions).Select(p => new Claim(AppClaimTypes.UserGroupRolePermission, "{0}|{1}|{2}|{3}".FormatString(p.UserGroupID.ToStringValue(), p.Group.Name, p.Role.Name, p.Permissions))).ToList());
 
                 if (claims != null && claims.Length > 0)
                 {
